@@ -61,7 +61,7 @@
           {
             "group": "Configuring your Checkout & Custom Domain",
             "pages": [
-              "Configuring-your-Checkout-and-Domain/Unpublish-your-Checkout",
+              "Configuring-your-Checkout-and-Domain/Unpublish-Your-Checkout",
               "Configuring-your-Checkout-and-Domain/Undeploy-your-checkout",
               "Configuring-your-Checkout-and-Domain/Set-the-Percentage-of-Customers-directed-to-the-Apptics-Checkout",
               "Configuring-your-Checkout-and-Domain/Publishing-your-checkout",
@@ -100,8 +100,8 @@
           {
             "group": "Using the Deal Club Feature",
             "pages": [
-              "Using-the-Deal-Club-Feature/Using-the-Deal-Club-Feature",
-              "Using-the-Deal-Club-Feature/Previewing-and-using-Deal-Club",
+              "Using-the-Deal-Club-Feature/Using-the-Deal-Club-Feature-Feature",
+              "Using-the-Deal-Club-Feature/Previewing-Your-Deal-Club",
               "Using-the-Deal-Club-Feature/Customizing-your-Deal-Club-Content",
               "Using-the-Deal-Club-Feature/Customizing-the-Colors-of-your-Deal-Club",
               "Using-the-Deal-Club-Feature/Creating-a-Deal-Club"
@@ -150,14 +150,15 @@
           {
             "group": "Setting Up Payments",
             "pages": [
-              "Setting-up-Payments/Setting-Up-Payments",
+              "Setting-up-Payments/Setting-up-Payments",
               "Setting-up-Payments/Payments-Explained",
               "Setting-up-Payments/Create-a-payment-flow-for-your-store",
-              "Setting-up-Payments/Connect-Stripe-Payment-to-Apptics",
+              "Setting-up-Payments/Connect-Stripe-Account-to-Apptics",
               "Setting-up-Payments/Connect-Sandbox-Processor-to-Apptics",
               "Setting-up-Payments/Connect-Network-Ngenius-to-Apptics",
-              "Setting-up-Payments/Connect-FSMi-to-Apptics",
+              "Setting-up-Payments/Connect-NMI-to-Apptics",
               "Setting-up-Payments/Connect-Mastercard-to-Apptics",
+              "Setting-up-Payments/Connect-Checkout-to-Apptics",
               "Setting-up-Payments/Connect-Airwallex-to-Apptics",
               "Setting-up-Payments/Adding-Processors-to-your-Organization"
             ]
@@ -168,7 +169,7 @@
               "Managing-Subscriptions/Updating-Subscriptions-Billing-Cycle",
               "Managing-Subscriptions/Resuming-Subscriptions",
               "Managing-Subscriptions/Pausing-Subscriptions",
-              "Managing-Subscriptions/Managing-a-Subscription",
+              "Managing-Subscriptions/Managing-Subscriptions",
               "Managing-Subscriptions/Managing-Subscriptions-2",
               "Managing-Subscriptions/Creating-Subscriptions",
               "Managing-Subscriptions/Changing-Subscriptions-Processor",
