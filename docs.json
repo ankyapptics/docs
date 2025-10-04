@@ -14,35 +14,81 @@
         "tab": "Guides",
         "groups": [
           {
-            "group": "Getting started",
+            "group": "Getting Started with Apptics",
             "pages": [
-              "index",
-              "quickstart",
-              "development"
+              "Getting-Started-with-Apptics/placeholder"
             ]
           },
           {
-            "group": "Customization",
+            "group": "Customizing your checkout",
             "pages": [
-              "essentials/settings",
-              "essentials/navigation"
+              "Customizing-Your-Checkouts/placeholder"
             ]
           },
           {
-            "group": "Writing content",
+            "group": "Configuring your Checkout & Custom Domain",
             "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/reusable-snippets"
+              "Configuring-your-Checkout-and-Domain/placeholder"
             ]
           },
           {
-            "group": "AI tools",
+            "group": "Setting Up Order Bumps",
             "pages": [
-              "ai-tools/cursor",
-              "ai-tools/claude-code",
-              "ai-tools/windsurf"
+              "Setting-Up-Order-Bumps/placeholder"
+            ]
+          },
+          {
+            "group": "Using the Discounts and Offers Features",
+            "pages": [
+              "Using-the-Discounts-and-Offers-Features/placeholder"
+            ]
+          },
+          {
+            "group": "Using the Deal Club Feature",
+            "pages": [
+              "Using-the-Deal-Club-Feature/placeholder"
+            ]
+          },
+          {
+            "group": "Using the Funnels Feature",
+            "pages": [
+              "Using-the-Funnels-Feature/placeholder"
+            ]
+          },
+          {
+            "group": "Using the Languages Feature",
+            "pages": [
+              "Using-the-Languages-Feature/placeholder"
+            ]
+          },
+          {
+            "group": "Using the Emails Feature",
+            "pages": [
+              "Using-the-Emails-Feature/placeholder"
+            ]
+          },
+          {
+            "group": "Using the Connect Feature and Integrations",
+            "pages": [
+              "Using-the-Connect-Feature-and-Integrations/placeholder"
+            ]
+          },
+          {
+            "group": "Using the Direct Link Generator",
+            "pages": [
+              "Using-the-Direct-Link-Generator/placeholder"
+            ]
+          },
+          {
+            "group": "Setting Up Payments",
+            "pages": [
+              "Setting-up-Payments/placeholder"
+            ]
+          },
+          {
+            "group": "Managing Subscriptions",
+            "pages": [
+              "Managing-Subscriptions/placeholder"
             ]
           }
         ]
@@ -102,15 +148,15 @@
   },
   "contextual": {
     "options": [
-     "copy",
-     "view",
-     "chatgpt",
-     "claude",
-     "perplexity",
-     "mcp",
-     "cursor",
-     "vscode"
-   ]
+      "copy",
+      "view",
+      "chatgpt",
+      "claude",
+      "perplexity",
+      "mcp",
+      "cursor",
+      "vscode"
+    ]
   },
   "footer": {
     "socials": {
