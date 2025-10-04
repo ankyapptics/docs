@@ -1,7 +1,7 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Apptics",
+  "name": "Mint Starter Kit",
   "colors": {
     "primary": "#16A34A",
     "light": "#07C983",
@@ -22,77 +22,77 @@
           {
             "group": "Getting Started with Apptics",
             "pages": [
-              "Getting-Started-with-Apptics/Syncing-Products-From-Your-Store-to-Apptics",
+              "Getting-Started-with-Apptics/Getting-Started-With-Apptics",
               "Getting-Started-with-Apptics/Steps-needed-to-connect-Apptics-to-your-Shopify-Store",
+              "Getting-Started-with-Apptics/Connecting-your-Shopify-store-to-your-Apptics-account-Copy-page",
+              "Getting-Started-with-Apptics/Syncing-Products-From-Your-Store-to-Apptics",
               "Getting-Started-with-Apptics/Setting-up-your-Recurring-Products-with-Apptics",
               "Getting-Started-with-Apptics/How-to-lock-the-price-of-your-product-variant",
-              "Getting-Started-with-Apptics/Getting-Started-With-Apptics",
               "Getting-Started-with-Apptics/Customizing-Shipping-Rates",
-              "Getting-Started-with-Apptics/Connecting-your-Shopify-store-to-your-Apptics-account-Copy-page",
               "Getting-Started-with-Apptics/Adding-taxes"
             ]
           },
           {
             "group": "Customizing your checkout",
             "pages": [
-              "Customizing-Your-Checkouts/manage-sections-displayed-on-your-checkout-page",
+              "Customizing-Your-Checkouts/Customizing-Your-Checkout",
+              "Customizing-Your-Checkouts/Customizing-the-appearance-of-your-checkout",
               "Customizing-Your-Checkouts/Setting-the-checkout-type-one-page-or-multiple-page",
-              "Customizing-Your-Checkouts/Restrict-countries-from-shipping-rates",
-              "Customizing-Your-Checkouts/Require-an-Address-Number-at-Checkout",
+              "Customizing-Your-Checkouts/Changing-the-Logo-and-Favicon-on-Your-Checkout",
+              "Customizing-Your-Checkouts/Customize-the-Checkout_Theme-Color",
+              "Customizing-Your-Checkouts/Enabling-the-Checkout-Title-and-Subtitle",
               "Customizing-Your-Checkouts/Require-a-valid-phone-number-at-checkout",
               "Customizing-Your-Checkouts/Require-a-Phone-Number-at-Checkout",
+              "Customizing-Your-Checkouts/Require-an-Address-Number-at-Checkout",
               "Customizing-Your-Checkouts/Require-Pickup-Point-Selected-at-Checkout",
-              "Customizing-Your-Checkouts/Require-Customers-to-accept-terms-before-checkout",
               "Customizing-Your-Checkouts/Pre-check-email-marketing-checkbox",
               "Customizing-Your-Checkouts/Make-order-summary-open-by-default",
+              "Customizing-Your-Checkouts/Restrict-countries-from-shipping-rates",
               "Customizing-Your-Checkouts/Enable-Fullscreen-Select-Inputs-on-mobile-version-of-the-checkout",
-              "Customizing-Your-Checkouts/Enabling-the-Checkout-Title-and-Subtitle",
-              "Customizing-Your-Checkouts/Display-powered-by-apptics-at-checkout",
               "Customizing-Your-Checkouts/Display-a-sticky-payment-button-on-mobile-version-of-the-checkout",
               "Customizing-Your-Checkouts/Display-a-Scarcity-Timer-at",
-              "Customizing-Your-Checkouts/Customizing-the-appearance-of-your-checkout",
-              "Customizing-Your-Checkouts/Customizing-Your-Checkout",
-              "Customizing-Your-Checkouts/Customize-the-Checkout_Theme-Color",
+              "Customizing-Your-Checkouts/Add-Policy-URLS-at-Checkout",
+              "Customizing-Your-Checkouts/Require-Customers-to-accept-terms-before-checkout",
+              "Customizing-Your-Checkouts/Display-powered-by-apptics-at-checkout",
               "Customizing-Your-Checkouts/Customize-Trust-",
-              "Customizing-Your-Checkouts/Changing-the-Logo-and-Favicon-on-Your-Checkout",
-              "Customizing-Your-Checkouts/Add-Policy-URLS-at-Checkout"
+              "Customizing-Your-Checkouts/manage-sections-displayed-on-your-checkout-page"
             ]
           },
           {
             "group": "Configuring your Checkout & Custom Domain",
             "pages": [
-              "Configuring-your-Checkout-and-Domain/Unpublish-Your-Checkout",
-              "Configuring-your-Checkout-and-Domain/Undeploy-your-checkout",
-              "Configuring-your-Checkout-and-Domain/Set-the-Percentage-of-Customers-directed-to-the-Apptics-Checkout",
-              "Configuring-your-Checkout-and-Domain/Publishing-your-checkout",
+              "Configuring-your-Checkout-and-Domain/Configuring-your-Checkout-and-Domain",
+              "Configuring-your-Checkout-and-Domain/Deploying-your-Checkout",
               "Configuring-your-Checkout-and-Domain/How-to-preview-your-checkout",
+              "Configuring-your-Checkout-and-Domain/Publishing-your-checkout",
               "Configuring-your-Checkout-and-Domain/Enabling-Checkout-Button-Detector",
               "Configuring-your-Checkout-and-Domain/Enabling-Buy-Now-Button-Detector",
+              "Configuring-your-Checkout-and-Domain/Set-the-Percentage-of-Customers-directed-to-the-Apptics-Checkout",
               "Configuring-your-Checkout-and-Domain/Enable-the-tracker-and-advanced-feature-for-custom-button-mapping",
               "Configuring-your-Checkout-and-Domain/Enable-Cachine-bundle-Mode",
-              "Configuring-your-Checkout-and-Domain/Deploying-your-Checkout",
-              "Configuring-your-Checkout-and-Domain/Deploying-a-custom-domain-for-your-checkout",
-              "Configuring-your-Checkout-and-Domain/Configuring-your-Checkout-and-Domain",
               "Configuring-your-Checkout-and-Domain/Configure-URL-Patterns",
-              "Configuring-your-Checkout-and-Domain/Adding-a-custom-domain-for-your-checkout"
+              "Configuring-your-Checkout-and-Domain/Undeploy-your-checkout",
+              "Configuring-your-Checkout-and-Domain/Unpublish-Your-Checkout",
+              "Configuring-your-Checkout-and-Domain/Adding-a-custom-domain-for-your-checkout",
+              "Configuring-your-Checkout-and-Domain/Deploying-a-custom-domain-for-your-checkout"
             ]
           },
           {
             "group": "Setting Up Order Bumps",
             "pages": [
-              "Setting-Up-Order-Bumps/Setting-up-order-bump-upsells-Always-Show-the-Upsells",
+              "Setting-Up-Order-Bumps/Setting-Up-Order-Bumps",
               "Setting-Up-Order-Bumps/Setting-up-Order-Bump-Upsells-When-a-Specific-Product-is-in-the-Cart",
-              "Setting-Up-Order-Bumps/Setting-Up-Order-Bumps"
+              "Setting-Up-Order-Bumps/Setting-up-order-bump-upsells-Always-Show-the-Upsells"
             ]
           },
           {
             "group": "Using the Discounts and Offers Features",
             "pages": [
               "Using-the-Discounts-and-Offers-Features/Using-the-Discounts-and-Offers-Features",
-              "Using-the-Discounts-and-Offers-Features/Using-Discounts-with-Kaching-and-Other-Bundle-Apps",
-              "Using-the-Discounts-and-Offers-Features/How-to-manage-discounts-edit-or-delete",
-              "Using-the-Discounts-and-Offers-Features/How-to-create-discount-codes",
               "Using-the-Discounts-and-Offers-Features/How-to-Create-a-Discount",
+              "Using-the-Discounts-and-Offers-Features/How-to-create-discount-codes",
+              "Using-the-Discounts-and-Offers-Features/How-to-manage-discounts-edit-or-delete",
+              "Using-the-Discounts-and-Offers-Features/Using-Discounts-with-Kaching-and-Other-Bundle-Apps",
               "Using-the-Discounts-and-Offers-Features/Create-an-Offer-with-a-discount",
               "Using-the-Discounts-and-Offers-Features/Create-a-bundle-with-a-discount"
             ]
@@ -118,18 +118,18 @@
             "group": "Using the Languages Feature",
             "pages": [
               "Using-the-Languages-Feature/Using-the-Languages-Feature",
-              "Using-the-Languages-Feature/Using-Languages-Feature-to-edit-Checkout-Fields",
+              "Using-the-Languages-Feature/Adding-new-languages",
               "Using-the-Languages-Feature/Translating-languages-using-AI",
-              "Using-the-Languages-Feature/Removing-Specific-wording-from-your-checkout",
+              "Using-the-Languages-Feature/Using-Languages-Feature-to-edit-Checkout-Fields",
               "Using-the-Languages-Feature/How-to-limit-checkout-to-only-one-language-no-matter-clients-IP",
-              "Using-the-Languages-Feature/Adding-new-languages"
+              "Using-the-Languages-Feature/Removing-Specific-wording-from-your-checkout"
             ]
           },
           {
             "group": "Using the Emails Feature",
             "pages": [
               "Using-the-Emails-Feature/Using-the-Emails-Feature",
-              "Using-the-Emails-Feature/Setting-a-Custom-Sender-Domain-with-the-Emails-Feature",
+              "Using-the-Emails-Feature/Setting-up-a-Custom-Sender-Domain-with-the-Emails-Feature",
               "Using-the-Emails-Feature/Creating-a-new-template-with-the-Emails-Feature"
             ]
           },
@@ -152,31 +152,31 @@
             "pages": [
               "Setting-up-Payments/Setting-up-Payments",
               "Setting-up-Payments/Payments-Explained",
-              "Setting-up-Payments/Create-a-payment-flow-for-your-store",
+              "Setting-up-Payments/Adding-Processors-to-your-Organization",
               "Setting-up-Payments/Connect-Stripe-Account-to-Apptics",
-              "Setting-up-Payments/Connect-Sandbox-Processor-to-Apptics",
-              "Setting-up-Payments/Connect-Network-Ngenius-to-Apptics",
               "Setting-up-Payments/Connect-NMI-to-Apptics",
-              "Setting-up-Payments/Connect-Mastercard-to-Apptics",
               "Setting-up-Payments/Connect-Checkout-to-Apptics",
               "Setting-up-Payments/Connect-Airwallex-to-Apptics",
-              "Setting-up-Payments/Adding-Processors-to-your-Organization"
+              "Setting-up-Payments/Connect-Mastercard-to-Apptics",
+              "Setting-up-Payments/Connect-Sandbox-Processor-to-Apptics",
+              "Setting-up-Payments/Connect-Network-Ngenius-to-Apptics",
+              "Setting-up-Payments/Create-a-payment-flow-for-your-store"
             ]
           },
           {
             "group": "Managing Subscriptions",
             "pages": [
-              "Managing-Subscriptions/Updating-Subscriptions-Billing-Cycle",
-              "Managing-Subscriptions/Resuming-Subscriptions",
-              "Managing-Subscriptions/Pausing-Subscriptions",
               "Managing-Subscriptions/Managing-Subscriptions",
-              "Managing-Subscriptions/Managing-Subscriptions-2",
               "Managing-Subscriptions/Creating-Subscriptions",
-              "Managing-Subscriptions/Changing-Subscriptions-Processor",
-              "Managing-Subscriptions/Cancelling-Subscriptions",
-              "Managing-Subscriptions/Adding-Subscription-free-trial",
               "Managing-Subscriptions/Activating-Authorize-first-Feature",
-              "Managing-Subscriptions/Activating-Apptics-Vault-for-your-Subscriptions"
+              "Managing-Subscriptions/Adding-Subscription-free-trial",
+              "Managing-Subscriptions/Managing-Subscriptions-2",
+              "Managing-Subscriptions/Updating-Subscriptions-Billing-Cycle",
+              "Managing-Subscriptions/Changing-Subscriptions-Processor",
+              "Managing-Subscriptions/Activating-Apptics-Vault-for-your-Subscriptions",
+              "Managing-Subscriptions/Cancelling-Subscriptions",
+              "Managing-Subscriptions/Pausing-Subscriptions",
+              "Managing-Subscriptions/Resuming-Subscriptions"
             ]
           }
         ]
