@@ -14,81 +14,87 @@
         "tab": "Guides",
         "groups": [
           {
+            "group": "Overview",
+            "pages": [
+              "Overview/your-file-name-here"
+            ]
+          },
+          {
             "group": "Getting Started with Apptics",
             "pages": [
-              "Getting-Started-with-Apptics/placeholder"
+              "Getting-Started-with-Apptics/your-file-name-here"
             ]
           },
           {
             "group": "Customizing your checkout",
             "pages": [
-              "Customizing-Your-Checkouts/placeholder"
+              "Customizing-Your-Checkouts/your-file-name-here"
             ]
           },
           {
             "group": "Configuring your Checkout & Custom Domain",
             "pages": [
-              "Configuring-your-Checkout-and-Domain/placeholder"
+              "Configuring-your-Checkout-and-Domain/your-file-name-here"
             ]
           },
           {
             "group": "Setting Up Order Bumps",
             "pages": [
-              "Setting-Up-Order-Bumps/placeholder"
+              "Setting-Up-Order-Bumps/your-file-name-here"
             ]
           },
           {
             "group": "Using the Discounts and Offers Features",
             "pages": [
-              "Using-the-Discounts-and-Offers-Features/placeholder"
+              "Using-the-Discounts-and-Offers-Features/your-file-name-here"
             ]
           },
           {
             "group": "Using the Deal Club Feature",
             "pages": [
-              "Using-the-Deal-Club-Feature/placeholder"
+              "Using-the-Deal-Club-Feature/your-file-name-here"
             ]
           },
           {
             "group": "Using the Funnels Feature",
             "pages": [
-              "Using-the-Funnels-Feature/placeholder"
+              "Using-the-Funnels-Feature/your-file-name-here"
             ]
           },
           {
             "group": "Using the Languages Feature",
             "pages": [
-              "Using-the-Languages-Feature/placeholder"
+              "Using-the-Languages-Feature/your-file-name-here"
             ]
           },
           {
             "group": "Using the Emails Feature",
             "pages": [
-              "Using-the-Emails-Feature/placeholder"
+              "Using-the-Emails-Feature/your-file-name-here"
             ]
           },
           {
             "group": "Using the Connect Feature and Integrations",
             "pages": [
-              "Using-the-Connect-Feature-and-Integrations/placeholder"
+              "Using-the-Connect-Feature-and-Integrations/your-file-name-here"
             ]
           },
           {
             "group": "Using the Direct Link Generator",
             "pages": [
-              "Using-the-Direct-Link-Generator/placeholder"
+              "Using-the-Direct-Link-Generator/your-file-name-here"
             ]
           },
           {
             "group": "Setting Up Payments",
             "pages": [
-              "Setting-up-Payments/placeholder"
+              "Setting-up-Payments/your-file-name-here"
             ]
           },
           {
             "group": "Managing Subscriptions",
             "pages": [
-              "Managing-Subscriptions/placeholder"
+              "Managing-Subscriptions/your-file-name-here"
             ]
           }
         ]
