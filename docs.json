@@ -195,12 +195,12 @@
     "global": {
       "anchors": [
         {
-          "anchor": "Documentation",
+          "anchor": "Dashboard",
           "href": "https://crm.apptics.ai",
           "icon": "chart-line"
         },
         {
-          "anchor": "Support",
+          "anchor": "Contact us on Telegram",
           "href": "https://apptics.ai",
           "icon": "life-ring"
         }
@@ -215,13 +215,13 @@
     "links": [
       {
         "label": "Support",
-        "href": "mailto:hi@mintlify.com"
+        "href": "https://t.me/Apptics"
       }
     ],
     "primary": {
       "type": "button",
       "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
+      "href": "https://crm.apptics.ai"
     }
   },
   "contextual": {
