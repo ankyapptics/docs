@@ -33,6 +33,12 @@
             ]
           },
           {
+            "group": "Whop",
+            "pages": [
+              "Whop/whop"
+            ]
+          },
+          {
             "group": "Customizing your checkout",
             "pages": [
               "Customizing-Your-Checkouts/Customizing-Your-Checkout",
