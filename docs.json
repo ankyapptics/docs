@@ -22,7 +22,8 @@
           {
             "group": "Getting Started with Apptics",
             "pages": [
-              "Getting-Started-with-Apptics/Getting-Started-With-Apptics",
+              "Getting-Started-with-Apptics/Getting-Started-With-Apptics", 
+              "Getting-Started-with-Apptics/How-to-add-a-payment-method-in-the-CRM",
               "Getting-Started-with-Apptics/Steps-needed-to-connect-Apptics-to-your-Shopify-Store",
               "Getting-Started-with-Apptics/Connecting-your-Shopify-store-to-your-Apptics-account-Copy-page",
               "Getting-Started-with-Apptics/Syncing-Products-From-Your-Store-to-Apptics",
