@@ -1,0 +1,63 @@
+---
+title: "How to add Custom Domains on Your Checkout"
+---
+
+<Steps>
+  <Step title="Go to the Checkout">
+    <br />
+  </Step>
+  <Step title="Under Advance settings, go to Domains and then create subdomain.domainname structure. Lets say we use secure as subdomain, and if the Domain URL of the store is thecalmpet.com, then it would be secure.______.com (store name in blank)">
+    ![revis8-1.png](/images/revis8-1.png)
+  </Step>
+  <Step title="Click on Add">
+    
+  </Step>
+  <Step title="Now you will be able to see the the subdomain added with a pending status, so click on it and you will be able to view the DNS records.">
+    
+  </Step>
+  <Step title="Now go to their store’s Shopify Admin page, click on settings.">
+    
+  </Step>
+  <Step title="Now go to Domains">
+    ![revis8-2.png](/images/revis8-2.png)
+  </Step>
+  <Step title="Click the URL with Primary Label">
+    
+  </Step>
+  <Step title="If u see the name of the store in the Domain this means their Domain is hosted on Shopify, so now click on Domain Settings.">
+    ![revis8-3.png](/images/revis8-3.png)
+  </Step>
+  <Step title="Go to Edit DNS settings > DNS Records ">
+    ![revis8-4.png](/images/revis8-4.png)
+  </Step>
+  <Step title="Copy the DNS records and add all that info in format:">
+    Type: CNAME
+
+    Name: secure
+
+    Value: [cname.vercel-dns.com](http://cname.vercel-dns.com)
+
+    TTL: .......
+
+    Type: TXT
+
+    Name: @ 
+
+    Value: verification………
+  </Step>
+  <Step title="Go to the same Domain settings in Shopify and in DNS Records, click on Add Custom Record">
+    
+  </Step>
+  <Step title="Change the CNAME to secure, then in the Points to section, add the Value from DNS Record you copied, then confirm.">
+    
+  </Step>
+  <Step title="Change the TXT record, put the Name and Value in TXT under DNS Records and click Confirm.">
+    
+  </Step>
+  <Step title="Go back to Domains in Checkout, wait for the status to get verified, you can also Refresh it.">
+    
+  </Step>
+  <Step title="NOTE: If the domain is not being hosted on Shopify, you wont be able to see anything in Step 8">
+    
+  </Step>
+</Steps>
