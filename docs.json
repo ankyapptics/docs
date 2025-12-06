@@ -163,6 +163,7 @@
             "pages": [
               "Setting-up-Payments/Setting-up-Payments",
               "Setting-up-Payments/Payments-Explained",
+              "Setting-up-Payments/How-to-Connect-Your-Mid-API-Key-to-the-CRM-and-Enable-Customer-Vault",
               "Setting-up-Payments/Adding-Processors-to-your-Organization",
               "Setting-up-Payments/How-to-Adjust-Traffic-if-you-Have-Multiple-Processors",
               "Setting-up-Payments/How-to-Modify-and-Arrange-Fallbacks-for-Processors",
