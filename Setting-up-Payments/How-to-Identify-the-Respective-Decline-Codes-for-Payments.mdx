@@ -1,0 +1,86 @@
+---
+title: "How to identify the respective Decline Codes for Payments?"
+description: "Description of your new file."
+---
+
+<Steps>
+  <Step title="Go to the Payments in the CRM.">
+    
+  </Step>
+  <Step title="In the Status Column for all payments, if you see Declined, just click on that to see the exact issue.">
+    <img
+      src="/images/revis11-1.png"
+      alt="Revis11 1"
+      title="Revis11 1"
+      style={{ width:"35%" }}
+    />
+  </Step>
+  <Step title="Under the Timeline section, look out for a small blue-framed rectangular button, which will show you the reason for that declined payment.">
+    ![Revis 11 2](/images/revis11-2.png)
+  </Step>
+  <Step title="You can click on the button to see more insights for that decline or you can simply refer to these Decline Codes:">
+    ## **Bank-Side Declines (Issuer Related):**
+
+    | **Error**                                 | **Code** | **Reason **                               |
+    | :---------------------------------------- | :------- | :---------------------------------------- |
+    | call_issuer                               | 240      | Bank wants cardholder to contact them.    |
+    | fraudulent_card                           | 253      | Bank flagged card as suspicious/fraud.    |
+    | insufficient_funds                        | 202      | Customer doesn’t have enough balance.     |
+    | do_not_honor                              | 201      | Bank refused transaction without details. |
+    | pick_up_card                              | 250      | Card is blocked; bank wants it retained.  |
+    | Processor Error: Pick up card - NF        | —        | Bank marked the card as blocked/stolen.   |
+    | Processor Error: Exceeds withdrawal limit | —        | Daily spending/withdrawal limit reached.  |
+    | Processor Error: Pin tries exceeded       | —        | Too many wrong PIN attempts.              |
+
+    **Card Detail Errors (Customer Input/Validation):**
+
+    | **Error**                                   | **Code** | **Reason**                           |
+    | :------------------------------------------ | :------- | :----------------------------------- |
+    | Processor Error: Invalid card number        | —        | Card number is incorrect/invalid.    |
+    | Processor Error: CVV2 Mismatch              | —        | Entered CVV does not match the card. |
+    | Reason: Unknown processing error (CVV fail) | —        | CVV validation failed.               |
+    | Processor Error: CID Verification error     | —        | Card ID (CID) check failed.          |
+
+    **Missing Required Fields (Form/CRM Input Errors):**
+
+    | **Error**                                      | **Code** | **Reason**                      |
+    | :--------------------------------------------- | :------- | :------------------------------ |
+    | the address1 field is required REFID:615811973 | —        | Required address field missing. |
+    | The Customer Name is required REFID:615811215  | —        | Customer name not provided.     |
+
+    **Limits & Threshold Errors:**
+
+    | **Error**                                                                  | **Code** | **Reason**                                |
+    | :------------------------------------------------------------------------- | :------- | :---------------------------------------- |
+    | Processor Error: Activity limit exceeded                                   | —        | Too many attempts on card; limit hit.     |
+    | Processor Error: Amount exceeds the maximum ticket allowed REFID:602317588 | —        | Transaction amount exceeds allowed limit. |
+
+    **Card Type / Currency Mismatch:**
+
+    | **Error**                                                                                              | **Code** | **Reason**                                    |
+    | :----------------------------------------------------------------------------------------------------- | :------- | :-------------------------------------------- |
+    | Processor Error: The cc payment type [Maestro] and/or currency [USD] is not accepted REFID:603608870   | —        | Card type or currency not supported.          |
+    | Processor Error: Invalid Initial Transaction ID. The Payment Type [MC] Does Not Match. REFID:612973065 | —        | Card type doesn’t match original transaction. |
+
+    **Customer Vault / Tokenization Errors:**
+
+    | **Error**                                                            | **Code** | **Reason**                            |
+    | :------------------------------------------------------------------- | :------- | :------------------------------------ |
+    | Processor Error: Invalid Customer Vault ID specified REFID:609192021 | —        | Saved card token/vault ID is invalid. |
+
+    **API / System Configuration Errors:**
+
+    | **Error**                                                       | **Code** | **Reason**                                 |
+    | :-------------------------------------------------------------- | :------- | :----------------------------------------- |
+    | Processor Error: Specified API key not found REFID:626654140    | —        | API key invalid/missing in CRM or gateway. |
+    | Processor Error: Invalid Initial Transaction ID REFID:626530934 | —        | Reference transaction ID not found.        |
+    | Processor Error: Duplicate transaction REFID:625398892          | —        | Same transaction submitted multiple times. |
+    | Processor Error: Invalid card number (System flagged)           | —        | System validation failed on card format.   |
+
+    **Catch-All Processing Errors:**
+
+    | **Error**                        | **Code** | **Reason**                                 |
+    | :------------------------------- | :------- | :----------------------------------------- |
+    | Reason: Unknown processing error | —        | Gateway couldn't identify the exact issue. |
+  </Step>
+</Steps>
