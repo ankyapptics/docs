@@ -202,9 +202,92 @@
         "tab": "API reference",
         "groups": [
           {
-            "group": "API Introduction",
+            "group": "API documentation",
             "pages": [
               "api-reference/introduction"
+            ]
+          },
+          {
+            "group": "API Endpoints",
+            "pages": [
+              {
+                "group": "Auth",
+                "pages": [
+                  "api-reference/auth/test-authentication"
+                ]
+              },
+              {
+                "group": "Checkout",
+                "pages": [
+                  "api-reference/checkout/initialize-checkout-session"
+                ]
+              },
+              {
+                "group": "Payments",
+                "pages": [
+                  "api-reference/payments/process-payment"
+                ]
+              },
+              {
+                "group": "Block Rules",
+                "pages": [
+                  "api-reference/block-rules/list"
+                ]
+              },
+              {
+                "group": "Plugins",
+                "pages": [
+                  "api-reference/plugins/list"
+                ]
+              },
+              {
+                "group": "Domains",
+                "pages": [
+                  "api-reference/domains/list"
+                ]
+              },
+              {
+                "group": "Orders",
+                "pages": [
+                  "api-reference/orders/list"
+                ]
+              },
+              {
+                "group": "Subscriptions",
+                "pages": [
+                  "api-reference/subscriptions/list"
+                ]
+              },
+              {
+                "group": "Products",
+                "pages": [
+                  "api-reference/products/list"
+                ]
+              },
+              {
+                "group": "Events",
+                "pages": [
+                  "api-reference/events/list"
+                ]
+              },
+              {
+                "group": "Customers",
+                "pages": [
+                  "api-reference/customers/list"
+                ]
+              },
+              {
+                "group": "Payment Instruments",
+                "pages": [
+                  "api-reference/payment-instruments/list"
+                ]
+              },
+              {
+                "group": "Stores",
+                "pages": [
+                  "api-reference/stores/list"
+                ]
+              }
             ]
           }
         ]
