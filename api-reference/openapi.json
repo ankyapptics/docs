@@ -1,17 +1,17 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "TagadaPay API",
-    "description": "Public API for TagadaPay integrations including payments, checkout, and subscriptions.",
+    "title": "Apptics API",
+    "description": "Public API for Apptics integrations including payments, checkout, and subscriptions.",
     "version": "1.0.0"
   },
   "servers": [
     {
-      "url": "https://app.tagadapay.com/api/public/v1",
+      "url": "https://crm.apptics.ai/api/public/v1",
       "description": "Production Server"
     },
     {
-      "url": "https://app.tagadapay.dev/api/public/v1",
+      "url": "https://crm.apptics.dev/api/public/v1",
       "description": "Development Server"
     }
   ],
