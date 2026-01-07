@@ -1,0 +1,156 @@
+# Test authentication
+
+> Test if the API key is valid and return user information
+
+
+
+## OpenAPI
+
+````yaml openapi.json post /api/public/v1/auth/test
+openapi: 3.0.3
+info:
+  title: TagadaPay API
+  description: >-
+
+    # TagadaPay API Documentation
+
+
+    Welcome to the TagadaPay API! This API allows you to process payments,
+    manage transactions, and handle various payment-related operations.
+
+
+    ## Getting Started
+
+
+    ### Authentication
+
+    Get your API key from the dashboard and use Bearer authentication:
+
+    ```
+
+    Authorization: Bearer your-api-key
+
+    ```
+
+
+    ### Making Requests
+
+    - All API calls use HTTPS
+
+    - Request/Response format is JSON
+
+    - Required headers: Authorization
+
+
+    ### Rate Limits
+
+    | Plan | Requests | Burst |
+
+    |------|----------|--------|
+
+    | Standard | 100/min | 150/min |
+
+    | Premium | 500/min | 750/min |
+
+
+    ### Support
+
+    - Support: api-support@tagadapay.com
+
+    - Documentation: docs.tagadapay.com
+        
+  version: 1.0.0
+servers:
+  - url: https://app.tagadapay.com/
+    description: Production environment
+  - url: https://app.tagadapay.dev/
+    description: Development environment
+  - url: http://app.localhost:3000/
+    description: Local development
+security:
+  - bearerAuth: []
+tags:
+  - name: payments
+  - name: refunds
+  - name: disputes
+  - name: customers
+  - name: reports
+paths:
+  /api/public/v1/auth/test:
+    post:
+      tags:
+        - auth
+      summary: Test authentication
+      description: Test if the API key is valid and return user information
+      operationId: post-api-public-v1-auth-test
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+              additionalProperties: false
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema: {}
+              examples:
+                success:
+                  summary: Successful authentication
+                  value:
+                    success: true
+                    user:
+                      id: user_123
+                      orgId: org_456
+                      permissions:
+                        - org:admin
+                      account:
+                        id: acc_789
+                        name: My Account
+                      isServiceAccount: false
+                      isAccountOwner: true
+        default:
+          $ref: '#/components/responses/error'
+components:
+  responses:
+    error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              code:
+                type: string
+              issues:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                  required:
+                    - message
+                  additionalProperties: false
+            required:
+              - message
+              - code
+            additionalProperties: false
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'Enter your API key as: `Bearer your-api-key`'
+
+````
+
+---
+
+> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.tagadapay.com/llms.txt
