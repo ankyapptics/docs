@@ -1,33 +1,178 @@
----
-title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
----
+# API Introduction
 
-<Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
-</Note>
+> Get started with the TagadaPay API
 
-## Welcome
+# TagadaPay API Introduction
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+The TagadaPay API is organized around REST. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.
 
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
+## Base URLs
+
+The TagadaPay API is available in multiple environments:
+
+| Environment | Base URL                     | Description                             |
+| ----------- | ---------------------------- | --------------------------------------- |
+| Production  | `https://app.tagadapay.com/` | Live environment for production traffic |
+| Development | `https://app.tagadapay.dev/` | Testing environment with sandbox data   |
+| Local       | `http://app.localhost:3000/` | Local development environment           |
 
 ## Authentication
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+The TagadaPay API uses API keys to authenticate requests. You can view and manage your API keys in the [TagadaPay Dashboard](https://app.tagadapay.com).
 
-```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
+Your API keys carry many privileges, so be sure to keep them secure! Do not share your secret API keys in publicly accessible areas such as GitHub, client-side code, and so forth.
+
+Authentication to the API is performed via HTTP Bearer Authentication. Provide your API key as the bearer token value:
+
+```bash  theme={null}
+curl https://app.tagadapay.com/api/public/v1/auth/test \
+  -H "Authorization: Bearer your-api-key"
 ```
+
+All API requests must be made over HTTPS. Calls made over plain HTTP will fail. API requests without authentication will also fail.
+
+## Rate Limits
+
+The TagadaPay API implements rate limiting to ensure fair usage and maintain service quality:
+
+| Plan     | Requests per Minute | Burst Limit |
+| -------- | ------------------- | ----------- |
+| Standard | 100                 | 150         |
+| Premium  | 500                 | 750         |
+
+When you exceed the rate limit, you'll receive a `429 Too Many Requests` response with details about when you can retry.
+
+## Request Format
+
+The API accepts JSON-encoded request bodies for POST and PUT requests. Make sure to set the `Content-Type` header to `application/json`:
+
+```bash  theme={null}
+curl https://app.tagadapay.com/api/public/v1/payments \
+  -H "Authorization: Bearer your-api-key" \
+  -H "Content-Type: application/json" \
+  -d '{"amount": 2000, "currency": "USD"}'
+```
+
+## Response Format
+
+All responses are returned in JSON format. Successful responses will have a `2xx` status code, while errors will have `4xx` or `5xx` status codes with additional error information.
+
+### Success Response
+
+```json  theme={null}
+{
+  "id": "pay_1234567890",
+  "status": "succeeded",
+  "amount": 2000,
+  "currency": "USD",
+  "created": "2024-03-20T10:30:00Z"
+}
+```
+
+### Error Response
+
+```json  theme={null}
+{
+  "error": {
+    "type": "invalid_request_error",
+    "code": "parameter_missing",
+    "message": "Missing required parameter: amount",
+    "param": "amount"
+  }
+}
+```
+
+## Errors
+
+TagadaPay uses conventional HTTP response codes to indicate the success or failure of an API request. In general:
+
+* `2xx` codes indicate success
+* `4xx` codes indicate an error that failed given the information provided
+* `5xx` codes indicate an error with TagadaPay's servers
+
+### Common Error Codes
+
+| Code               | Status            | Description                                                             |
+| ------------------ | ----------------- | ----------------------------------------------------------------------- |
+| 400                | Bad Request       | The request was unacceptable, often due to missing a required parameter |
+| 401                | Unauthorized      | No valid API key provided                                               |
+| 402                | Request Failed    | The parameters were valid but the request failed                        |
+| 403                | Forbidden         | The API key doesn't have permissions to perform the request             |
+| 404                | Not Found         | The requested resource doesn't exist                                    |
+| 409                | Conflict          | The request conflicts with another request                              |
+| 429                | Too Many Requests | Too many requests hit the API too quickly                               |
+| 500, 502, 503, 504 | Server Errors     | Something went wrong on TagadaPay's end                                 |
+
+## Idempotency
+
+The TagadaPay API supports idempotency for safely retrying requests without accidentally performing the same operation twice. This is especially useful when an API call is interrupted and you don't know whether it was successful.
+
+To perform an idempotent request, provide an additional `Idempotency-Key` header to the request:
+
+```bash  theme={null}
+curl https://app.tagadapay.com/api/public/v1/payments \
+  -H "Authorization: Bearer your-api-key" \
+  -H "Content-Type: application/json" \
+  -H "Idempotency-Key: unique-key-123" \
+  -d '{"amount": 2000, "currency": "USD"}'
+```
+
+## Webhooks
+
+TagadaPay can send webhook events that notify your application when events happen in your account. Webhooks are particularly useful for asynchronous events like when a customer's bank confirms a payment, a customer disputes a charge, or a recurring payment succeeds.
+
+### Setting up Webhooks
+
+1. Create a webhook endpoint on your server
+2. Register the endpoint URL in your TagadaPay Dashboard
+3. Handle the webhook events in your application
+
+### Webhook Security
+
+TagadaPay signs the webhook events it sends to your endpoints by including a signature in each event's headers. This allows you to verify that the events were sent by TagadaPay, not by a third party.
+
+## SDKs and Libraries
+
+TagadaPay provides official SDKs for JavaScript/TypeScript development:
+
+<CardGroup cols={2}>
+  <Card title="Plugin SDK" icon="puzzle-piece" href="/developer-tools/sdk/introduction">
+    `bash npm install @tagadapay/plugin-sdk `
+    React SDK for building custom plugins
+  </Card>
+
+  <Card title="Plugin CLI" icon="terminal" href="/developer-tools/cli/introduction">
+    `bash npm install -g @tagadapay/plugin-cli `
+    CLI tool for deploying and managing plugins
+  </Card>
+</CardGroup>
+
+## Testing
+
+Use the development environment (`https://app.tagadapay.dev/`) for testing your integration. This environment uses test data and will not process real payments.
+
+### Test API Keys
+
+Test API keys are available in your dashboard and are prefixed with `test_`. These keys will only work in the development environment.
+
+### Test Data
+
+The development environment provides various test scenarios:
+
+* Successful payments
+* Failed payments with different error codes
+* Webhook event testing
+* Subscription lifecycle testing
+
+## Need Help?
+
+* **Email Support**: [api-support@tagadapay.com](mailto:api-support@tagadapay.com)
+* **Documentation**: Browse our comprehensive API reference
+* **Status Page**: Check our system status and uptime
+
+Ready to get started? Check out our API endpoints below!
+
+
+---
+
+> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.tagadapay.com/llms.txt
