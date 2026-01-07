@@ -22,7 +22,7 @@
           {
             "group": "Getting Started with Apptics",
             "pages": [
-              "Getting-Started-with-Apptics/Getting-Started-With-Apptics", 
+              "Getting-Started-with-Apptics/Getting-Started-With-Apptics",
               "Getting-Started-with-Apptics/How-to-add-a-payment-method-in-the-CRM",
               "Getting-Started-with-Apptics/Adding-Store-Details-on-the-CRM",
               "Getting-Started-with-Apptics/Steps-needed-to-connect-Apptics-to-your-Shopify-Store",
@@ -200,7 +200,14 @@
       },
       {
         "tab": "API reference",
-        "groups": []
+        "groups": [
+          {
+            "group": "Introduction",
+            "pages": [
+              "api-reference/introduction"
+            ]
+          }
+        ]
       }
     ],
     "global": {
@@ -249,7 +256,7 @@
   },
   "footer": {
     "socials": {
-      "x": "https://https://x.com/AppticsAI",
+      "x": "https://x.com/AppticsAI",
       "instagram": "https://www.instagram.com/apptics.ai/",
       "linkedin": "https://www.linkedin.com/company/appticsai?trk=public_profile_topcard-current-company"
     }
