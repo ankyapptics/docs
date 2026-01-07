@@ -1,17 +1,222 @@
----
-title: "Initialize checkout session"
-api: "GET https://crm.apptics.ai/api/public/v1/checkout/init"
-description: "Initialize a checkout session and automatically redirect to the checkout URL."
----
+# Initialize checkout session
 
-This endpoint works exactly like the current CMS checkout-init page - you can navigate to it with query parameters and it will automatically redirect the browser to the checkout page.
+> 
+Initialize a checkout session and automatically redirect to the checkout URL. This endpoint works exactly 
+like the current CMS checkout-init page - you can navigate to it with query parameters and it will 
+automatically redirect the browser to the checkout page.
 
 Perfect for direct links, email links, or anywhere you want automatic redirection.
 
 **This endpoint is completely public and requires no authentication.**
 
-### Example Usage
-
-```bash
+Example usage:
+```
 GET /api/public/v1/checkout/init?storeId=store_123&items=[{"variantId":"var_123","quantity":1}]&currency=USD
-→ Redirects to: [https://checkout.apptics.ai/checkout/ch_abc123/op?token=cms_token_xyz](https://checkout.apptics.ai/checkout/ch_abc123/op?token=cms_token_xyz)
+→ Redirects to: https://checkout.example.com/checkout/ch_abc123/op?token=cms_token_xyz
+```
+    
+
+
+
+## OpenAPI
+
+````yaml openapi.json get /api/public/v1/checkout/init
+openapi: 3.0.3
+info:
+  title: TagadaPay API
+  description: >-
+
+    # TagadaPay API Documentation
+
+
+    Welcome to the TagadaPay API! This API allows you to process payments,
+    manage transactions, and handle various payment-related operations.
+
+
+    ## Getting Started
+
+
+    ### Authentication
+
+    Get your API key from the dashboard and use Bearer authentication:
+
+    ```
+
+    Authorization: Bearer your-api-key
+
+    ```
+
+
+    ### Making Requests
+
+    - All API calls use HTTPS
+
+    - Request/Response format is JSON
+
+    - Required headers: Authorization
+
+
+    ### Rate Limits
+
+    | Plan | Requests | Burst |
+
+    |------|----------|--------|
+
+    | Standard | 100/min | 150/min |
+
+    | Premium | 500/min | 750/min |
+
+
+    ### Support
+
+    - Support: api-support@tagadapay.com
+
+    - Documentation: docs.tagadapay.com
+        
+  version: 1.0.0
+servers:
+  - url: https://app.tagadapay.com/
+    description: Production environment
+  - url: https://app.tagadapay.dev/
+    description: Development environment
+  - url: http://app.localhost:3000/
+    description: Local development
+security:
+  - bearerAuth: []
+tags:
+  - name: payments
+  - name: refunds
+  - name: disputes
+  - name: customers
+  - name: reports
+paths:
+  /api/public/v1/checkout/init:
+    get:
+      tags:
+        - checkout
+      summary: Initialize checkout session
+      description: >-
+
+        Initialize a checkout session and automatically redirect to the checkout
+        URL. This endpoint works exactly 
+
+        like the current CMS checkout-init page - you can navigate to it with
+        query parameters and it will 
+
+        automatically redirect the browser to the checkout page.
+
+
+        Perfect for direct links, email links, or anywhere you want automatic
+        redirection.
+
+
+        **This endpoint is completely public and requires no authentication.**
+
+
+        Example usage:
+
+        ```
+
+        GET
+        /api/public/v1/checkout/init?storeId=store_123&items=[{"variantId":"var_123","quantity":1}]&currency=USD
+
+        → Redirects to:
+        https://checkout.example.com/checkout/ch_abc123/op?token=cms_token_xyz
+
+        ```
+            
+      operationId: get-api-public-v1-checkout-init
+      parameters:
+        - name: data
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: storeId
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: items
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: currency
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: locale
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: cartToken
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: returnUrl
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: cid
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema: {}
+              examples:
+                redirect:
+                  summary: Automatic redirect
+                  value: >-
+                    HTTP 302 Redirect to:
+                    https://checkout.example.com/checkout/ch_abc123/op?token=cms_token_xyz
+        default:
+          $ref: '#/components/responses/error'
+components:
+  responses:
+    error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              code:
+                type: string
+              issues:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                  required:
+                    - message
+                  additionalProperties: false
+            required:
+              - message
+              - code
+            additionalProperties: false
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'Enter your API key as: `Bearer your-api-key`'
+
+````
+
+---
+
+> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.tagadapay.com/llms.txt
