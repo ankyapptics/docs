@@ -69,68 +69,77 @@
       }
     },
     "/checkout/init": {
-  "get": {
-    "tags": ["Checkout"],
-    "summary": "Initialize checkout session",
-    "description": "Initialize a checkout session and automatically redirect to the checkout URL. This endpoint works exactly like the current CMS checkout-init page - you can navigate to it with query parameters and it will automatically redirect the browser to the checkout page.\n\nPerfect for direct links, email links, or anywhere you want automatic redirection.\n\n**This endpoint is completely public and requires no authentication.**\n\nExample usage:\n```\nGET /api/public/v1/checkout/init?storeId=store_123&items=[{\"variantId\":\"var_123\",\"quantity\":1}]&currency=USD\n→ Redirects to: [https://checkout.apptics.ai/checkout/ch_abc123/op?token=cms_token_xyz](https://checkout.apptics.ai/checkout/ch_abc123/op?token=cms_token_xyz)\n```",
-    "operationId": "initializeCheckoutSession",
-    "parameters": [
-      {
-        "name": "data",
-        "in": "query",
-        "schema": { "type": "string" }
-      },
-      {
-        "name": "storeId",
-        "in": "query",
-        "schema": { "type": "string" }
-      },
-      {
-        "name": "items",
-        "in": "query",
-        "schema": { "type": "string" }
-      },
-      {
-        "name": "currency",
-        "in": "query",
-        "schema": { "type": "string" }
-      },
-      {
-        "name": "locale",
-        "in": "query",
-        "schema": { "type": "string" }
-      },
-      {
-        "name": "cartToken",
-        "in": "query",
-        "schema": { "type": "string" }
-      },
-      {
-        "name": "returnUrl",
-        "in": "query",
-        "schema": { "type": "string" }
-      },
-      {
-        "name": "cid",
-        "in": "query",
-        "schema": { "type": "string" }
-      }
-    ],
-    "responses": {
-      "200": {
-        "description": "Successful response",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "string",
-              "example": "HTTP 302 Redirect to: https://checkout.apptics.ai/checkout/ch_abc123/op?token=cms_token_xyz"
+      "get": {
+        "tags": ["Checkout"],
+        "summary": "Initialize checkout session",
+        "description": "Initialize a checkout session and automatically redirect to the checkout URL. This endpoint works exactly like the current CMS checkout-init page - you can navigate to it with query parameters and it will automatically redirect the browser to the checkout page.\n\nPerfect for direct links, email links, or anywhere you want automatic redirection.\n\n**This endpoint is completely public and requires no authentication.**\n\nExample usage:\n```\nGET /api/public/v1/checkout/init?storeId=store_123&items=[{\"variantId\":\"var_123\",\"quantity\":1}]&currency=USD\n→ Redirects to: [https://checkout.apptics.ai/checkout/ch_abc123/op?token=cms_token_xyz](https://checkout.apptics.ai/checkout/ch_abc123/op?token=cms_token_xyz)\n```",
+        "operationId": "initializeCheckoutSession",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "query",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "storeId",
+            "in": "query",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "items",
+            "in": "query",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "currency",
+            "in": "query",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "locale",
+            "in": "query",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "cartToken",
+            "in": "query",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "returnUrl",
+            "in": "query",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "cid",
+            "in": "query",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": "HTTP 302 Redirect to: https://checkout.apptics.ai/checkout/ch_abc123/op?token=cms_token_xyz"
+                }
+              }
             }
           }
         }
       }
-    }
-  }
-},
+    },
+    "/payments": {
+      "post": {
+        "tags": ["Payments"],
+        "summary": "Process payment",
+        "responses": {
+          "200": { "description": "Payment successful" }
+        }
+      }
+    },
     "/block-rules": {
       "get": {
         "tags": ["Block Rules"],
