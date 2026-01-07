@@ -41,13 +41,15 @@
         "tags": ["Auth"],
         "summary": "Test authentication",
         "description": "Test if the API key is valid and return user information.",
+        "operationId": "testAuthentication",
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
-                "properties": {}
+                "properties": {},
+                "example": {}
               }
             }
           }
@@ -183,29 +185,54 @@
       "bearerAuth": {
         "type": "http",
         "scheme": "bearer",
-        "bearerFormat": "JWT"
+        "bearerFormat": "JWT",
+        "description": "Enter your API key as: `Bearer <your-api-key>`"
       }
     },
     "schemas": {
       "User": {
         "type": "object",
         "properties": {
-          "success": { "type": "boolean" },
+          "success": { 
+            "type": "boolean",
+            "example": true
+          },
           "user": {
             "type": "object",
             "properties": {
-              "id": { "type": "string" },
-              "orgId": { "type": "string" },
+              "id": { 
+                "type": "string",
+                "example": "user_123"
+              },
+              "orgId": { 
+                "type": "string",
+                "example": "org_456"
+              },
               "permissions": {
                 "type": "array",
-                "items": { "type": "string" }
+                "items": { "type": "string" },
+                "example": ["org:admin"]
               },
               "account": {
                 "type": "object",
                 "properties": {
-                  "id": { "type": "string" },
-                  "name": { "type": "string" }
+                  "id": { 
+                    "type": "string",
+                    "example": "acc_789"
+                  },
+                  "name": { 
+                    "type": "string",
+                    "example": "My Account"
+                  }
                 }
+              },
+              "isServiceAccount": { 
+                "type": "boolean",
+                "example": false
+              },
+              "isAccountOwner": { 
+                "type": "boolean",
+                "example": true
               }
             }
           }
