@@ -1,0 +1,58 @@
+---
+title: "Pay checkout session V2"
+api: "POST https://crm.apptics.ai/api/public/v1/checkout/pay-v2"
+description: "Pay for a checkout session with enhanced control over payment initiation."
+---
+
+> Pay for a checkout session with enhanced control over payment initiation.
+
+This V2 endpoint provides additional parameters:
+
+- `initiatedBy`: Specify whether payment was initiated by 'customer' (default) or 'merchant'
+- `source`: Specify the payment source, defaults to 'checkout'
+
+These parameters are used for tracking and analytics purposes.
+
+<ParamField body="checkoutSessionId" type="string" required>
+  
+</ParamField>
+
+<ParamField body="paymentInstrumentId" type="string">
+  
+</ParamField>
+
+<ParamField body="returnUrl" type="string">
+  
+</ParamField>
+
+<ParamField body="metadata" type="object">
+  
+</ParamField>
+
+<ParamField body="draft" default="false" type="boolean">
+  
+</ParamField>
+
+<ParamField body="initiatedBy" default="customer" type="string">
+  Enum: `customer`, `merchant`
+</ParamField>
+
+<ParamField body="source" default="checkout" type="string">
+  Enum: `upsell`, `checkout`, `offer`, `missing_club`, `forced`
+</ParamField>
+
+## Examples
+
+<CodeGroup>
+
+```bash Basic Payment
+curl -X POST https://crm.apptics.ai/api/public/v1/checkout/pay-v2 \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "checkoutSessionId": "ch_1234567890",
+    "paymentInstrumentId": "pi_1234567890"
+  }'
+```
+
+</CodeGroup>
