@@ -21,52 +21,24 @@
     }
   ],
   "tags": [
-    {
-      "name": "Auth"
-    },
-    {
-      "name": "Checkout"
-    },
-    {
-      "name": "Payments"
-    },
-    {
-      "name": "Block Rules"
-    },
-    {
-      "name": "Plugins"
-    },
-    {
-      "name": "Domains"
-    },
-    {
-      "name": "Orders"
-    },
-    {
-      "name": "Subscriptions"
-    },
-    {
-      "name": "Products"
-    },
-    {
-      "name": "Events"
-    },
-    {
-      "name": "Customers"
-    },
-    {
-      "name": "Payment Instruments"
-    },
-    {
-      "name": "Stores"
-    }
+    { "name": "Auth" },
+    { "name": "Checkout" },
+    { "name": "Payments" },
+    { "name": "Block Rules" },
+    { "name": "Plugins" },
+    { "name": "Domains" },
+    { "name": "Orders" },
+    { "name": "Subscriptions" },
+    { "name": "Products" },
+    { "name": "Events" },
+    { "name": "Customers" },
+    { "name": "Payment Instruments" },
+    { "name": "Stores" }
   ],
   "paths": {
     "/auth/test": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Test authentication",
         "description": "Test if the API key is valid and return user information.",
         "operationId": "testAuthentication",
@@ -98,139 +70,19 @@
     },
     "/checkout/init": {
       "get": {
-        "tags": [
-          "Checkout"
-        ],
+        "tags": ["Checkout"],
         "summary": "Initialize checkout session",
-        "description": "Initialize a checkout session and automatically redirect to the checkout URL. This endpoint works exactly like the current CMS checkout-init page - you can navigate to it with query parameters and it will automatically redirect the browser to the checkout page.\n\nPerfect for direct links, email links, or anywhere you want automatic redirection.\n\n**This endpoint is completely public and requires no authentication.**\n\n**Additional Query Parameters**: Any extra query parameters you add will be automatically forwarded to the checkout URL. This is useful for tracking parameters (utm_source, utm_campaign, etc.) or custom parameters.\n\n**Customer Prefill**: You can prefill customer information to streamline checkout:\n- `customerId`: Link to existing customer account\n- `customerEmail`: Prefill customer email\n- `customerFirstName`: Prefill customer first name\n- `customerLastName`: Prefill customer last name\n- `customerPhone`: Prefill customer phone number\n- `customerTags`: Apply tags to customer (comma-separated or JSON array: \"segment:vip,source:facebook\")\n\n**Checkout Token Forwarding**: Include the checkout token in the final checkout URL:\n- `includeCheckoutToken`: Set to the desired query parameter name (default: \"checkoutToken\")\n- Example: `includeCheckoutToken=checkoutToken` will append `?checkoutToken=ch_abc123` to the checkout URL\n- Example: `includeCheckoutToken=token` will append `?token=ch_abc123` to the checkout URL\n\nExample usage:\n```\nGET /api/public/v1/checkout/init?storeId=store_123&items=[{\"variantId\":\"var_123\",\"quantity\":1}]&currency=USD\n→ Redirects to: [https://checkout.apptics.ai/checkout/ch_abc123/op?token=cms_token_xyz](https://checkout.apptics.ai/checkout/ch_abc123/op?token=cms_token_xyz)\n\nGET /api/public/v1/checkout/init?storeId=store_123&items=[...]&currency=USD&utm_source=email&custom_param=value\n→ Redirects to: [https://checkout.apptics.ai/checkout/ch_abc123/op?token=cms_token_xyz&utm_source=email&custom_param=value](https://checkout.apptics.ai/checkout/ch_abc123/op?token=cms_token_xyz&utm_source=email&custom_param=value)\n\nGET /api/public/v1/checkout/init?storeId=store_123&items=[...]&currency=USD&customerEmail=john@example.com&customerFirstName=John&customerLastName=Doe\n→ Redirects to checkout with customer information prefilled\n```",
+        "description": "Initialize a checkout session and automatically redirect to the checkout URL. This endpoint works exactly like the current CMS checkout-init page - you can navigate to it with query parameters and it will automatically redirect the browser to the checkout page.\n\nPerfect for direct links, email links, or anywhere you want automatic redirection.\n\n**This endpoint is completely public and requires no authentication.**\n\nExample usage:\n```\nGET /api/public/v1/checkout/init?storeId=store_123&items=[{\"variantId\":\"var_123\",\"quantity\":1}]&currency=USD\n→ Redirects to: [https://checkout.apptics.ai/checkout/ch_abc123/op?token=cms_token_xyz](https://checkout.apptics.ai/checkout/ch_abc123/op?token=cms_token_xyz)\n```",
         "operationId": "initializeCheckoutSession",
         "parameters": [
-          {
-            "name": "data",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "storeId",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "items",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "currency",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "locale",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "cartToken",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "returnUrl",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "checkoutUrl",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "cid",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "customerId",
-            "in": "query",
-            "description": "Link to existing customer account",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "customerEmail",
-            "in": "query",
-            "description": "Prefill customer email",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "customerFirstName",
-            "in": "query",
-            "description": "Prefill customer first name",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "customerLastName",
-            "in": "query",
-            "description": "Prefill customer last name",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "customerPhone",
-            "in": "query",
-            "description": "Prefill customer phone number",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "customerTags",
-            "in": "query",
-            "description": "Apply tags to customer",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "includeCheckoutToken",
-            "in": "query",
-            "description": "Set to the desired query parameter name to forward the token (e.g. 'token')",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "draft",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
+          { "name": "data", "in": "query", "schema": { "type": "string" } },
+          { "name": "storeId", "in": "query", "schema": { "type": "string" } },
+          { "name": "items", "in": "query", "schema": { "type": "string" } },
+          { "name": "currency", "in": "query", "schema": { "type": "string" } },
+          { "name": "locale", "in": "query", "schema": { "type": "string" } },
+          { "name": "cartToken", "in": "query", "schema": { "type": "string" } },
+          { "name": "returnUrl", "in": "query", "schema": { "type": "string" } },
+          { "name": "cid", "in": "query", "schema": { "type": "string" } }
         ],
         "responses": {
           "200": {
@@ -247,146 +99,201 @@
         }
       }
     },
-    "/payments": {
+    "/checkout/pay-v2": {
       "post": {
-        "tags": [
-          "Payments"
-        ],
-        "summary": "Process payment",
+        "tags": ["Checkout"],
+        "summary": "Pay checkout session V2",
+        "description": "Pay for a checkout session with enhanced control over payment initiation.\n\nThis V2 endpoint provides additional parameters:\n- initiatedBy: Specify whether payment was initiated by 'customer' (default) or 'merchant'\n- source: Specify the payment source, defaults to 'checkout'\n\nThese parameters are used for tracking and analytics purposes.",
+        "operationId": "payCheckoutSessionV2",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "checkoutSessionId": { "type": "string" },
+                  "paymentInstrumentId": { "type": "string" },
+                  "returnUrl": { "type": "string" },
+                  "metadata": { 
+                    "type": "object",
+                    "additionalProperties": {},
+                    "default": {}
+                  },
+                  "draft": { 
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "initiatedBy": {
+                    "type": "string",
+                    "enum": ["customer", "merchant"],
+                    "default": "customer"
+                  },
+                  "source": {
+                    "type": "string",
+                    "enum": ["upsell", "checkout", "offer", "missing_club", "forced"],
+                    "default": "checkout"
+                  }
+                },
+                "required": ["checkoutSessionId"],
+                "additionalProperties": false
+              },
+              "examples": {
+                "basic": {
+                  "summary": "Basic payment",
+                  "value": {
+                    "checkoutSessionId": "ch_1234567890",
+                    "paymentInstrumentId": "pi_1234567890"
+                  }
+                },
+                "withParameters": {
+                  "summary": "Payment with custom parameters",
+                  "value": {
+                    "checkoutSessionId": "ch_1234567890",
+                    "paymentInstrumentId": "pi_1234567890",
+                    "initiatedBy": "customer",
+                    "source": "checkout",
+                    "returnUrl": "https://mystore.com/success"
+                  }
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": "Payment successful"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "examples": {
+                  "success": {
+                    "summary": "Successful payment",
+                    "value": {
+                      "order": {
+                        "id": "ord_1234567890",
+                        "status": "paid",
+                        "totalAmount": 2999,
+                        "currency": "USD"
+                      },
+                      "payment": {
+                        "id": "pay_1234567890",
+                        "status": "succeeded",
+                        "amount": 2999,
+                        "currency": "USD"
+                      },
+                      "redirectUrl": "https://mystore.com/thankyou/ord_1234567890"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/error"
           }
+        },
+        "security": [
+          { "bearerAuth": [] }
+        ]
+      }
+    },
+    "/payments": {
+      "post": {
+        "tags": ["Payments"],
+        "summary": "Process payment",
+        "responses": {
+          "200": { "description": "Payment successful" }
         }
       }
     },
     "/block-rules": {
       "get": {
-        "tags": [
-          "Block Rules"
-        ],
+        "tags": ["Block Rules"],
         "summary": "List block rules",
         "responses": {
-          "200": {
-            "description": "List of block rules"
-          }
+          "200": { "description": "List of block rules" }
         }
       }
     },
     "/plugins": {
       "get": {
-        "tags": [
-          "Plugins"
-        ],
+        "tags": ["Plugins"],
         "summary": "List plugins",
         "responses": {
-          "200": {
-            "description": "List of plugins"
-          }
+          "200": { "description": "List of plugins" }
         }
       }
     },
     "/domains": {
       "get": {
-        "tags": [
-          "Domains"
-        ],
+        "tags": ["Domains"],
         "summary": "List domains",
         "responses": {
-          "200": {
-            "description": "List of domains"
-          }
+          "200": { "description": "List of domains" }
         }
       }
     },
     "/orders": {
       "get": {
-        "tags": [
-          "Orders"
-        ],
+        "tags": ["Orders"],
         "summary": "List orders",
         "responses": {
-          "200": {
-            "description": "List of orders"
-          }
+          "200": { "description": "List of orders" }
         }
       }
     },
     "/subscriptions": {
       "get": {
-        "tags": [
-          "Subscriptions"
-        ],
+        "tags": ["Subscriptions"],
         "summary": "List subscriptions",
         "responses": {
-          "200": {
-            "description": "List of subscriptions"
-          }
+          "200": { "description": "List of subscriptions" }
         }
       }
     },
     "/products": {
       "get": {
-        "tags": [
-          "Products"
-        ],
+        "tags": ["Products"],
         "summary": "List products",
         "responses": {
-          "200": {
-            "description": "List of products"
-          }
+          "200": { "description": "List of products" }
         }
       }
     },
     "/events": {
       "get": {
-        "tags": [
-          "Events"
-        ],
+        "tags": ["Events"],
         "summary": "List events",
         "responses": {
-          "200": {
-            "description": "List of events"
-          }
+          "200": { "description": "List of events" }
         }
       }
     },
     "/customers": {
       "get": {
-        "tags": [
-          "Customers"
-        ],
+        "tags": ["Customers"],
         "summary": "List customers",
         "responses": {
-          "200": {
-            "description": "List of customers"
-          }
+          "200": { "description": "List of customers" }
         }
       }
     },
     "/payment-instruments": {
       "get": {
-        "tags": [
-          "Payment Instruments"
-        ],
+        "tags": ["Payment Instruments"],
         "summary": "List payment instruments",
         "responses": {
-          "200": {
-            "description": "List of payment instruments"
-          }
+          "200": { "description": "List of payment instruments" }
         }
       }
     },
     "/stores": {
       "get": {
-        "tags": [
-          "Stores"
-        ],
+        "tags": ["Stores"],
         "summary": "List stores",
         "responses": {
-          "200": {
-            "description": "List of stores"
-          }
+          "200": { "description": "List of stores" }
         }
       }
     }
@@ -404,51 +311,76 @@
       "User": {
         "type": "object",
         "properties": {
-          "success": {
+          "success": { 
             "type": "boolean",
             "example": true
           },
           "user": {
             "type": "object",
             "properties": {
-              "id": {
+              "id": { 
                 "type": "string",
                 "example": "user_123"
               },
-              "orgId": {
+              "orgId": { 
                 "type": "string",
                 "example": "org_456"
               },
               "permissions": {
                 "type": "array",
-                "items": {
-                  "type": "string"
-                },
-                "example": [
-                  "org:admin"
-                ]
+                "items": { "type": "string" },
+                "example": ["org:admin"]
               },
               "account": {
                 "type": "object",
                 "properties": {
-                  "id": {
+                  "id": { 
                     "type": "string",
                     "example": "acc_789"
                   },
-                  "name": {
+                  "name": { 
                     "type": "string",
                     "example": "My Account"
                   }
                 }
               },
-              "isServiceAccount": {
+              "isServiceAccount": { 
                 "type": "boolean",
                 "example": false
               },
-              "isAccountOwner": {
+              "isAccountOwner": { 
                 "type": "boolean",
                 "example": true
               }
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "error": {
+        "description": "Error response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": { "type": "string" },
+                "code": { "type": "string" },
+                "issues": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "message": { "type": "string" }
+                    },
+                    "required": ["message"],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": ["message", "code"],
+              "additionalProperties": false
             }
           }
         }
