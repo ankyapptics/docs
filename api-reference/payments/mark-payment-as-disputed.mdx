@@ -1,0 +1,47 @@
+---
+title: "Mark payment as disputed"
+api: "POST https://crm.apptics.ai/api/public/v1/payments/mark-disputed"
+description: "Mark a payment as disputed with initial dispute information."
+---
+
+> Mark a payment as disputed with initial dispute information. This endpoint is used to initiate a dispute on a payment.
+
+<ParamField body="paymentId" type="string" required>
+  The ID of the payment to mark as disputed.
+</ParamField>
+
+<ParamField body="disputeStatus" type="string" required>
+  Initial status of the dispute (e.g., `response-needed`, `under-review`).
+</ParamField>
+
+<ParamField body="disputeType" type="string" required>
+  Type of dispute (e.g., `first-chargeback`, `fraud`).
+</ParamField>
+
+<ParamField body="disputeReasonCode" type="string" required>
+  Reason code for the dispute (e.g., `fraudulent`, `product_not_received`).
+</ParamField>
+
+<ParamField body="disputedTransactionId" type="string">
+  ID of the specific transaction being disputed.
+</ParamField>
+
+<ParamField body="disputeNote" type="string">
+  Additional notes about the dispute.
+</ParamField>
+
+## Examples
+
+<CodeGroup>
+```bash Mark as Disputed
+curl -X POST [https://crm.apptics.ai/api/public/v1/payments/mark-disputed](https://crm.apptics.ai/api/public/v1/payments/mark-disputed) \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "paymentId": "pay_123xyz",
+    "disputeStatus": "response-needed",
+    "disputeType": "first-chargeback",
+    "disputeReasonCode": "fraudulent",
+    "disputedTransactionId": "txn_123",
+    "disputeNote": "Customer claims unauthorized transaction"
+  }'

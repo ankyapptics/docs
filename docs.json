@@ -229,7 +229,8 @@
                 "group": "Payments",
                 "pages": [
                   "api-reference/payments/list-payments-with-transactions",
-                  "api-reference/payments/refund-payment"
+                  "api-reference/payments/refund-payment",
+                  "api-reference/payments/mark-payment-as-disputed"
                 ]
               },
               {
