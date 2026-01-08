@@ -1,15 +1,18 @@
 ---
 title: "Initialize checkout session"
-openapi: "GET /api/public/v1/checkout/init"
+api: "GET https://crm.apptics.ai/api/public/v1/checkout/init"
+description: "Initialize a checkout session and automatically redirect to the checkout URL."
 ---
 
-Initialize a checkout session and automatically redirect to the checkout URL. This endpoint works exactly like the current CMS checkout-init page - you can navigate to it with query parameters and it will automatically redirect the browser to the checkout page.
+This endpoint works exactly like the current CMS checkout-init page - you can navigate to it with query parameters and it will automatically redirect the browser to the checkout page.
+
+Perfect for direct links, email links, or anywhere you want automatic redirection.
 
 <Note>
-  Perfect for direct links, email links, or anywhere you want automatic redirection.
+  **This endpoint is completely public and requires no authentication.**
 </Note>
 
-**This endpoint is completely public and requires no authentication.**
+## Capabilities
 
 ### Additional Query Parameters
 
@@ -19,32 +22,75 @@ Any extra query parameters you add will be automatically forwarded to the checko
 
 You can prefill customer information to streamline checkout:
 
-* `customerId`: Link to existing customer account
-* `customerEmail`: Prefill customer email
-* `customerFirstName`: Prefill customer first name
-* `customerLastName`: Prefill customer last name
-* `customerPhone`: Prefill customer phone number
-* `customerTags`: Apply tags to customer (comma-separated or JSON array: "segment:vip,source:facebook")
+- `customerId`: Link to existing customer account
+- `customerEmail`: Prefill customer email
+- `customerFirstName`: Prefill customer first name
+- `customerLastName`: Prefill customer last name
+- `customerPhone`: Prefill customer phone number
+- `customerTags`: Apply tags to customer (comma-separated or JSON array: "segment:vip,source:facebook")
 
 ### Checkout Token Forwarding
 
 Include the checkout token in the final checkout URL:
 
-* `includeCheckoutToken`: Set to the desired query parameter name (default: "checkoutToken")
-* Example: `includeCheckoutToken=checkoutToken` will append `?checkoutToken=ch_abc123` to the checkout URL
-* Example: `includeCheckoutToken=token` will append `?token=ch_abc123` to the checkout URL
+- `includeCheckoutToken`: Set to the desired query parameter name (default: "checkoutToken")
+  - Example: `includeCheckoutToken=checkoutToken` will append `?checkoutToken=ch_abc123` to the checkout URL
+  - Example: `includeCheckoutToken=token` will append `?token=ch_abc123` to the checkout URL
 
-### Example usage
+## Parameters
 
-```bash Redirect with Basic Items
-GET /api/public/v1/checkout/init?storeId=store_123&items=[{"variantId":"var_123","quantity":1}]&currency=USD
+<ParamField query="storeId" type="string" required>
+  The ID of the store initializing the checkout.
+</ParamField>
 
-# → Redirects to: [https://checkout.example.com/checkout/ch_abc123/op?token=cms_token_xyz](https://checkout.example.com/checkout/ch_abc123/op?token=cms_token_xyz)
+<ParamField query="items" type="string" required>
+  JSON string of items to purchase. Example: `[{"variantId":"var_123","quantity":1}]`
+</ParamField>
 
-GET /api/public/v1/checkout/init?storeId=store_123&items=[...]&currency=USD&utm_source=email&custom_param=value
+<ParamField query="currency" type="string" required>
+  The currency code (e.g., "USD").
+</ParamField>
 
-# → Redirects to: [https://checkout.example.com/checkout/ch_abc123/op?token=cms_token_xyz&utm_source=email&custom_param=value](https://checkout.example.com/checkout/ch_abc123/op?token=cms_token_xyz&utm_source=email&custom_param=value)
+<ParamField query="customerId" type="string">
+  Link to an existing customer account ID.
+</ParamField>
 
-GET /api/public/v1/checkout/init?storeId=store_123&items=[...]&currency=USD&customerEmail=john@example.com&customerFirstName=John&customerLastName=Doe
+<ParamField query="customerEmail" type="string">
+  Prefill customer email address.
+</ParamField>
 
-# → Redirects to checkout with customer information prefilled
+<ParamField query="customerFirstName" type="string">
+  Prefill customer first name.
+</ParamField>
+
+<ParamField query="customerLastName" type="string">
+  Prefill customer last name.
+</ParamField>
+
+<ParamField query="customerPhone" type="string">
+  Prefill customer phone number.
+</ParamField>
+
+<ParamField query="customerTags" type="string">
+  Apply tags to the customer (comma-separated or JSON array).
+</ParamField>
+
+<ParamField query="includeCheckoutToken" type="string">
+  Set to the desired query parameter name to forward the checkout token.
+</ParamField>
+
+<ParamField query="draft" type="string">
+  Specific draft ID to load.
+</ParamField>
+
+## Examples
+
+<CodeGroup>
+
+```bash
+# Basic Redirect
+curl -X GET "https://crm.apptics.ai/api/public/v1/checkout/init?storeId=store_123&items=[{\"variantId\":\"var_123\",\"quantity\":1}]&currency=USD"
+# Redirects to: https://checkout.apptics.ai/checkout/ch_abc123/op?token=cms_token_xyz
+```
+
+</CodeGroup>
