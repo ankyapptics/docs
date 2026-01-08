@@ -7,6 +7,7 @@ description: "Update the dispute status of a payment."
 > Update the dispute status of a payment. Supports various dispute statuses including RDR (Rapid Dispute Resolution) and Alert notifications.
 
 Available dispute statuses:
+
 - `response-needed`: Requires merchant response
 - `under-review`: Currently being reviewed
 - `forfeited`: Dispute forfeited
@@ -43,8 +44,9 @@ Available dispute statuses:
 ## Examples
 
 <CodeGroup>
+
 ```bash RDR Update
-curl -X POST [https://crm.apptics.ai/api/public/v1/payments/dispute](https://crm.apptics.ai/api/public/v1/payments/dispute) \
+curl -X POST https://crm.apptics.ai/api/public/v1/payments/dispute \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -58,3 +60,6 @@ curl -X POST [https://crm.apptics.ai/api/public/v1/payments/dispute](https://crm
       "resolutionType": "pre_dispute_resolution"
     }
   }'
+```
+
+</CodeGroup>

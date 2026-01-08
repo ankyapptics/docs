@@ -1,0 +1,20 @@
+---
+title: "Get payment currencies"
+api: "POST https://crm.apptics.ai/api/public/v1/payments/currencies"
+description: "Get all currencies used in payments for the authenticated account."
+---
+
+> Get all currencies used in payments for the authenticated account.
+
+## Examples
+
+<CodeGroup>
+
+```bash Get Currencies
+curl -X POST https://crm.apptics.ai/api/public/v1/payments/currencies \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{}'
+```
+
+</CodeGroup>

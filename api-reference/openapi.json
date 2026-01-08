@@ -696,6 +696,48 @@
         ]
       }
     },
+    "/payments/currencies": {
+      "post": {
+        "tags": ["Payments"],
+        "summary": "Get payment currencies",
+        "description": "Get all currencies used in payments for the authenticated account",
+        "operationId": "getPaymentCurrencies",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "examples": {
+                  "success": {
+                    "summary": "Available currencies",
+                    "value": {
+                      "currencies": ["USD", "EUR", "GBP", "CAD"]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": { "$ref": "#/components/responses/error" }
+        },
+        "security": [
+          { "bearerAuth": [] }
+        ]
+      }
+    },
     "/block-rules": {
       "get": {
         "tags": ["Block Rules"],

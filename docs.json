@@ -231,7 +231,8 @@
                   "api-reference/payments/list-payments-with-transactions",
                   "api-reference/payments/refund-payment",
                   "api-reference/payments/mark-payment-as-disputed",
-                  "api-reference/payments/update-payment-dispute-status"
+                  "api-reference/payments/update-payment-dispute-status",
+                  "api-reference/payments/get-payment-currencies"
                 ]
               },
               {
