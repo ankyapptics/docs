@@ -234,7 +234,8 @@
                   "api-reference/payments/update-payment-dispute-status",
                   "api-reference/payments/get-payment-currencies",
                   "api-reference/payments/get-available-processors",
-                  "api-reference/payments/get-payment-by-id"
+                  "api-reference/payments/get-payment-by-id",
+                  "api-reference/payments/process-payment"
                 ]
               },
               {

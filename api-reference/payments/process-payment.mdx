@@ -1,0 +1,91 @@
+---
+title: "Process payment"
+api: "POST https://crm.apptics.ai/api/public/v1/payments/process"
+description: "Process a payment using the payment flow system with comprehensive options for different payment scenarios."
+---
+
+> Process a payment using the payment flow system with comprehensive options for different payment scenarios.
+
+<ParamField body="orderId" type="string">
+  The ID of the order associated with this payment.
+</ParamField>
+
+<ParamField body="paymentInstrumentId" type="string">
+  The ID of the payment instrument to charge.
+</ParamField>
+
+<ParamField body="mode" default="purchase" type="string">
+  Payment mode. Options: `purchase`, `auth`, `capture`.
+</ParamField>
+
+<ParamField body="amount" type="number" required>
+  Amount to charge (must be greater than 0).
+</ParamField>
+
+<ParamField body="currency" type="string" required>
+  Currency code (e.g., `USD`).
+</ParamField>
+
+<ParamField body="storeId" type="string" required>
+  The ID of the store processing the payment.
+</ParamField>
+
+<ParamField body="customerId" type="string">
+  The ID of the customer making the payment.
+</ParamField>
+
+<ParamField body="initiatedBy" default="customer" type="string">
+  Who initiated the payment. Options: `customer`, `merchant`.
+</ParamField>
+
+<ParamField body="reasonType" type="string">
+  Reason for the payment. Options: `recurring`, `unscheduled`, `installment`.
+</ParamField>
+
+<ParamField body="returnUrl" type="string">
+  URL to redirect the user after payment completion (format: uri).
+</ParamField>
+
+<ParamField body="draft" default="false" type="boolean">
+  If true, creates a draft payment.
+</ParamField>
+
+<ParamField body="isRetry" default="false" type="boolean">
+  Indicates if this is a retry attempt.
+</ParamField>
+
+<ParamField body="threedsSessionId" type="string">
+  3DS Session ID for authentication.
+</ParamField>
+
+<ParamField body="subscriptionId" type="string">
+  ID of the associated subscription (if applicable).
+</ParamField>
+
+<ParamField body="paymentFlowId" type="string">
+  ID of a specific payment flow to use.
+</ParamField>
+
+<ParamField body="paymentId" type="string">
+  ID of a specific payment to process (e.g., for capture or retry).
+</ParamField>
+
+## Examples
+
+<CodeGroup>
+
+```bash Basic Payment
+curl -X POST https://crm.apptics.ai/api/public/v1/payments/process \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "paymentInstrumentId": "pi_123",
+    "amount": 2999,
+    "currency": "USD",
+    "storeId": "store_123",
+    "customerId": "cus_456",
+    "mode": "purchase"
+  }'
+```
+
+</CodeGroup>
