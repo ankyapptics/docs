@@ -564,6 +564,138 @@
         ]
       }
     },
+    "/payments/dispute": {
+      "post": {
+        "tags": ["Payments"],
+        "summary": "Update payment dispute status",
+        "description": "Update the dispute status of a payment. Supports various dispute statuses including RDR (Rapid Dispute Resolution) and Alert notifications.\n\nAvailable dispute statuses:\n- response-needed: Requires merchant response\n- under-review: Currently being reviewed\n- forfeited: Dispute forfeited\n- won: Dispute won by merchant\n- lost: Dispute lost by merchant\n- unknown: Status unknown\n- rdr: Rapid Dispute Resolution - expedited dispute handling\n- alert: Alert notification",
+        "operationId": "updatePaymentDisputeStatus",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "paymentId": { "type": "string" },
+                  "disputeStatus": {
+                    "type": "string",
+                    "enum": ["response-needed", "under-review", "forfeited", "won", "lost", "unknown", "refunded", "refunded_externally"]
+                  },
+                  "disputeType": {
+                    "type": "string",
+                    "enum": ["information-request", "first-chargeback", "second-chargeback", "fraud", "ethoca-alert", "verifi-alert", "paypal-claim", "representment", "rdr"]
+                  },
+                  "disputeReasonCode": {
+                    "type": "string",
+                    "enum": [
+                      "0", "00", "1", "2", "3", "4", "5", "6", "7", "8", "9", 
+                      "10.1", "10.2", "10.3", "10.4", "10.5", "11.1", "11.2", "11.3", 
+                      "12", "12.1", "12.2", "12.3", "12.4", "12.5", "12.6", "12.7", 
+                      "13.1", "13.2", "13.3", "13.4", "13.5", "13.6", "13.7", "13.8", "13.9", 
+                      "30", "31", "34", "35", "37", "40", "41", "42", "46", "47", "49", 
+                      "50", "51", "53", "54", "55", "57", "59", "60", "62", "63", 
+                      "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", 
+                      "80", "81", "82", "83", "85", "86", "93", "98", "1000", 
+                      "2700", "2702", "A", "A01", "A02", "A08", "AL", "AP", "AW", "B", 
+                      "C02", "C04", "C05", "C08", "C14", "C18", "C28", "C31", "C32", "CA", "CD", "CR", 
+                      "DA", "DP", "DP1", "EX", "F10", "F14", "F22", "F24", "F29", "FR1", "FR4", "FR6", 
+                      "IC", "IN", "IS", "LP", "M01", "M10", "M49", "N", "NA", "NC", 
+                      "P", "P01", "P03", "P04", "P05", "P07", "P08", "P22", "P23", 
+                      "R03", "R13", "RG", "RM", "RN1", "RN2", "SV", "TF", "TNM", 
+                      "UA01", "UA02", "UA03", "UA10", "UA11", "UA12", "UA18", 
+                      "UA20", "UA21", "UA22", "UA23", "UA28", "UA30", "UA31", "UA32", "UA38", "UA99", 
+                      "bank_cannot_process", "credit_not_processed", "customer_initiated", 
+                      "debit_not_authorized", "duplicate", "fraudulent", "general", 
+                      "incorrect_account_details", "insufficient_funds", "pre-chargeback-alert", 
+                      "product_not_received", "product_unacceptable", "subscription_canceled", 
+                      "unrecognized"
+                    ]
+                  },
+                  "disputedTransactionId": { "type": "string" },
+                  "disputeNote": { "type": "string" }
+                },
+                "required": ["paymentId"],
+                "additionalProperties": false
+              },
+              "examples": {
+                "rdr": {
+                  "summary": "Update to RDR type",
+                  "value": {
+                    "paymentId": "pay_123xyz",
+                    "disputeStatus": "under-review",
+                    "disputeType": "rdr",
+                    "disputeReasonCode": "fraudulent",
+                    "metadata": {
+                      "reason": "Rapid dispute resolution initiated",
+                      "amount": 2999,
+                      "resolutionType": "pre_dispute_resolution"
+                    }
+                  }
+                },
+                "alert": {
+                  "summary": "Update to Alert type",
+                  "value": {
+                    "paymentId": "pay_123xyz",
+                    "disputeStatus": "under-review",
+                    "disputeType": "ethoca-alert",
+                    "disputeReasonCode": "fraudulent",
+                    "metadata": {
+                      "alertType": "fraud_suspicious",
+                      "description": "Suspicious activity detected"
+                    }
+                  }
+                },
+                "standard": {
+                  "summary": "Standard dispute update",
+                  "value": {
+                    "paymentId": "pay_123xyz",
+                    "disputeStatus": "under-review",
+                    "disputeType": "first-chargeback",
+                    "disputeReasonCode": "fraudulent",
+                    "metadata": {
+                      "reason": "Customer dispute",
+                      "amount": 2999
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "examples": {
+                  "success": {
+                    "summary": "Successful response",
+                    "value": {
+                      "id": "pay_123xyz",
+                      "disputeStatus": "under-review",
+                      "disputeType": "rdr",
+                      "disputeReasonCode": "fraudulent",
+                      "updatedAt": "2024-03-20T10:30:00Z",
+                      "metadata": {
+                        "reason": "Rapid dispute resolution initiated",
+                        "amount": 2999,
+                        "resolutionType": "pre_dispute_resolution"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": { "$ref": "#/components/responses/error" }
+        },
+        "security": [
+          { "bearerAuth": [] }
+        ]
+      }
+    },
     "/block-rules": {
       "get": {
         "tags": ["Block Rules"],

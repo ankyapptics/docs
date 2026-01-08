@@ -1,0 +1,60 @@
+---
+title: "Update payment dispute status"
+api: "POST https://crm.apptics.ai/api/public/v1/payments/dispute"
+description: "Update the dispute status of a payment."
+---
+
+> Update the dispute status of a payment. Supports various dispute statuses including RDR (Rapid Dispute Resolution) and Alert notifications.
+
+Available dispute statuses:
+- `response-needed`: Requires merchant response
+- `under-review`: Currently being reviewed
+- `forfeited`: Dispute forfeited
+- `won`: Dispute won by merchant
+- `lost`: Dispute lost by merchant
+- `unknown`: Status unknown
+- `rdr`: Rapid Dispute Resolution - expedited dispute handling
+- `alert`: Alert notification
+
+<ParamField body="paymentId" type="string" required>
+  The ID of the payment to update.
+</ParamField>
+
+<ParamField body="disputeStatus" type="string">
+  New status of the dispute.
+</ParamField>
+
+<ParamField body="disputeType" type="string">
+  Type of dispute (e.g., `first-chargeback`, `rdr`).
+</ParamField>
+
+<ParamField body="disputeReasonCode" type="string">
+  Reason code for the dispute.
+</ParamField>
+
+<ParamField body="disputedTransactionId" type="string">
+  ID of the specific transaction being disputed.
+</ParamField>
+
+<ParamField body="disputeNote" type="string">
+  Additional notes about the dispute.
+</ParamField>
+
+## Examples
+
+<CodeGroup>
+```bash RDR Update
+curl -X POST [https://crm.apptics.ai/api/public/v1/payments/dispute](https://crm.apptics.ai/api/public/v1/payments/dispute) \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "paymentId": "pay_123xyz",
+    "disputeStatus": "under-review",
+    "disputeType": "rdr",
+    "disputeReasonCode": "fraudulent",
+    "metadata": {
+      "reason": "Rapid dispute resolution initiated",
+      "amount": 2999,
+      "resolutionType": "pre_dispute_resolution"
+    }
+  }'
