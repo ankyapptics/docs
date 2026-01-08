@@ -1,0 +1,108 @@
+---
+title: "List payments with transactions"
+api: "POST https://crm.apptics.ai/api/public/v1/payments"
+description: "List and filter payments with their associated transactions."
+---
+
+> List and filter payments with their associated transactions. Supports pagination, sorting, and advanced filtering options.
+
+Supported filters:
+- Store IDs
+- Payment status and sub-status
+- Currency and amount
+- Card details (last4, brand, expiry)
+- Customer information (email, name)
+- Date ranges
+- Dispute status and type
+
+<ParamField body="pagination" type="object" required>
+  Pagination options.
+  <Expandable title="properties">
+    <ParamField body="page" type="number" required>
+      Page number (1-based index).
+    </ParamField>
+    <ParamField body="pageSize" type="number" required>
+      Number of items per page.
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+<ParamField body="useCursor" type="boolean" default="false">
+  Enable cursor-based pagination.
+</ParamField>
+
+<ParamField body="cursor" type="string">
+  Cursor for the next page of results (if `useCursor` is true).
+</ParamField>
+
+<ParamField body="sortBy" type="object">
+  Sorting configuration.
+  <Expandable title="properties">
+    <ParamField body="field" type="string" required>
+      Field to sort by: `id`, `accountId`, `createdAt`, `updatedAt`.
+    </ParamField>
+    <ParamField body="direction" type="string" required>
+      Sort direction: `asc` or `desc`.
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+<ParamField body="filters" type="object">
+  Advanced filtering criteria.
+  <Expandable title="properties">
+    <ParamField body="storeIds" type="string[]">
+      List of store IDs to filter by.
+    </ParamField>
+    <ParamField body="status" type="string">
+      Filter by payment status (e.g., `succeeded`, `failed`).
+    </ParamField>
+    <ParamField body="subStatus" type="string">
+      Filter by payment sub-status.
+    </ParamField>
+    <ParamField body="initiatedBy" type="string">
+      Filter by who initiated the payment: `customer` or `merchant`.
+    </ParamField>
+    <ParamField body="currency" type="string[]">
+      List of currency codes (e.g., `["USD", "EUR"]`).
+    </ParamField>
+    <ParamField body="customer" type="object">
+      Filter by customer details.
+      <Expandable title="properties">
+        <ParamField body="email" type="string">
+          Customer email address.
+        </ParamField>
+        <ParamField body="fullName" type="string">
+          Customer full name.
+        </ParamField>
+      </Expandable>
+    </ParamField>
+    <ParamField body="card" type="object">
+      Filter by card details.
+      <Expandable title="properties">
+        <ParamField body="last4" type="string">
+          Last 4 digits of the card.
+        </ParamField>
+        <ParamField body="brand" type="string">
+          Card brand (e.g., `visa`).
+        </ParamField>
+      </Expandable>
+    </ParamField>
+    <ParamField body="date" type="object">
+      Filter by date range.
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+## Examples
+
+<CodeGroup>
+```bash Basic Pagination
+curl -X POST [https://crm.apptics.ai/api/public/v1/payments](https://crm.apptics.ai/api/public/v1/payments) \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "pagination": {
+      "page": 1,
+      "pageSize": 20
+    }
+  }'

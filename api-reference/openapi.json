@@ -201,10 +201,127 @@
     "/payments": {
       "post": {
         "tags": ["Payments"],
-        "summary": "Process payment",
+        "summary": "List payments with transactions",
+        "description": "List and filter payments with their associated transactions. Supports pagination, sorting, and advanced filtering options.\n\nSupported filters:\n- Store IDs\n- Payment status and sub-status\n- Currency and amount\n- Card details (last4, brand, expiry)\n- Customer information (email, name)\n- Date ranges\n- Dispute status and type",
+        "operationId": "listPaymentsWithTransactions",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "pagination": {
+                    "type": "object",
+                    "properties": {
+                      "page": { "type": "number" },
+                      "pageSize": { "type": "number" }
+                    },
+                    "required": ["page", "pageSize"],
+                    "additionalProperties": false
+                  },
+                  "useCursor": { "type": "boolean", "default": false },
+                  "cursor": { "type": "string" },
+                  "sortBy": {
+                    "type": "object",
+                    "properties": {
+                      "field": {
+                        "type": "string",
+                        "enum": ["id", "accountId", "createdAt", "updatedAt"]
+                      },
+                      "direction": {
+                        "type": "string",
+                        "enum": ["asc", "desc"]
+                      }
+                    },
+                    "required": ["field", "direction"],
+                    "additionalProperties": false
+                  },
+                  "filters": {
+                    "type": "object",
+                    "properties": {
+                      "storeIds": {
+                        "type": "array",
+                        "items": { "type": "string" }
+                      },
+                      "initiatedBy": {
+                        "type": "string",
+                        "enum": ["customer", "merchant"]
+                      },
+                      "status": {
+                        "type": "string",
+                        "enum": ["pending", "succeeded", "error", "refunded", "declined", "expired", "rejected"]
+                      },
+                      "currency": {
+                        "type": "array",
+                        "items": { "type": "string" }
+                      },
+                      "customer": {
+                        "type": "object",
+                        "properties": {
+                          "fullName": { "type": "string" },
+                          "email": { "type": "string" }
+                        },
+                        "additionalProperties": false
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "examples": {
+                "basic": {
+                  "summary": "Basic pagination",
+                  "value": {
+                    "pagination": {
+                      "page": 1,
+                      "pageSize": 20
+                    }
+                  }
+                },
+                "sorting": {
+                  "summary": "Sorting example",
+                  "value": {
+                    "pagination": { "page": 1, "pageSize": 20 },
+                    "sortBy": { "field": "createdAt", "direction": "desc" }
+                  }
+                }
+              }
+            }
+          }
+        },
         "responses": {
-          "200": { "description": "Payment successful" }
-        }
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "examples": {
+                  "success": {
+                    "summary": "Successful response",
+                    "value": {
+                      "payments": [
+                        {
+                          "id": "pay_123xyz",
+                          "amount": 2999,
+                          "currency": "USD",
+                          "status": "succeeded",
+                          "createdAt": "2024-03-20T10:30:00Z"
+                        }
+                      ],
+                      "total": 1,
+                      "pageCount": 1
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": { "$ref": "#/components/responses/error" }
+        },
+        "security": [
+          { "bearerAuth": [] }
+        ]
       }
     },
     "/block-rules": {
@@ -311,47 +428,22 @@
       "User": {
         "type": "object",
         "properties": {
-          "success": { 
-            "type": "boolean",
-            "example": true
-          },
+          "success": { "type": "boolean", "example": true },
           "user": {
             "type": "object",
             "properties": {
-              "id": { 
-                "type": "string",
-                "example": "user_123"
-              },
-              "orgId": { 
-                "type": "string",
-                "example": "org_456"
-              },
-              "permissions": {
-                "type": "array",
-                "items": { "type": "string" },
-                "example": ["org:admin"]
-              },
+              "id": { "type": "string", "example": "user_123" },
+              "orgId": { "type": "string", "example": "org_456" },
+              "permissions": { "type": "array", "items": { "type": "string" }, "example": ["org:admin"] },
               "account": {
                 "type": "object",
                 "properties": {
-                  "id": { 
-                    "type": "string",
-                    "example": "acc_789"
-                  },
-                  "name": { 
-                    "type": "string",
-                    "example": "My Account"
-                  }
+                  "id": { "type": "string", "example": "acc_789" },
+                  "name": { "type": "string", "example": "My Account" }
                 }
               },
-              "isServiceAccount": { 
-                "type": "boolean",
-                "example": false
-              },
-              "isAccountOwner": { 
-                "type": "boolean",
-                "example": true
-              }
+              "isServiceAccount": { "type": "boolean", "example": false },
+              "isAccountOwner": { "type": "boolean", "example": true }
             }
           }
         }
