@@ -738,6 +738,59 @@
         ]
       }
     },
+    "/payments/processors": {
+      "post": {
+        "tags": ["Payments"],
+        "summary": "Get available processors",
+        "description": "Get all enabled payment processors for the authenticated account",
+        "operationId": "getAvailableProcessors",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "examples": {
+                  "success": {
+                    "summary": "Available processors",
+                    "value": {
+                      "processors": [
+                        {
+                          "id": "proc_stripe",
+                          "name": "Stripe",
+                          "type": "stripe"
+                        },
+                        {
+                          "id": "proc_paypal",
+                          "name": "PayPal",
+                          "type": "paypal"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": { "$ref": "#/components/responses/error" }
+        },
+        "security": [
+          { "bearerAuth": [] }
+        ]
+      }
+    },
     "/block-rules": {
       "get": {
         "tags": ["Block Rules"],
