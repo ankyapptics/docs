@@ -1,0 +1,22 @@
+---
+title: "Get payment by ID"
+api: "GET https://crm.apptics.ai/api/public/v1/payments/{paymentId}"
+description: "Retrieve detailed information about a specific payment including transactions and customer data."
+---
+
+> Retrieve detailed information about a specific payment including transactions and customer data.
+
+<ParamField path="paymentId" type="string" required>
+  The unique identifier of the payment to retrieve.
+</ParamField>
+
+## Examples
+
+<CodeGroup>
+
+```bash Get Payment
+curl -X GET https://crm.apptics.ai/api/public/v1/payments/pay_123 \
+  -H "Authorization: Bearer <token>"
+```
+
+</CodeGroup>
