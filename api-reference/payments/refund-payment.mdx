@@ -1,0 +1,73 @@
+---
+title: "Refund payment"
+api: "POST https://crm.apptics.ai/api/public/v1/payments/refund"
+description: "Process a full or partial refund for a payment."
+---
+
+> Process a full or partial refund for a payment.
+
+<ParamField body="paymentIds" type="string[]" required>
+  Array of payment IDs to refund.
+</ParamField>
+
+<ParamField body="amount" type="number">
+  Amount to refund (for partial refunds).
+</ParamField>
+
+<ParamField body="refundAll" type="boolean">
+  Set to `true` to issue a full refund.
+</ParamField>
+
+<ParamField body="metadata" type="object">
+  Additional metadata key-value pairs.
+</ParamField>
+
+<ParamField body="cancelSubscription" type="boolean">
+  If true, cancels any associated subscription.
+</ParamField>
+
+<ParamField body="blacklistCustomer" type="boolean">
+  If true, adds the customer to the blacklist.
+</ParamField>
+
+<ParamField body="dispute" type="object">
+  Information regarding a dispute associated with this refund.
+
+  <Expandable title="properties">
+    <ParamField body="disputeStatus" type="string" required>
+      Status of the dispute (e.g., `response-needed`, `won`, `lost`).
+    </ParamField>
+    <ParamField body="disputeType" type="string" required>
+      Type of dispute (e.g., `fraud`, `first-chargeback`).
+    </ParamField>
+    <ParamField body="disputeReasonCode" type="string" required>
+      Standardized reason code for the dispute (e.g., `fraudulent`, `product_not_received`).
+    </ParamField>
+    <ParamField body="disputedTransactionId" type="string">
+      ID of the specific transaction being disputed.
+    </ParamField>
+    <ParamField body="disputeNote" type="string">
+      Additional notes regarding the dispute.
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+## Examples
+
+<CodeGroup>
+
+```bash Full Refund
+curl -X POST https://crm.apptics.ai/api/public/v1/payments/refund \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "paymentIds": ["pay_123xyz"],
+    "refundAll": true,
+    "metadata": {
+      "reason": "Customer request",
+      "initiatedBy": "merchant"
+    }
+  }'
+```
+
+</CodeGroup>
