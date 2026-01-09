@@ -1003,6 +1003,64 @@
         ]
       }
     },
+    "/payments/void": {
+      "post": {
+        "tags": ["Payments"],
+        "summary": "Void payment",
+        "description": "Void an authorized payment transaction. This cancels a previously authorized payment before it has been captured.\n\nImportant notes:\n- Only works for payments with 'authorized' status\n- Must be performed before the payment is captured\n- Once voided, the authorization is released and funds are no longer held\n- Cannot be undone once voided\n\nCommon error codes:\n- PAYMENT_NOT_FOUND: The specified payment does not exist\n- TRANSACTION_NOT_AUTHORIZE: The payment is not in authorized status\n- TRANSACTION_NO_PROCESSOR: No processor found for the transaction\n- TRANSACTION_VOID_FAILED: The void operation failed at the processor level",
+        "operationId": "voidPayment",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "paymentId": { "type": "string" }
+                },
+                "required": ["paymentId"],
+                "additionalProperties": false
+              },
+              "examples": {
+                "basic": {
+                  "summary": "Void authorized payment",
+                  "value": {
+                    "paymentId": "pay_123xyz"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "examples": {
+                  "success": {
+                    "summary": "Successful void",
+                    "value": {
+                      "id": "pay_123xyz",
+                      "status": "failed",
+                      "subStatus": "voided",
+                      "amount": 2999,
+                      "currency": "USD",
+                      "voidedAt": "2024-03-20T10:30:00Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": { "$ref": "#/components/responses/error" }
+        },
+        "security": [
+          { "bearerAuth": [] }
+        ]
+      }
+    },
     "/block-rules": {
       "get": {
         "tags": ["Block Rules"],

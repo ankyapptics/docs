@@ -1,0 +1,33 @@
+---
+title: "Void payment"
+api: "POST https://crm.apptics.ai/api/public/v1/payments/void"
+description: "Void an authorized payment transaction."
+---
+
+> Void an authorized payment transaction. This cancels a previously authorized payment before it has been captured.
+
+Important notes:
+
+- Only works for payments with 'authorized' status
+- Must be performed before the payment is captured
+- Once voided, the authorization is released and funds are no longer held
+- Cannot be undone once voided
+
+<ParamField body="paymentId" type="string" required>
+  The ID of the payment to void.
+</ParamField>
+
+## Examples
+
+<CodeGroup>
+
+```bash Void Payment
+curl -X POST https://crm.apptics.ai/api/public/v1/payments/void \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "paymentId": "pay_123xyz"
+  }'
+```
+
+</CodeGroup>
