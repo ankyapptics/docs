@@ -1487,6 +1487,44 @@
         ]
       }
     },
+    "/plugins/public/{id}": {
+      "get": {
+        "tags": [
+          "Plugins"
+        ],
+        "summary": "Get public plugins",
+        "description": "Get all public plugins",
+        "operationId": "getPublicPlugins",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
     "/plugins": {
       "get": {
         "tags": ["Plugins"],

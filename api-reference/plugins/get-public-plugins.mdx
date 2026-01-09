@@ -1,0 +1,18 @@
+---
+title: "Get public plugins"
+api: "GET https://crm.apptics.ai/api/public/v1/plugins/public/{id}"
+description: "Get all public plugins"
+---
+
+> Get all public plugins
+
+<ParamField path="id" type="string" required>
+  The ID of the plugin.
+</ParamField>
+
+## Examples
+
+<CodeGroup>
+```bash Get Public Plugin
+curl -X GET [https://crm.apptics.ai/api/public/v1/plugins/public/plug_123](https://crm.apptics.ai/api/public/v1/plugins/public/plug_123) \
+  -H "Authorization: Bearer <token>"
