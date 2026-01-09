@@ -1169,6 +1169,90 @@
       }
     },
     "/block-rules": {
+      "post": {
+        "tags": ["Block Rules"],
+        "summary": "Create block rule",
+        "description": "Create a new block rule for fraud prevention",
+        "operationId": "createBlockRule",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string", "minLength": 1 },
+                  "operator": { "type": "string", "enum": ["OR", "AND"] },
+                  "ipAddress": {
+                    "anyOf": [
+                      { "type": "string", "anyOf": [{ "format": "ipv4" }, { "format": "ipv6" }] },
+                      { "type": "string", "enum": [""] }
+                    ],
+                    "nullable": true
+                  },
+                  "customerId": { "type": "string", "nullable": true },
+                  "email": { "type": "string", "format": "email", "nullable": true },
+                  "emailRegex": { "type": "string", "nullable": true },
+                  "pan": { "type": "string", "nullable": true },
+                  "panRegex": { "type": "string", "nullable": true },
+                  "bin": { "type": "string", "nullable": true },
+                  "binRegex": { "type": "string", "nullable": true },
+                  "paymentId": { "type": "string", "nullable": true },
+                  "autoCreated": { "type": "boolean", "default": false },
+                  "isPermanent": { "type": "boolean", "default": false },
+                  "ttlHours": { "type": "number", "minimum": 1, "maximum": 8760 },
+                  "metadata": { 
+                    "type": "object", 
+                    "additionalProperties": { "type": "string" },
+                    "nullable": true
+                  }
+                },
+                "required": ["name", "operator"],
+                "additionalProperties": false
+              },
+              "examples": {
+                "basic": {
+                  "summary": "Create country block rule",
+                  "value": {
+                    "name": "Block High Risk Countries",
+                    "operator": "OR",
+                    "type": "country",
+                    "value": ["XX", "YY"],
+                    "enabled": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "examples": {
+                  "success": {
+                    "summary": "Successful creation",
+                    "value": {
+                      "id": "rule_123",
+                      "name": "Block High Risk Countries",
+                      "enabled": true,
+                      "type": "country",
+                      "value": ["XX", "YY"],
+                      "createdAt": "2024-03-20T10:30:00Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": { "$ref": "#/components/responses/error" }
+        },
+        "security": [
+          { "bearerAuth": [] }
+        ]
+      },
       "get": {
         "tags": ["Block Rules"],
         "summary": "List block rules",

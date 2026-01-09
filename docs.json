@@ -242,7 +242,8 @@
               {
                 "group": "Block Rules",
                 "pages": [
-                  "api-reference/block-rules/list-block-rules"
+                  "api-reference/block-rules/list-block-rules",
+                  "api-reference/block-rules/create-block-rule"
                 ]
               },
               {
