@@ -252,7 +252,7 @@
               {
                 "group": "Plugins",
                 "pages": [
-                  "api-reference/plugins/list"
+                  "api-reference/plugins/list-plugins-for-a-store"
                 ]
               },
               {

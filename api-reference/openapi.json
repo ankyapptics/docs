@@ -1448,6 +1448,45 @@
         }
       }
     },
+    "/plugins/list": {
+      "post": {
+        "tags": ["Plugins"],
+        "summary": "List plugins for a store",
+        "description": "Get all plugins associated with a specific store",
+        "operationId": "listPluginsForStore",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "storeId": { "type": "string" }
+                },
+                "required": ["storeId"],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "security": [
+          { "bearerAuth": [] }
+        ]
+      }
+    },
     "/plugins": {
       "get": {
         "tags": ["Plugins"],

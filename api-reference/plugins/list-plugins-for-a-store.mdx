@@ -1,0 +1,26 @@
+---
+title: "List plugins for a store"
+api: "POST https://crm.apptics.ai/api/public/v1/plugins/list"
+description: "Get all plugins associated with a specific store."
+---
+
+> Get all plugins associated with a specific store.
+
+<ParamField body="storeId" type="string" required>
+  The unique identifier of the store to retrieve plugins for.
+</ParamField>
+
+## Examples
+
+<CodeGroup>
+
+```bash List Plugins
+curl -X POST https://crm.apptics.ai/api/public/v1/plugins/list \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "storeId": "store_123"
+  }'
+```
+
+</CodeGroup>
