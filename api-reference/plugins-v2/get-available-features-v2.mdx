@@ -1,0 +1,34 @@
+---
+title: "Get available features (V2)"
+api: "POST https://crm.apptics.ai/api/public/v1/plugins/v2/features"
+description: "Get available features across all deployments for filtering"
+---
+
+> Get available features across all deployments for filtering
+
+### Body
+
+<ParamField body="storeId" type="string">
+  
+</ParamField>
+
+<ParamField body="publicOnly" type="boolean">
+  
+</ParamField>
+
+<ParamField body="privateOnly" type="boolean">
+  
+</ParamField>
+
+### Examples
+
+<CodeGroup>
+
+```json Request
+{
+  "storeId": "store_abc123",
+  "publicOnly": true
+}
+```
+
+</CodeGroup>

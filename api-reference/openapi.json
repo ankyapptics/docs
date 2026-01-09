@@ -1557,7 +1557,7 @@
                   "summary": "Deploy from blob URL",
                   "value": {
                     "blobUrl": "https://blob.vercel-storage.com/plugins/plugin.zip",
-                    "pluginData": "{\"pluginId\":\"sample-funnel\",\"version\":\"1.0.0\",\"name\":\"Sample Funnel Plugin\",\"description\":\"A sample funnel plugin\",\"author\":\"Tagada Pay Team\",\"storeId\":\"store_123\",\"mode\":\"direct-mode\"}"
+                    "pluginData": "{\"pluginId\":\"sample-funnel\",\"version\":\"1.0.0\",\"name\":\"Sample Funnel Plugin\",\"description\":\"A sample funnel plugin\",\"author\":\"Apptics Team\",\"storeId\":\"store_123\",\"mode\":\"direct-mode\"}"
                   }
                 }
               }
@@ -1578,7 +1578,7 @@
                       "deployment": {
                         "pluginId": "sample-funnel",
                         "version": "1.0.0",
-                        "url": "https://sample-funnel-abc123.cdn.tagadapay.dev/",
+                        "url": "https://sample-funnel-abc123.cdn.apptics.dev/",
                         "deployedAt": "2024-03-20T10:30:00Z",
                         "size": 15000000
                       },
@@ -1968,6 +1968,38 @@
                     "features": ["checkout", "payment"]
                   }
                 }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "default": { "$ref": "#/components/responses/error" }
+        },
+        "security": [{ "bearerAuth": [] }]
+      }
+    },
+    "/plugins/v2/features": {
+      "post": {
+        "tags": ["Plugins V2"],
+        "summary": "Get available features (V2)",
+        "description": "Get available features across all deployments for filtering",
+        "operationId": "post-api-public-v1-plugins-v2-features",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "storeId": { "type": "string" },
+                  "publicOnly": { "type": "boolean" },
+                  "privateOnly": { "type": "boolean" }
+                },
+                "additionalProperties": false
               }
             }
           }
