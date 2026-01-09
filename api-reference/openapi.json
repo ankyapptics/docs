@@ -1448,37 +1448,29 @@
         }
       }
     },
-    "/plugins/deployments": {
+    "/plugins/deploy": {
       "post": {
-        "tags": [
-          "Plugins"
-        ],
-        "summary": "List plugin deployments",
-        "description": "Get all deployments for plugins in a store",
-        "operationId": "listPluginDeployments",
+        "tags": ["Plugins"],
+        "summary": "Deploy plugin version from CLI",
+        "description": "Deploy a new version of a plugin to the CMS from the CLI tool. Supports custom domains for direct-mode plugins. Validates that custom domain + path combinations are unique to prevent conflicts.",
+        "operationId": "deployPluginVersion",
         "requestBody": {
           "required": true,
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
                 "type": "object",
                 "properties": {
-                  "storeId": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "pluginData": {
                     "type": "string"
                   }
                 },
-                "required": [
-                  "storeId"
-                ],
+                "required": ["file", "pluginData"],
                 "additionalProperties": false
-              },
-              "examples": {
-                "basic": {
-                  "summary": "List deployments for a store",
-                  "value": {
-                    "storeId": "store_abc123"
-                  }
-                }
               }
             }
           }
@@ -1491,39 +1483,33 @@
                 "schema": {},
                 "examples": {
                   "success": {
-                    "summary": "Successful response",
+                    "summary": "Successful deployment",
                     "value": {
-                      "deployments": [
-                        {
-                          "id": "dep_123",
-                          "pluginId": "jointboost-variant-a",
-                          "version": "1.0.2",
-                          "url": "https://jointboost-variant-a-abc123.cdn.tagadapay.dev/",
-                          "active": true,
-                          "mode": "direct-mode",
-                          "size": 264697,
-                          "deployedAt": "2024-03-20T10:30:00Z",
-                          "plugin": {
-                            "id": "jointboost-variant-a",
-                            "name": "JointBoost Variant A",
-                            "description": "Green theme variant for A/B testing"
-                          }
-                        }
-                      ]
+                      "success": true,
+                      "deployment": {
+                        "pluginId": "sample-funnel",
+                        "version": "1.0.0",
+                        "url": "https://blob.vercel-storage.com/plugins/sample-funnel/1.0.0/plugin.zip",
+                        "deployedAt": "2024-03-20T10:30:00Z",
+                        "size": 1024000
+                      },
+                      "message": "Plugin Sample Funnel Plugin v1.0.0 deployed successfully"
+                    }
+                  },
+                  "conflict": {
+                    "summary": "Custom domain conflict",
+                    "value": {
+                      "error": "Custom domain conflict: Another plugin is already deployed to checkout.example.com/. Please use a different path."
                     }
                   }
                 }
               }
             }
           },
-          "default": {
-            "$ref": "#/components/responses/error"
-          }
+          "default": { "$ref": "#/components/responses/error" }
         },
         "security": [
-          {
-            "bearerAuth": []
-          }
+          { "bearerAuth": [] }
         ]
       }
     },

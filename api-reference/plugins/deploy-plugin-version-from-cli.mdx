@@ -1,0 +1,28 @@
+---
+title: "Deploy plugin version from CLI"
+api: "POST https://crm.apptics.ai/api/public/v1/plugins/deploy"
+description: "Deploy a new version of a plugin to the CMS from the CLI tool."
+---
+
+> Deploy a new version of a plugin to the CMS from the CLI tool. Supports custom domains for direct-mode plugins. Validates that custom domain + path combinations are unique to prevent conflicts.
+
+<ParamField body="file" type="file" required>
+  The plugin zip file to deploy.
+</ParamField>
+
+<ParamField body="pluginData" type="string" required>
+  JSON string containing plugin metadata (id, version, name, etc).
+</ParamField>
+
+## Examples
+
+<CodeGroup>
+
+```bash Deploy Plugin
+curl -X POST https://crm.apptics.ai/api/public/v1/plugins/deploy \
+  -H "Authorization: Bearer <token>" \
+  -F "file=@./plugin.zip" \
+  -F 'pluginData={"pluginId":"sample-funnel","version":"1.0.0","name":"Sample Funnel","storeId":"store_123","mode":"direct-mode"}'
+```
+
+</CodeGroup>
