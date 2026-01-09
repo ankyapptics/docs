@@ -261,7 +261,8 @@
                   "api-reference/plugins/deploy-plugin-from-blob-url",
                   "api-reference/plugins/undeploy-plugin",
                   "api-reference/plugins/promote-plugin-to-custom-domain",
-                  "api-reference/plugins/promote-plugin-deployment-to-alias"
+                  "api-reference/plugins/promote-plugin-deployment-to-alias",
+                  "api-reference/plugins/count-public-plugins-by-type"
                 ]
               },
               {

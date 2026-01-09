@@ -2004,6 +2004,65 @@
         ]
       }
     },
+    "/plugins-count": {
+      "get": {
+        "tags": [
+          "Plugins"
+        ],
+        "summary": "Count public plugins by type",
+        "description": "Get a count of public plugins grouped by type. This endpoint is completely public and requires no authentication.\n\nReturns counts for each plugin type:\n- landing: Landing page plugins\n- checkout: Checkout and payment plugins\n- advertorial: Advertorial and marketing plugins\n- loyalty: Customer loyalty and retention plugins\n- postpurchase: Post-purchase experience plugins",
+        "operationId": "getPublicPluginsCount",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "examples": {
+                  "success": {
+                    "summary": "Plugin counts by type",
+                    "value": [
+                      {
+                        "type": "landing",
+                        "count": 15
+                      },
+                      {
+                        "type": "checkout",
+                        "count": 8
+                      },
+                      {
+                        "type": "advertorial",
+                        "count": 12
+                      },
+                      {
+                        "type": "loyalty",
+                        "count": 6
+                      },
+                      {
+                        "type": "postpurchase",
+                        "count": 4
+                      }
+                    ]
+                  },
+                  "empty": {
+                    "summary": "No public plugins found",
+                    "value": []
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
     "/plugins/{id}": {
       "get": {
         "tags": [
