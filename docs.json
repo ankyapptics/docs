@@ -242,7 +242,7 @@
               {
                 "group": "Block Rules",
                 "pages": [
-                  "api-reference/block-rules/list"
+                  "api-reference/block-rules/list-block-rules"
                 ]
               },
               {

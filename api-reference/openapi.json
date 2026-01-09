@@ -1061,6 +1061,113 @@
         ]
       }
     },
+    "/block-rules/list": {
+      "post": {
+        "tags": ["Block Rules"],
+        "summary": "List block rules",
+        "description": "Get all block rules for the authenticated account with filtering and pagination",
+        "operationId": "listBlockRules",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "pagination": {
+                    "type": "object",
+                    "properties": {
+                      "page": { "type": "number" },
+                      "pageSize": { "type": "number" }
+                    },
+                    "required": ["page", "pageSize"],
+                    "additionalProperties": false
+                  },
+                  "sortBy": {
+                    "type": "object",
+                    "properties": {
+                      "field": {
+                        "type": "string",
+                        "enum": ["id", "accountId", "createdAt", "updatedAt"]
+                      },
+                      "direction": {
+                        "type": "string",
+                        "enum": ["asc", "desc"]
+                      }
+                    },
+                    "required": ["field", "direction"],
+                    "additionalProperties": false
+                  },
+                  "filters": {
+                    "type": "object",
+                    "properties": {
+                      "createdAt": { "type": "string" },
+                      "name": { "type": "string" },
+                      "operator": {
+                        "type": "string",
+                        "enum": ["AND", "OR"]
+                      },
+                      "ipAddress": { "type": "string" },
+                      "customerId": { "type": "string" },
+                      "email": { "type": "string" },
+                      "bin": { "type": "string" },
+                      "paymentId": { "type": "string" },
+                      "autoCreated": { "type": "boolean" }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "additionalProperties": false
+              },
+              "examples": {
+                "basic": {
+                  "summary": "Basic block rules list",
+                  "value": {
+                    "pagination": {
+                      "page": 1,
+                      "pageSize": 20
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "examples": {
+                  "success": {
+                    "summary": "Successful response",
+                    "value": {
+                      "items": [
+                        {
+                          "id": "rule_123",
+                          "name": "Block High Risk Countries",
+                          "enabled": true,
+                          "type": "country",
+                          "value": ["XX", "YY"],
+                          "createdAt": "2024-03-20T10:30:00Z"
+                        }
+                      ],
+                      "total": 1,
+                      "pageCount": 1
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": { "$ref": "#/components/responses/error" }
+        },
+        "security": [
+          { "bearerAuth": [] }
+        ]
+      }
+    },
     "/block-rules": {
       "get": {
         "tags": ["Block Rules"],

@@ -1,0 +1,85 @@
+---
+title: "List block rules"
+api: "POST https://crm.apptics.ai/api/public/v1/block-rules/list"
+description: "Get all block rules for the authenticated account with filtering and pagination."
+---
+
+> Get all block rules for the authenticated account with filtering and pagination.
+
+<ParamField body="pagination" type="object" required>
+  Pagination options.
+
+  <Expandable title="properties">
+    <ParamField body="page" type="number" required>
+      Page number (1-based index).
+    </ParamField>
+    <ParamField body="pageSize" type="number" required>
+      Number of items per page.
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+<ParamField body="sortBy" type="object">
+  Sorting configuration.
+
+  <Expandable title="properties">
+    <ParamField body="field" type="string" required>
+      Field to sort by: `id`, `accountId`, `createdAt`, `updatedAt`.
+    </ParamField>
+    <ParamField body="direction" type="string" required>
+      Sort direction: `asc` or `desc`.
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+<ParamField body="filters" type="object">
+  Filtering criteria.
+
+  <Expandable title="properties">
+    <ParamField body="createdAt" type="string">
+      Filter by creation date.
+    </ParamField>
+    <ParamField body="name" type="string">
+      Filter by rule name.
+    </ParamField>
+    <ParamField body="operator" type="string">
+      Logical operator for combining filters: `AND`, `OR`.
+    </ParamField>
+    <ParamField body="ipAddress" type="string">
+      Filter by IP address.
+    </ParamField>
+    <ParamField body="customerId" type="string">
+      Filter by customer ID.
+    </ParamField>
+    <ParamField body="email" type="string">
+      Filter by email address.
+    </ParamField>
+    <ParamField body="bin" type="string">
+      Filter by card BIN.
+    </ParamField>
+    <ParamField body="paymentId" type="string">
+      Filter by payment ID.
+    </ParamField>
+    <ParamField body="autoCreated" type="boolean">
+      Filter by auto-created rules.
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+## Examples
+
+<CodeGroup>
+
+```bash List Rules
+curl -X POST https://crm.apptics.ai/api/public/v1/block-rules/list \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "pagination": {
+      "page": 1,
+      "pageSize": 20
+    }
+  }'
+```
+
+</CodeGroup>
