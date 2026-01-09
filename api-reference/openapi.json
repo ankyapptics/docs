@@ -26,6 +26,7 @@
     { "name": "Payments" },
     { "name": "Block Rules" },
     { "name": "Plugins" },
+    { "name": "Plugins V2" },
     { "name": "Domains" },
     { "name": "Orders" },
     { "name": "Subscriptions" },
@@ -1925,6 +1926,60 @@
         "security": [
           { "bearerAuth": [] }
         ]
+      }
+    },
+    "/plugins/v2/list": {
+      "post": {
+        "tags": ["Plugins V2"],
+        "summary": "List all plugins (V2)",
+        "description": "List all plugins for the account with their deployments using V2 schema",
+        "operationId": "listAllPluginsV2",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "storeId": { "type": "string" },
+                  "includeInactive": { "type": "boolean", "default": false },
+                  "search": { "type": "string" },
+                  "publicOnly": { "type": "boolean" },
+                  "privateOnly": { "type": "boolean" },
+                  "features": { "type": "array", "items": { "type": "string" } }
+                },
+                "additionalProperties": false
+              },
+              "examples": {
+                "basic": {
+                  "summary": "List all plugins for account",
+                  "value": {
+                    "storeId": "store_abc123",
+                    "includeInactive": false
+                  }
+                },
+                "withFilters": {
+                  "summary": "List plugins with filters",
+                  "value": {
+                    "storeId": "store_abc123",
+                    "includeInactive": true,
+                    "search": "checkout",
+                    "publicOnly": false,
+                    "features": ["checkout", "payment"]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "default": { "$ref": "#/components/responses/error" }
+        },
+        "security": [{ "bearerAuth": [] }]
       }
     },
     "/plugins/deployments": {

@@ -1,0 +1,58 @@
+---
+title: "List all plugins (V2)"
+api: "POST https://app.tagadapay.com/api/public/v1/plugins/v2/list"
+description: "List all plugins for the account with their deployments using V2 schema"
+---
+
+### Body
+
+<ParamField body="storeId" type="string">
+  
+</ParamField>
+
+<ParamField body="includeInactive" default="false" type="boolean">
+  
+</ParamField>
+
+<ParamField body="search" type="string">
+  
+</ParamField>
+
+<ParamField body="publicOnly" type="boolean">
+  
+</ParamField>
+
+<ParamField body="privateOnly" type="boolean">
+  
+</ParamField>
+
+<ParamField body="features" type="array">
+  
+</ParamField>
+
+### Examples
+
+<CodeGroup>
+
+```json Basic
+{
+  "storeId": "store_abc123",
+  "includeInactive": false
+}
+```
+
+
+```json Advanced
+{
+  "storeId": "store_abc123",
+  "includeInactive": true,
+  "search": "checkout",
+  "publicOnly": false,
+  "features": [
+    "checkout",
+    "payment"
+  ]
+}
+```
+
+</CodeGroup>

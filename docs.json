@@ -266,6 +266,12 @@
                 ]
               },
               {
+                "group": "Plugins-v2",
+                "pages": [
+                  "api-reference/plugin-v2/list-all-plugins-v2"
+                ]
+              },
+              {
                 "group": "Domains",
                 "pages": [
                   "api-reference/domains/list"
