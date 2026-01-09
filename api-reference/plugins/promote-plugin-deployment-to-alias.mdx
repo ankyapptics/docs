@@ -1,0 +1,31 @@
+---
+title: "Promote plugin deployment to alias"
+api: "POST https://crm.apptics.ai/api/public/v1/plugins/promote-to-alias"
+description: "Promote an existing plugin deployment to a new alias. This reassigns the alias without creating a new deployment."
+---
+
+> Promote an existing plugin deployment to a new alias. This reassigns the alias without creating a new deployment.
+
+<ParamField body="deploymentId" type="string" required>
+  The unique identifier of the deployment to promote.
+</ParamField>
+
+<ParamField body="alias" type="string" required>
+  The alias to assign to the deployment (pattern: `^[a-z0-9-]+$`).
+</ParamField>
+
+## Examples
+
+<CodeGroup>
+
+```bash Promote to Alias
+curl -X POST https://crm.apptics.ai/api/public/v1/plugins/promote-to-alias \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "deploymentId": "plugin_deployment_abc123",
+    "alias": "checkout"
+  }'
+```
+
+</CodeGroup>

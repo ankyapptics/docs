@@ -1743,6 +1743,86 @@
         ]
       }
     },
+    "/plugins/promote-to-alias": {
+      "post": {
+        "tags": [
+          "Plugins"
+        ],
+        "summary": "Promote plugin deployment to alias",
+        "description": "Promote an existing plugin deployment to a new alias. This reassigns the alias without creating a new deployment.",
+        "operationId": "promotePluginToAlias",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "deploymentId": {
+                    "type": "string"
+                  },
+                  "alias": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9-]+$"
+                  }
+                },
+                "required": [
+                  "deploymentId",
+                  "alias"
+                ],
+                "additionalProperties": false
+              },
+              "examples": {
+                "basic": {
+                  "summary": "Promote to alias",
+                  "value": {
+                    "deploymentId": "plugin_deployment_abc123",
+                    "alias": "checkout"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "examples": {
+                  "success": {
+                    "summary": "Successful alias promotion",
+                    "value": {
+                      "success": true,
+                      "url": "http://checkout.store_123.cdn.localhost:3000/",
+                      "message": "Deployment promoted successfully to alias \"checkout\"",
+                      "alias": "checkout"
+                    }
+                  },
+                  "conflict": {
+                    "summary": "Alias already exists",
+                    "value": {
+                      "success": true,
+                      "message": "Alias \"checkout\" already points to this deployment",
+                      "url": "http://checkout.store_123.cdn.localhost:3000/"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
     "/plugins/undeploy": {
       "post": {
         "tags": [
