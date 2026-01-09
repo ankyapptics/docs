@@ -1,0 +1,33 @@
+---
+title: "List mount points (V2)"
+api: "POST https://crm.apptics.ai/api/public/v1/plugins/v2/mount-points"
+description: "List all mount points grouped by route (hostname + basePath)"
+---
+
+> List all mount points grouped by route (hostname + basePath)
+
+### Body
+
+<ParamField body="storeId" type="string" required>
+  
+</ParamField>
+
+<ParamField body="lightweight" default="true" type="boolean">
+  
+</ParamField>
+
+<ParamField body="includeDirectInstanceRoutes" default="false" type="boolean">
+  
+</ParamField>
+
+### Examples
+
+<CodeGroup>
+
+```json Basic
+{
+  "storeId": "store_abc123"
+}
+```
+
+</CodeGroup>

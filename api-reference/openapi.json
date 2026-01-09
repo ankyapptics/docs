@@ -2031,6 +2031,47 @@
         "security": [{ "bearerAuth": [] }]
       }
     },
+    "/plugins/v2/mount-points": {
+      "post": {
+        "tags": ["Plugins V2"],
+        "summary": "List mount points (V2)",
+        "description": "List all mount points grouped by route (hostname + basePath)",
+        "operationId": "post-api-public-v1-plugins-v2-mount-points",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "storeId": { "type": "string" },
+                  "lightweight": { "type": "boolean", "default": true },
+                  "includeDirectInstanceRoutes": { "type": "boolean", "default": false }
+                },
+                "required": ["storeId"],
+                "additionalProperties": false
+              },
+              "examples": {
+                "basic": {
+                  "summary": "List mount points for a store",
+                  "value": {
+                    "storeId": "store_abc123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "default": { "$ref": "#/components/responses/error" }
+        },
+        "security": [{ "bearerAuth": [] }]
+      }
+    },
     "/plugins/deployments": {
       "post": {
         "tags": ["Plugins"],
