@@ -1,3 +1,50 @@
 ---
-title: "Test Authentication"
+title: "Test authentication"
+api: "POST https://crm.apptics.ai/api/public/v1/auth/test"
+description: "Test if the API key is valid and return user information"
 ---
+
+### Headers
+
+<ParamField header="Authorization" type="string" required>
+  Enter your API key as: `Bearer your-api-key`
+</ParamField>
+
+### Body
+
+<ParamField body="body" type="object">
+  The body is of type `object`.
+</ParamField>
+
+### Response
+
+<ResponseField name="success" type="boolean">
+  Indicates if the request was successful
+</ResponseField>
+
+<ResponseField name="user" type="object">
+  The user object
+</ResponseField>
+
+<ResponseExample>
+
+```json Response
+{
+  "success": true,
+  "user": {
+    "id": "user_123",
+    "orgId": "org_456",
+    "permissions": [
+      "org:admin"
+    ],
+    "account": {
+      "id": "acc_789",
+      "name": "My Account"
+    },
+    "isServiceAccount": false,
+    "isAccountOwner": true
+  }
+}
+```
+
+</ResponseExample>
