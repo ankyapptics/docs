@@ -2159,6 +2159,47 @@
         "security": [{ "bearerAuth": [] }]
       }
     },
+    "/plugins/v2/deployment/details": {
+      "post": {
+        "tags": ["Plugins V2"],
+        "summary": "Get deployment details (V2)",
+        "description": "Get detailed information about a specific deployment with instances and routes",
+        "operationId": "post-api-public-v1-plugins-v2-deployment-details",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "deploymentId": { "type": "string" },
+                  "storeId": { "type": "string" }
+                },
+                "required": ["deploymentId", "storeId"],
+                "additionalProperties": false
+              },
+              "examples": {
+                "basic": {
+                  "summary": "Get deployment details",
+                  "value": {
+                    "deploymentId": "plugin_deployment_abc123",
+                    "storeId": "store_abc123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "default": { "$ref": "#/components/responses/error" }
+        },
+        "security": [{ "bearerAuth": [] }]
+      }
+    },
     "/plugins/deployments": {
       "post": {
         "tags": ["Plugins"],
