@@ -1,0 +1,22 @@
+---
+title: "Get block rule by ID"
+api: "GET https://crm.apptics.ai/api/public/v1/block-rules/{id}"
+description: "Retrieve detailed information about a specific block rule."
+---
+
+> Retrieve detailed information about a specific block rule.
+
+<ParamField path="id" type="string" required>
+  The unique identifier of the block rule to retrieve.
+</ParamField>
+
+## Examples
+
+<CodeGroup>
+
+```bash Get Block Rule
+curl -X GET https://crm.apptics.ai/api/public/v1/block-rules/rule_123 \
+  -H "Authorization: Bearer <token>"
+```
+
+</CodeGroup>

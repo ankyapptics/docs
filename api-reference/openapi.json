@@ -1168,6 +1168,52 @@
         ]
       }
     },
+    "/block-rules/{id}": {
+      "get": {
+        "tags": ["Block Rules"],
+        "summary": "Get block rule by ID",
+        "description": "Retrieve detailed information about a specific block rule",
+        "operationId": "getBlockRuleById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "examples": {
+                  "success": {
+                    "summary": "Block rule details",
+                    "value": {
+                      "id": "rule_123",
+                      "name": "Block High Risk Countries",
+                      "enabled": true,
+                      "type": "country",
+                      "value": ["XX", "YY"],
+                      "createdAt": "2024-03-20T10:30:00Z",
+                      "updatedAt": "2024-03-20T10:30:00Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": { "$ref": "#/components/responses/error" }
+        },
+        "security": [
+          { "bearerAuth": [] }
+        ]
+      }
+    },
     "/block-rules": {
       "post": {
         "tags": ["Block Rules"],
