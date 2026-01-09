@@ -1654,6 +1654,95 @@
         ]
       }
     },
+    "/plugins/promote-to-custom-domain": {
+      "post": {
+        "tags": [
+          "Plugins"
+        ],
+        "summary": "Promote plugin to custom domain",
+        "description": "Promote a plugin to a custom domain. This will create a new route for the plugin.",
+        "operationId": "promotePluginToCustomDomain",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "deploymentId": {
+                    "type": "string"
+                  },
+                  "customDomain": {
+                    "type": "string"
+                  },
+                  "basePath": {
+                    "type": "string",
+                    "default": "/"
+                  }
+                },
+                "required": [
+                  "deploymentId",
+                  "customDomain"
+                ],
+                "additionalProperties": false
+              },
+              "examples": {
+                "basic": {
+                  "summary": "Promote plugin to custom domain",
+                  "value": {
+                    "pluginId": "sample-funnel-v1-abc123",
+                    "storeId": "store_123",
+                    "hostname": "checkout.example.com",
+                    "path": "/checkout"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "examples": {
+                  "success": {
+                    "summary": "Successful promotion",
+                    "value": {
+                      "success": true,
+                      "message": "Plugin promoted to custom domain successfully",
+                      "route": {
+                        "id": "route_123",
+                        "pluginId": "sample-funnel-v1-abc123",
+                        "storeId": "store_123",
+                        "hostname": "checkout.example.com",
+                        "path": "/checkout",
+                        "createdAt": "2024-03-20T10:30:00Z"
+                      }
+                    }
+                  },
+                  "conflict": {
+                    "summary": "Custom domain conflict",
+                    "value": {
+                      "error": "Custom domain conflict: Another plugin is already deployed to checkout.example.com/. Please use a different path."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
     "/plugins/undeploy": {
       "post": {
         "tags": [

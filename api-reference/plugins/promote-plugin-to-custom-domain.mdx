@@ -1,0 +1,36 @@
+---
+title: "Promote plugin to custom domain"
+api: "POST https://crm.apptics.ai/api/public/v1/plugins/promote-to-custom-domain"
+description: "Promote a plugin to a custom domain. This will create a new route for the plugin."
+---
+
+> Promote a plugin to a custom domain. This will create a new route for the plugin.
+
+<ParamField body="deploymentId" type="string" required>
+  The ID of the deployment to promote.
+</ParamField>
+
+<ParamField body="customDomain" type="string" required>
+  The custom domain to promote the plugin to.
+</ParamField>
+
+<ParamField body="basePath" default="/" type="string">
+  The base path for the plugin on the custom domain.
+</ParamField>
+
+## Examples
+
+<CodeGroup>
+
+```bash Promote Plugin
+curl -X POST https://crm.apptics.ai/api/public/v1/plugins/promote-to-custom-domain \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "deploymentId": "dep_123",
+    "customDomain": "checkout.example.com",
+    "basePath": "/checkout"
+  }'
+```
+
+</CodeGroup>

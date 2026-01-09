@@ -259,7 +259,8 @@
                   "api-reference/plugins/deploy-plugin-version-from-cli",
                   "api-reference/plugins/deploy-plugin-from-marketplace",
                   "api-reference/plugins/deploy-plugin-from-blob-url",
-                  "api-reference/plugins/undeploy-plugin"
+                  "api-reference/plugins/undeploy-plugin",
+                  "api-reference/plugins/promote-plugin-to-custom-domain"
                 ]
               },
               {
