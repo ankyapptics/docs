@@ -392,150 +392,6 @@
         ]
       }
     },
-    "/payments/process": {
-      "post": {
-        "tags": ["Payments"],
-        "summary": "Process payment",
-        "description": "Process a payment using the payment flow system with comprehensive options for different payment scenarios.",
-        "operationId": "processPayment",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "orderId": { "type": "string" },
-                  "paymentInstrumentId": { "type": "string" },
-                  "mode": {
-                    "type": "string",
-                    "enum": ["purchase", "auth", "capture"],
-                    "default": "purchase"
-                  },
-                  "amount": { 
-                    "type": "number",
-                    "minimum": 0,
-                    "exclusiveMinimum": true
-                  },
-                  "currency": { "type": "string" },
-                  "storeId": { "type": "string" },
-                  "customerId": { "type": "string" },
-                  "initiatedBy": {
-                    "type": "string",
-                    "enum": ["customer", "merchant"],
-                    "default": "customer"
-                  },
-                  "reasonType": {
-                    "type": "string",
-                    "enum": ["recurring", "unscheduled", "installment"]
-                  },
-                  "returnUrl": { 
-                    "type": "string", 
-                    "format": "uri" 
-                  },
-                  "draft": { 
-                    "type": "boolean",
-                    "default": false
-                  },
-                  "isRetry": { 
-                    "type": "boolean",
-                    "default": false
-                  },
-                  "threedsSessionId": { "type": "string" },
-                  "subscriptionId": { "type": "string" },
-                  "paymentFlowId": { "type": "string" },
-                  "paymentId": { "type": "string" }
-                },
-                "required": ["amount", "currency", "storeId"],
-                "additionalProperties": false
-              },
-              "examples": {
-                "basic": {
-                  "summary": "Basic payment processing",
-                  "value": {
-                    "paymentInstrumentId": "pi_123",
-                    "amount": 2999,
-                    "currency": "USD",
-                    "storeId": "store_123",
-                    "customerId": "cus_456",
-                    "mode": "purchase"
-                  }
-                },
-                "subscription": {
-                  "summary": "Subscription payment",
-                  "value": {
-                    "paymentInstrumentId": "pi_123",
-                    "amount": 2999,
-                    "currency": "USD",
-                    "storeId": "store_123",
-                    "customerId": "cus_456",
-                    "mode": "purchase",
-                    "initiatedBy": "merchant",
-                    "reasonType": "recurring",
-                    "subscriptionId": "sub_123",
-                    "isRetry": true
-                  }
-                },
-                "order": {
-                  "summary": "Order payment",
-                  "value": {
-                    "orderId": "ord_123",
-                    "paymentInstrumentId": "pi_123",
-                    "amount": 2999,
-                    "currency": "USD",
-                    "storeId": "store_123",
-                    "customerId": "cus_456",
-                    "mode": "purchase",
-                    "returnUrl": "https://example.com/return"
-                  }
-                },
-                "withCustomFlow": {
-                  "summary": "Payment with custom flow",
-                  "value": {
-                    "paymentInstrumentId": "pi_123",
-                    "amount": 2999,
-                    "currency": "USD",
-                    "storeId": "store_123",
-                    "customerId": "cus_456",
-                    "mode": "purchase",
-                    "paymentFlowId": "flow_custom_abc123"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {},
-                "examples": {
-                  "success": {
-                    "summary": "Successful payment processing",
-                    "value": {
-                      "payment": {
-                        "id": "pay_123",
-                        "amount": 2999,
-                        "currency": "USD",
-                        "status": "succeeded",
-                        "subStatus": "approved",
-                        "requireAction": "none"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "default": { "$ref": "#/components/responses/error" }
-        },
-        "security": [
-          { "bearerAuth": [] }
-        ]
-      }
-    },
     "/payments/refund": {
       "post": {
         "tags": ["Payments"],
@@ -1450,7 +1306,9 @@
     },
     "/plugins/deploy": {
       "post": {
-        "tags": ["Plugins"],
+        "tags": [
+          "Plugins"
+        ],
         "summary": "Deploy plugin version from CLI",
         "description": "Deploy a new version of a plugin to the CMS from the CLI tool. Supports custom domains for direct-mode plugins. Validates that custom domain + path combinations are unique to prevent conflicts.",
         "operationId": "deployPluginVersion",
@@ -1469,7 +1327,10 @@
                     "type": "string"
                   }
                 },
-                "required": ["file", "pluginData"],
+                "required": [
+                  "file",
+                  "pluginData"
+                ],
                 "additionalProperties": false
               }
             }
@@ -1506,10 +1367,91 @@
               }
             }
           },
-          "default": { "$ref": "#/components/responses/error" }
+          "default": {
+            "$ref": "#/components/responses/error"
+          }
         },
         "security": [
-          { "bearerAuth": [] }
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/plugins/deploy-from-blob": {
+      "post": {
+        "tags": [
+          "Plugins"
+        ],
+        "summary": "Deploy plugin from blob URL",
+        "description": "Deploy a plugin from a blob URL. This endpoint is used after uploading a large ZIP file to blob storage to bypass the 4.5MB serverless function limit.",
+        "operationId": "deployPluginFromBlob",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "blobUrl": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "pluginData": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "blobUrl",
+                  "pluginData"
+                ],
+                "additionalProperties": false
+              },
+              "examples": {
+                "basic": {
+                  "summary": "Deploy from blob URL",
+                  "value": {
+                    "blobUrl": "https://blob.vercel-storage.com/plugins/plugin.zip",
+                    "pluginData": "{\"pluginId\":\"sample-funnel\",\"version\":\"1.0.0\",\"name\":\"Sample Funnel Plugin\",\"description\":\"A sample funnel plugin\",\"author\":\"Tagada Pay Team\",\"storeId\":\"store_123\",\"mode\":\"direct-mode\"}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "examples": {
+                  "success": {
+                    "summary": "Successful deployment from blob",
+                    "value": {
+                      "success": true,
+                      "deployment": {
+                        "pluginId": "sample-funnel",
+                        "version": "1.0.0",
+                        "url": "https://sample-funnel-abc123.cdn.tagadapay.dev/",
+                        "deployedAt": "2024-03-20T10:30:00Z",
+                        "size": 15000000
+                      },
+                      "message": "Plugin Sample Funnel Plugin v1.0.0 deployed successfully from blob"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ]
       }
     },

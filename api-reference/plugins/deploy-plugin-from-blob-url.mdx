@@ -1,0 +1,31 @@
+---
+title: "Deploy plugin from blob URL"
+api: "POST https://crm.apptics.ai/api/public/v1/plugins/deploy-from-blob"
+description: "Deploy a plugin from a blob URL. This endpoint is used after uploading a large ZIP file to blob storage to bypass the 4.5MB serverless function limit."
+---
+
+> Deploy a plugin from a blob URL. This endpoint is used after uploading a large ZIP file to blob storage to bypass the 4.5MB serverless function limit.
+
+<ParamField body="blobUrl" type="string" required>
+  URL to the plugin ZIP file (format: uri).
+</ParamField>
+
+<ParamField body="pluginData" type="string" required>
+  JSON string containing plugin metadata.
+</ParamField>
+
+## Examples
+
+<CodeGroup>
+
+```bash Deploy from Blob
+curl -X POST https://crm.apptics.ai/api/public/v1/plugins/deploy-from-blob \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "blobUrl": "https://blob.vercel-storage.com/plugins/plugin.zip",
+    "pluginData": "{\"pluginId\":\"sample-funnel\",\"version\":\"1.0.0\",\"name\":\"Sample Funnel Plugin\",\"description\":\"A sample funnel plugin\",\"author\":\"Tagada Pay Team\",\"storeId\":\"store_123\",\"mode\":\"direct-mode\"}"
+  }'
+```
+
+</CodeGroup>

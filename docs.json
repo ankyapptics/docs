@@ -257,7 +257,8 @@
                   "api-reference/plugins/get-plugin-by-id",
                   "api-reference/plugins/list-plugin-deployments",
                   "api-reference/plugins/deploy-plugin-version-from-cli",
-                  "api-reference/plugins/deploy-plugin-from-marketplace"
+                  "api-reference/plugins/deploy-plugin-from-marketplace",
+                  "api-reference/plugins/deploy-plugin-from-blob-url"
                 ]
               },
               {
