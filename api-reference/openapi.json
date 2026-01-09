@@ -1448,6 +1448,85 @@
         }
       }
     },
+    "/plugins/deployments": {
+      "post": {
+        "tags": [
+          "Plugins"
+        ],
+        "summary": "List plugin deployments",
+        "description": "Get all deployments for plugins in a store",
+        "operationId": "listPluginDeployments",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "storeId": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "storeId"
+                ],
+                "additionalProperties": false
+              },
+              "examples": {
+                "basic": {
+                  "summary": "List deployments for a store",
+                  "value": {
+                    "storeId": "store_abc123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "examples": {
+                  "success": {
+                    "summary": "Successful response",
+                    "value": {
+                      "deployments": [
+                        {
+                          "id": "dep_123",
+                          "pluginId": "jointboost-variant-a",
+                          "version": "1.0.2",
+                          "url": "https://jointboost-variant-a-abc123.cdn.tagadapay.dev/",
+                          "active": true,
+                          "mode": "direct-mode",
+                          "size": 264697,
+                          "deployedAt": "2024-03-20T10:30:00Z",
+                          "plugin": {
+                            "id": "jointboost-variant-a",
+                            "name": "JointBoost Variant A",
+                            "description": "Green theme variant for A/B testing"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
     "/plugins/list": {
       "post": {
         "tags": ["Plugins"],

@@ -1,0 +1,22 @@
+---
+title: "List plugin deployments"
+api: "POST https://crm.apptics.ai/api/public/v1/plugins/deployments"
+description: "Get all deployments for plugins in a store"
+---
+
+> Get all deployments for plugins in a store
+
+<ParamField body="storeId" type="string" required>
+  The unique identifier of the store to retrieve deployments for.
+</ParamField>
+
+## Examples
+
+<CodeGroup>
+```bash List Deployments
+curl -X POST [https://crm.apptics.ai/api/public/v1/plugins/deployments](https://crm.apptics.ai/api/public/v1/plugins/deployments) \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "storeId": "store_abc123"
+  }'
