@@ -1212,6 +1212,105 @@
         "security": [
           { "bearerAuth": [] }
         ]
+      },
+      "put": {
+        "tags": ["Block Rules"],
+        "summary": "Update block rule",
+        "description": "Update an existing block rule",
+        "operationId": "updateBlockRule",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "type": "object",
+                    "properties": {
+                      "name": { "type": "string", "minLength": 1 },
+                      "operator": { "type": "string", "enum": ["OR", "AND"] },
+                      "ipAddress": {
+                        "anyOf": [
+                          { "type": "string", "anyOf": [{ "format": "ipv4" }, { "format": "ipv6" }] },
+                          { "type": "string", "enum": [""] }
+                        ],
+                        "nullable": true
+                      },
+                      "customerId": { "type": "string", "nullable": true },
+                      "email": { "type": "string", "format": "email", "nullable": true },
+                      "emailRegex": { "type": "string", "nullable": true },
+                      "pan": { "type": "string", "nullable": true },
+                      "panRegex": { "type": "string", "nullable": true },
+                      "bin": { "type": "string", "nullable": true },
+                      "binRegex": { "type": "string", "nullable": true },
+                      "paymentId": { "type": "string", "nullable": true },
+                      "autoCreated": { "type": "boolean", "default": false },
+                      "isPermanent": { "type": "boolean", "default": false },
+                      "ttlHours": { "type": "number", "minimum": 1, "maximum": 8760 },
+                      "metadata": { 
+                        "type": "object", 
+                        "additionalProperties": { "type": "string" },
+                        "nullable": true
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "required": ["data"],
+                "additionalProperties": false
+              },
+              "examples": {
+                "basic": {
+                  "summary": "Update block rule",
+                  "value": {
+                    "data": {
+                      "name": "Updated Block Rule Name",
+                      "enabled": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "examples": {
+                  "success": {
+                    "summary": "Successful update",
+                    "value": {
+                      "id": "rule_123",
+                      "name": "Updated Block Rule Name",
+                      "enabled": false,
+                      "type": "country",
+                      "value": ["XX", "YY"],
+                      "updatedAt": "2024-03-20T10:30:00Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": { "$ref": "#/components/responses/error" }
+        },
+        "security": [
+          { "bearerAuth": [] }
+        ]
       }
     },
     "/block-rules": {
@@ -1247,8 +1346,8 @@
                   "autoCreated": { "type": "boolean", "default": false },
                   "isPermanent": { "type": "boolean", "default": false },
                   "ttlHours": { "type": "number", "minimum": 1, "maximum": 8760 },
-                  "metadata": { 
-                    "type": "object", 
+                  "metadata": { 
+                    "type": "object", 
                     "additionalProperties": { "type": "string" },
                     "nullable": true
                   }

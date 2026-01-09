@@ -244,7 +244,8 @@
                 "pages": [
                   "api-reference/block-rules/list-block-rules",
                   "api-reference/block-rules/create-block-rule",
-                  "api-reference/block-rules/get-block-rule-by-id"
+                  "api-reference/block-rules/get-block-rule-by-id",
+                  "api-reference/block-rules/update-block-rule"
                 ]
               },
               {

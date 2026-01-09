@@ -1,0 +1,81 @@
+---
+title: "Update block rule"
+api: "PUT https://crm.apptics.ai/api/public/v1/block-rules/{id}"
+description: "Update an existing block rule."
+---
+
+> Update an existing block rule.
+
+<ParamField path="id" type="string" required>
+  The unique identifier of the block rule to update.
+</ParamField>
+
+<ParamField body="data" type="object" required>
+  Object containing the fields to update.
+
+  <Expandable title="properties">
+    <ParamField body="name" type="string">
+      Name of the block rule (min length 1).
+    </ParamField>
+    <ParamField body="operator" type="string">
+      Logical operator. Options: `OR`, `AND`.
+    </ParamField>
+    <ParamField body="ipAddress" type="string">
+      IP address to block (IPv4 or IPv6).
+    </ParamField>
+    <ParamField body="customerId" type="string">
+      Customer ID to block.
+    </ParamField>
+    <ParamField body="email" type="string">
+      Email address to block.
+    </ParamField>
+    <ParamField body="emailRegex" type="string">
+      Regular expression for blocking emails.
+    </ParamField>
+    <ParamField body="pan" type="string">
+      PAN (Primary Account Number) to block.
+    </ParamField>
+    <ParamField body="panRegex" type="string">
+      Regular expression for blocking PANs.
+    </ParamField>
+    <ParamField body="bin" type="string">
+      BIN (Bank Identification Number) to block.
+    </ParamField>
+    <ParamField body="binRegex" type="string">
+      Regular expression for blocking BINs.
+    </ParamField>
+    <ParamField body="paymentId" type="string">
+      Specific Payment ID to block.
+    </ParamField>
+    <ParamField body="autoCreated" default="false" type="boolean">
+      Whether the rule was automatically created.
+    </ParamField>
+    <ParamField body="isPermanent" default="false" type="boolean">
+      If true, the rule does not expire.
+    </ParamField>
+    <ParamField body="ttlHours" type="number">
+      Time-to-live in hours (1-8760).
+    </ParamField>
+    <ParamField body="metadata" type="object">
+      Additional metadata for the rule.
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+## Examples
+
+<CodeGroup>
+
+```bash Update Rule
+curl -X PUT https://crm.apptics.ai/api/public/v1/block-rules/rule_123 \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "data": {
+      "name": "Updated Block Rule Name",
+      "enabled": false
+    }
+  }'
+```
+
+</CodeGroup>
