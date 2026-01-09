@@ -1,0 +1,37 @@
+---
+title: "List instances (V2)"
+api: "POST https://crm.apptics.ai/api/public/v1/plugins/v2/instances"
+description: "List all instances for a store (including those without routes)"
+---
+
+> List all instances for a store (including those without routes)
+
+### Body
+
+<ParamField body="storeId" type="string" required>
+  
+</ParamField>
+
+<ParamField body="deploymentId" type="string">
+  
+</ParamField>
+
+### Examples
+
+<CodeGroup>
+
+```json Basic
+{
+  "storeId": "store_abc123"
+}
+```
+
+
+```json With Deployment ID
+{
+  "storeId": "store_abc123",
+  "deploymentId": "plugin_deployment_abc123"
+}
+```
+
+</CodeGroup>
