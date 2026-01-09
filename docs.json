@@ -269,7 +269,8 @@
                 "group": "Plugins-v2",
                 "pages": [
                   "api-reference/plugins-v2/list-all-plugins-v2",
-                  "api-reference/plugins-v2/get-available-features-v2"
+                  "api-reference/plugins-v2/get-available-features-v2",
+                  "api-reference/plugins-v2/list-verified-domains-v2"
                 ]
               },
               {
