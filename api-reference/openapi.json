@@ -392,6 +392,150 @@
         ]
       }
     },
+    "/payments/process": {
+      "post": {
+        "tags": ["Payments"],
+        "summary": "Process payment",
+        "description": "Process a payment using the payment flow system with comprehensive options for different payment scenarios.",
+        "operationId": "processPayment",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "orderId": { "type": "string" },
+                  "paymentInstrumentId": { "type": "string" },
+                  "mode": {
+                    "type": "string",
+                    "enum": ["purchase", "auth", "capture"],
+                    "default": "purchase"
+                  },
+                  "amount": { 
+                    "type": "number",
+                    "minimum": 0,
+                    "exclusiveMinimum": true
+                  },
+                  "currency": { "type": "string" },
+                  "storeId": { "type": "string" },
+                  "customerId": { "type": "string" },
+                  "initiatedBy": {
+                    "type": "string",
+                    "enum": ["customer", "merchant"],
+                    "default": "customer"
+                  },
+                  "reasonType": {
+                    "type": "string",
+                    "enum": ["recurring", "unscheduled", "installment"]
+                  },
+                  "returnUrl": { 
+                    "type": "string", 
+                    "format": "uri" 
+                  },
+                  "draft": { 
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "isRetry": { 
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "threedsSessionId": { "type": "string" },
+                  "subscriptionId": { "type": "string" },
+                  "paymentFlowId": { "type": "string" },
+                  "paymentId": { "type": "string" }
+                },
+                "required": ["amount", "currency", "storeId"],
+                "additionalProperties": false
+              },
+              "examples": {
+                "basic": {
+                  "summary": "Basic payment processing",
+                  "value": {
+                    "paymentInstrumentId": "pi_123",
+                    "amount": 2999,
+                    "currency": "USD",
+                    "storeId": "store_123",
+                    "customerId": "cus_456",
+                    "mode": "purchase"
+                  }
+                },
+                "subscription": {
+                  "summary": "Subscription payment",
+                  "value": {
+                    "paymentInstrumentId": "pi_123",
+                    "amount": 2999,
+                    "currency": "USD",
+                    "storeId": "store_123",
+                    "customerId": "cus_456",
+                    "mode": "purchase",
+                    "initiatedBy": "merchant",
+                    "reasonType": "recurring",
+                    "subscriptionId": "sub_123",
+                    "isRetry": true
+                  }
+                },
+                "order": {
+                  "summary": "Order payment",
+                  "value": {
+                    "orderId": "ord_123",
+                    "paymentInstrumentId": "pi_123",
+                    "amount": 2999,
+                    "currency": "USD",
+                    "storeId": "store_123",
+                    "customerId": "cus_456",
+                    "mode": "purchase",
+                    "returnUrl": "https://example.com/return"
+                  }
+                },
+                "withCustomFlow": {
+                  "summary": "Payment with custom flow",
+                  "value": {
+                    "paymentInstrumentId": "pi_123",
+                    "amount": 2999,
+                    "currency": "USD",
+                    "storeId": "store_123",
+                    "customerId": "cus_456",
+                    "mode": "purchase",
+                    "paymentFlowId": "flow_custom_abc123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "examples": {
+                  "success": {
+                    "summary": "Successful payment processing",
+                    "value": {
+                      "payment": {
+                        "id": "pay_123",
+                        "amount": 2999,
+                        "currency": "USD",
+                        "status": "succeeded",
+                        "subStatus": "approved",
+                        "requireAction": "none"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": { "$ref": "#/components/responses/error" }
+        },
+        "security": [
+          { "bearerAuth": [] }
+        ]
+      }
+    },
     "/payments/refund": {
       "post": {
         "tags": ["Payments"],
@@ -1457,7 +1601,9 @@
     },
     "/plugins/deploy-from-marketplace": {
       "post": {
-        "tags": ["Plugins"],
+        "tags": [
+          "Plugins"
+        ],
         "summary": "Deploy plugin from marketplace",
         "description": "Deploy a plugin from the public marketplace",
         "operationId": "deployPluginFromMarketplace",
@@ -1468,11 +1614,21 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "pluginId": { "type": "string" },
-                  "pluginData": { "type": "string" },
-                  "storeId": { "type": "string" }
+                  "pluginId": {
+                    "type": "string"
+                  },
+                  "pluginData": {
+                    "type": "string"
+                  },
+                  "storeId": {
+                    "type": "string"
+                  }
                 },
-                "required": ["pluginId", "pluginData", "storeId"],
+                "required": [
+                  "pluginId",
+                  "pluginData",
+                  "storeId"
+                ],
                 "additionalProperties": false
               }
             }
@@ -1487,10 +1643,79 @@
               }
             }
           },
-          "default": { "$ref": "#/components/responses/error" }
+          "default": {
+            "$ref": "#/components/responses/error"
+          }
         },
         "security": [
-          { "bearerAuth": [] }
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/plugins/undeploy": {
+      "post": {
+        "tags": [
+          "Plugins"
+        ],
+        "summary": "Undeploy plugin",
+        "description": "Remove a deployed plugin and make it inactive",
+        "operationId": "undeployPlugin",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "deploymentId": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "deploymentId"
+                ],
+                "additionalProperties": false
+              },
+              "examples": {
+                "basic": {
+                  "summary": "Undeploy plugin",
+                  "value": {
+                    "pluginId": "sample-funnel-v1-abc123",
+                    "storeId": "store_123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "examples": {
+                  "success": {
+                    "summary": "Successful undeploy",
+                    "value": {
+                      "success": true,
+                      "message": "Plugin undeployed successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ]
       }
     },

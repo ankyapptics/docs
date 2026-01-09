@@ -1,0 +1,26 @@
+---
+title: "Undeploy plugin"
+api: "POST https://crm.apptics.ai/api/public/v1/plugins/undeploy"
+description: "Remove a deployed plugin and make it inactive"
+---
+
+> Remove a deployed plugin and make it inactive
+
+<ParamField body="deploymentId" type="string" required>
+  The unique identifier of the deployment to undeploy.
+</ParamField>
+
+## Examples
+
+<CodeGroup>
+
+```bash Undeploy Plugin
+curl -X POST https://crm.apptics.ai/api/public/v1/plugins/undeploy \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "deploymentId": "sample-funnel-v1-abc123"
+  }'
+```
+
+</CodeGroup>
