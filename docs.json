@@ -253,7 +253,8 @@
                 "group": "Plugins",
                 "pages": [
                   "api-reference/plugins/list-plugins-for-a-store",
-                  "api-reference/plugins/get-public-plugins"
+                  "api-reference/plugins/get-public-plugins",
+                  "api-reference/plugins/get-plugin-by-id"
                 ]
               },
               {

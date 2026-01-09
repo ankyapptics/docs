@@ -1525,6 +1525,44 @@
         ]
       }
     },
+    "/plugins/{id}": {
+      "get": {
+        "tags": [
+          "Plugins"
+        ],
+        "summary": "Get plugin by ID",
+        "description": "Retrieve a specific plugin by its ID",
+        "operationId": "getPluginById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
     "/plugins": {
       "get": {
         "tags": ["Plugins"],

@@ -1,0 +1,22 @@
+---
+title: "Get plugin by ID"
+api: "GET https://crm.apptics.ai/api/public/v1/plugins/{id}"
+description: "Retrieve a specific plugin by its ID"
+---
+
+> Retrieve a specific plugin by its ID
+
+<ParamField path="id" type="string" required>
+  The ID of the plugin to retrieve.
+</ParamField>
+
+## Examples
+
+<CodeGroup>
+
+```bash Get Plugin
+curl -X GET https://crm.apptics.ai/api/public/v1/plugins/plug_123 \
+  -H "Authorization: Bearer <token>"
+```
+
+</CodeGroup>
