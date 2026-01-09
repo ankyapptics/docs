@@ -1,0 +1,18 @@
+---
+title: "Delete block rule"
+api: "DELETE https://crm.apptics.ai/api/public/v1/block-rules/{id}"
+description: "Delete a block rule by ID."
+---
+
+> Delete a block rule by ID.
+
+<ParamField path="id" type="string" required>
+  The unique identifier of the block rule to delete.
+</ParamField>
+
+## Examples
+
+<CodeGroup>
+```bash Delete Rule
+curl -X DELETE [https://crm.apptics.ai/api/public/v1/block-rules/rule_123](https://crm.apptics.ai/api/public/v1/block-rules/rule_123) \
+  -H "Authorization: Bearer <token>"
