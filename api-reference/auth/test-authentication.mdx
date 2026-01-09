@@ -4,31 +4,17 @@ api: "POST https://crm.apptics.ai/api/public/v1/auth/test"
 description: "Test if the API key is valid and return user information"
 ---
 
-### Headers
-
-<ParamField header="Authorization" type="string" required>
-  Enter your API key as: `Bearer your-api-key`
-</ParamField>
+> Test if the API key is valid and return user information
 
 ### Body
 
-<ParamField body="body" type="object">
-  The body is of type `object`.
+<ParamField body="{}" type="object">
 </ParamField>
 
-### Response
+### Examples
 
-<ResponseField name="success" type="boolean">
-  Indicates if the request was successful
-</ResponseField>
-
-<ResponseField name="user" type="object">
-  The user object
-</ResponseField>
-
-<ResponseExample>
-
-```json Response
+<CodeGroup>
+```json Success
 {
   "success": true,
   "user": {
@@ -45,6 +31,3 @@ description: "Test if the API key is valid and return user information"
     "isAccountOwner": true
   }
 }
-```
-
-</ResponseExample>
