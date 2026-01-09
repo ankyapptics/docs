@@ -12,6 +12,39 @@ description: "Test if the API key is valid and return user information"
   
 </ParamField>
 
+### Response
+
+<ResponseField name="success" type="boolean">
+  Indicates if the request was successful
+</ResponseField>
+
+<ResponseField name="user" type="object">
+  The user object
+</ResponseField>
+
+<ResponseExample>
+
+```json Response
+{
+  "success": true,
+  "user": {
+    "id": "user_123",
+    "orgId": "org_456",
+    "permissions": [
+      "org:admin"
+    ],
+    "account": {
+      "id": "acc_789",
+      "name": "My Account"
+    },
+    "isServiceAccount": false,
+    "isAccountOwner": true
+  }
+}
+```
+
+</ResponseExample>
+
 ### Examples
 
 <CodeGroup>
