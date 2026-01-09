@@ -1,0 +1,30 @@
+---
+title: "Get deployment details (V2)"
+api: "POST https://crm.apptics.ai/api/public/v1/plugins/v2/deployment/details"
+description: "Get detailed information about a specific deployment with instances and routes"
+---
+
+> Get detailed information about a specific deployment with instances and routes
+
+### Body
+
+<ParamField body="deploymentId" type="string" required>
+  
+</ParamField>
+
+<ParamField body="storeId" type="string" required>
+  
+</ParamField>
+
+### Examples
+
+<CodeGroup>
+
+```json Basic
+{
+  "deploymentId": "plugin_deployment_abc123",
+  "storeId": "store_abc123"
+}
+```
+
+</CodeGroup>

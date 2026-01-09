@@ -273,7 +273,8 @@
                   "api-reference/plugins-v2/list-verified-domains-v2",
                   "api-reference/plugins-v2/list-mount-points-v2",
                   "api-reference/plugins-v2/list-instances-v2",
-                  "api-reference/plugins-v2/get-plugin-details-v2"
+                  "api-reference/plugins-v2/get-plugin-details-v2",
+                  "api-reference/plugins-v2/get-deployment-details-v2"
                 ]
               },
               {
