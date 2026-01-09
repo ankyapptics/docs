@@ -1,0 +1,36 @@
+---
+title: "Deploy plugin from marketplace"
+api: "POST https://crm.apptics.ai/api/public/v1/plugins/deploy-from-marketplace"
+description: "Deploy a plugin from the public marketplace"
+---
+
+> Deploy a plugin from the public marketplace
+
+<ParamField body="pluginId" type="string" required>
+  The unique identifier of the plugin to deploy.
+</ParamField>
+
+<ParamField body="pluginData" type="string" required>
+  JSON string containing configuration data for the plugin.
+</ParamField>
+
+<ParamField body="storeId" type="string" required>
+  The ID of the store where the plugin will be deployed.
+</ParamField>
+
+## Examples
+
+<CodeGroup>
+
+```bash Deploy from Marketplace
+curl -X POST https://crm.apptics.ai/api/public/v1/plugins/deploy-from-marketplace \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "pluginId": "marketplace-plugin-123",
+    "pluginData": "{\"config\": \"value\"}",
+    "storeId": "store_123"
+  }'
+```
+
+</CodeGroup>

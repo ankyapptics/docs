@@ -1513,12 +1513,90 @@
         ]
       }
     },
+    "/plugins/deploy-from-marketplace": {
+      "post": {
+        "tags": ["Plugins"],
+        "summary": "Deploy plugin from marketplace",
+        "description": "Deploy a plugin from the public marketplace",
+        "operationId": "deployPluginFromMarketplace",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "pluginId": { "type": "string" },
+                  "pluginData": { "type": "string" },
+                  "storeId": { "type": "string" }
+                },
+                "required": ["pluginId", "pluginData", "storeId"],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "default": { "$ref": "#/components/responses/error" }
+        },
+        "security": [
+          { "bearerAuth": [] }
+        ]
+      }
+    },
     "/plugins/list": {
       "post": {
         "tags": ["Plugins"],
         "summary": "List plugins for a store",
         "description": "Get all plugins associated with a specific store",
         "operationId": "listPluginsForStore",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "storeId": { "type": "string" }
+                },
+                "required": ["storeId"],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "security": [
+          { "bearerAuth": [] }
+        ]
+      }
+    },
+    "/plugins/deployments": {
+      "post": {
+        "tags": ["Plugins"],
+        "summary": "List plugin deployments",
+        "description": "Get all deployments for plugins in a store",
+        "operationId": "listPluginDeployments",
         "requestBody": {
           "required": true,
           "content": {
