@@ -50,11 +50,11 @@ description: "Create a new block rule for fraud prevention."
   Specific Payment ID to block.
 </ParamField>
 
-<ParamField body="autoCreated" type="boolean" default="false">
+<ParamField body="autoCreated" default="false" type="boolean">
   Whether the rule was automatically created.
 </ParamField>
 
-<ParamField body="isPermanent" type="boolean" default="false">
+<ParamField body="isPermanent" default="false" type="boolean">
   If true, the rule does not expire.
 </ParamField>
 
@@ -69,8 +69,9 @@ description: "Create a new block rule for fraud prevention."
 ## Examples
 
 <CodeGroup>
+
 ```bash Create Rule
-curl -X POST [https://crm.apptics.ai/api/public/v1/block-rules](https://crm.apptics.ai/api/public/v1/block-rules) \
+curl -X POST https://crm.apptics.ai/api/public/v1/block-rules \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -80,3 +81,6 @@ curl -X POST [https://crm.apptics.ai/api/public/v1/block-rules](https://crm.appt
     "value": ["XX", "YY"],
     "enabled": true
   }'
+```
+
+</CodeGroup>
