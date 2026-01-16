@@ -278,49 +278,49 @@
                 ]
               },
               {
-                "group": "Domains",
+                "group": "Domains (Docs Under Development)",
                 "pages": [
                   "api-reference/domains/list"
                 ]
               },
               {
-                "group": "Orders",
+                "group": "Orders (Docs Under Development)",
                 "pages": [
                   "api-reference/orders/list"
                 ]
               },
               {
-                "group": "Subscriptions",
+                "group": "Subscriptions (Docs Under Development)",
                 "pages": [
                   "api-reference/subscriptions/list"
                 ]
               },
               {
-                "group": "Products",
+                "group": "Products (Docs Under Development)",
                 "pages": [
                   "api-reference/products/list"
                 ]
               },
               {
-                "group": "Events",
+                "group": "Events (Docs Under Development)",
                 "pages": [
                   "api-reference/events/list"
                 ]
               },
               {
-                "group": "Customers",
+                "group": "Customers (Docs Under Development)",
                 "pages": [
                   "api-reference/customers/list"
                 ]
               },
               {
-                "group": "Payment Instruments",
+                "group": "Payment Instruments (Docs Under Development)",
                 "pages": [
                   "api-reference/payment-instruments/list"
                 ]
               },
               {
-                "group": "Stores",
+                "group": "Stores (Docs Under Development)",
                 "pages": [
                   "api-reference/stores/list"
                 ]
