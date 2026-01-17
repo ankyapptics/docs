@@ -1,0 +1,86 @@
+---
+title: "Swap instance (V2)"
+api: "POST https://crm.apptics.ai/api/public/v1/plugins/v2/swap"
+description: "Swap an instance (atomic unmount + mount for switching)"
+---
+
+> Swap an instance (atomic unmount + mount for switching)
+
+### Body
+
+<ParamField body="currentDeploymentId" type="string" required>
+  The ID of the deployment currently mounted.
+</ParamField>
+
+<ParamField body="currentDeploymentInstanceId" type="string" required>
+  The ID of the instance currently mounted.
+</ParamField>
+
+<ParamField body="storeId" type="string" required>
+  The unique identifier of the store.
+</ParamField>
+
+<ParamField body="targetDeploymentId" type="string" required>
+  The ID of the new deployment to swap to.
+</ParamField>
+
+<ParamField body="targetDeploymentInstanceId" type="string" required>
+  The ID of the new instance to swap to.
+</ParamField>
+
+<ParamField body="hostname" type="string">
+  The hostname where the swap should occur.
+</ParamField>
+
+<ParamField body="alias" type="string">
+  The alias where the swap should occur.
+</ParamField>
+
+<ParamField body="customDomain" type="string">
+  The custom domain where the swap should occur.
+</ParamField>
+
+<ParamField body="basePath" default="/" type="string">
+  The base path for the mount.
+</ParamField>
+
+<ParamField body="matcher" type="string">
+  Regex pattern to match specific requests.
+</ParamField>
+
+<ParamField body="excluder" type="string">
+  Regex pattern to exclude specific requests.
+</ParamField>
+
+<ParamField body="routeId" type="string">
+  Specific route ID to swap.
+</ParamField>
+
+<ParamField body="pathRemap" type="object">
+  Configuration to remap paths.
+
+  <Expandable title="properties">
+    <ParamField body="from" type="string" required>
+      Pattern to remap from.
+    </ParamField>
+    <ParamField body="to" type="string" required>
+      Target path to remap to.
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+### Examples
+
+<CodeGroup>
+
+```json Swap instances
+{
+  "currentDeploymentId": "plugin_deployment_old123",
+  "currentDeploymentInstanceId": "plugin_instance_old123",
+  "targetDeploymentId": "plugin_deployment_new456",
+  "targetDeploymentInstanceId": "plugin_instance_new456",
+  "storeId": "store_abc123"
+}
+```
+
+</CodeGroup>

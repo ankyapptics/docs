@@ -2175,6 +2175,119 @@
         ]
       }
     },
+    "/plugins/v2/swap": {
+      "post": {
+        "tags": [
+          "Plugins V2"
+        ],
+        "summary": "Swap instance (V2)",
+        "description": "Swap an instance (atomic unmount + mount for switching)",
+        "operationId": "post-api-public-v1-plugins-v2-swap",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "currentDeploymentId": {
+                    "type": "string"
+                  },
+                  "currentDeploymentInstanceId": {
+                    "type": "string"
+                  },
+                  "storeId": {
+                    "type": "string"
+                  },
+                  "hostname": {
+                    "type": "string"
+                  },
+                  "alias": {
+                    "type": "string"
+                  },
+                  "customDomain": {
+                    "type": "string"
+                  },
+                  "basePath": {
+                    "type": "string",
+                    "default": "/"
+                  },
+                  "targetDeploymentId": {
+                    "type": "string"
+                  },
+                  "targetDeploymentInstanceId": {
+                    "type": "string"
+                  },
+                  "matcher": {
+                    "type": "string"
+                  },
+                  "excluder": {
+                    "type": "string"
+                  },
+                  "pathRemap": {
+                    "type": "object",
+                    "properties": {
+                      "from": {
+                        "type": "string"
+                      },
+                      "to": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "from",
+                      "to"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "routeId": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "currentDeploymentId",
+                  "currentDeploymentInstanceId",
+                  "storeId",
+                  "targetDeploymentId",
+                  "targetDeploymentInstanceId"
+                ],
+                "additionalProperties": false
+              },
+              "examples": {
+                "basic": {
+                  "summary": "Swap instances",
+                  "value": {
+                    "currentDeploymentId": "plugin_deployment_old123",
+                    "currentDeploymentInstanceId": "plugin_instance_old123",
+                    "targetDeploymentId": "plugin_deployment_new456",
+                    "targetDeploymentInstanceId": "plugin_instance_new456",
+                    "storeId": "store_abc123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
     "/plugins/list": {
       "post": {
         "tags": ["Plugins"],
