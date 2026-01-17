@@ -1,0 +1,126 @@
+---
+title: "Mount plugin (V2)"
+api: "POST https://crm.apptics.ai/api/public/v1/plugins/v2/mount"
+description: "Mount a deployment to a target (hostname, alias, or custom domain)"
+---
+
+> Mount a deployment to a target (hostname, alias, or custom domain)
+
+### Body
+
+<ParamField body="deploymentId" type="string" required>
+  The unique identifier of the deployment.
+</ParamField>
+
+<ParamField body="storeId" type="string" required>
+  The unique identifier of the store.
+</ParamField>
+
+<ParamField body="deploymentInstanceId" type="string">
+  The specific instance ID of the deployment.
+</ParamField>
+
+<ParamField body="hostname" type="string">
+  The target hostname to mount the plugin to.
+</ParamField>
+
+<ParamField body="alias" type="string">
+  An alias for the mount point. Must match pattern `^[a-z0-9-]+$`.
+</ParamField>
+
+<ParamField body="customDomain" type="string">
+  A custom domain to mount the deployment to.
+</ParamField>
+
+<ParamField body="basePath" default="/" type="string">
+  The base path for the mount point.
+</ParamField>
+
+<ParamField body="matcher" type="string">
+  A regex pattern to match specific requests.
+</ParamField>
+
+<ParamField body="excluder" type="string">
+  A regex pattern to exclude specific requests.
+</ParamField>
+
+<ParamField body="priority" type="number">
+  Priority order for the mount point.
+</ParamField>
+
+<ParamField body="force" default="false" type="boolean">
+  Force the mount operation.
+</ParamField>
+
+<ParamField body="isPreview" type="boolean">
+  Indicates if this is a preview mount.
+</ParamField>
+
+<ParamField body="config" type="object">
+  Additional configuration object.
+</ParamField>
+
+<ParamField body="pathRemap" type="object">
+  Configuration to remap paths.
+
+  <Expandable title="properties">
+    <ParamField body="from" type="string" required>
+      Pattern to remap from (must start with /).
+    </ParamField>
+    <ParamField body="to" type="string" required>
+      Target path to remap to (must start with /).
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+<ParamField body="metadata" type="object">
+  Arbitrary metadata key-value pairs.
+</ParamField>
+
+<ParamField body="htmlInjections" type="array">
+  List of HTML injections.
+
+  <Expandable title="items">
+    <ParamField body="metadataKey" type="string" required>
+      The metadata key to reference.
+    </ParamField>
+    <ParamField body="tagName" type="string" required>
+      The HTML tag name.
+    </ParamField>
+    <ParamField body="windowVariable" type="string">
+      Window variable name.
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+<ParamField body="splitConfig" type="object">
+  Configuration for split testing or geo-routing.
+
+  <Expandable title="properties">
+    <ParamField body="type" type="string" required>
+      Type of split: `weighted` or `geo`.
+    </ParamField>
+    <ParamField body="stickyDuration" default="604800" type="number">
+      Duration in seconds for sticky sessions.
+    </ParamField>
+    <ParamField body="instances" type="array" required>
+      List of instances involved in the split.
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+### Examples
+
+<CodeGroup>
+
+```json Mount to hostname
+{
+  "deploymentId": "plugin_deployment_abc123",
+  "storeId": "store_abc123",
+  "hostname": "cdn.example.com",
+  "basePath": "/",
+  "matcher": ".*"
+}
+```
+
+</CodeGroup>

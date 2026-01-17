@@ -1813,6 +1813,221 @@
               }
             }
           },
+          "/plugins/v2/mount": {
+      "post": {
+        "tags": [
+          "Plugins V2"
+        ],
+        "summary": "Mount plugin (V2)",
+        "description": "Mount a deployment to a target (hostname, alias, or custom domain)",
+        "operationId": "mountPluginV2",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "deploymentId": {
+                    "type": "string"
+                  },
+                  "deploymentInstanceId": {
+                    "type": "string"
+                  },
+                  "storeId": {
+                    "type": "string"
+                  },
+                  "hostname": {
+                    "type": "string"
+                  },
+                  "alias": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9-]+$"
+                  },
+                  "customDomain": {
+                    "type": "string"
+                  },
+                  "basePath": {
+                    "type": "string",
+                    "default": "/"
+                  },
+                  "matcher": {
+                    "type": "string"
+                  },
+                  "excluder": {
+                    "type": "string"
+                  },
+                  "priority": {
+                    "type": "number"
+                  },
+                  "config": {
+                    "type": "object",
+                    "additionalProperties": {}
+                  },
+                  "force": {
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "isPreview": {
+                    "type": "boolean"
+                  },
+                  "pathRemap": {
+                    "type": "object",
+                    "properties": {
+                      "from": {
+                        "type": "string",
+                        "pattern": "^\\/"
+                      },
+                      "to": {
+                        "type": "string",
+                        "pattern": "^\\/"
+                      }
+                    },
+                    "required": [
+                      "from",
+                      "to"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "metadata": {
+                    "type": "object",
+                    "additionalProperties": {}
+                  },
+                  "htmlInjections": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "metadataKey": {
+                          "type": "string"
+                        },
+                        "tagName": {
+                          "type": "string"
+                        },
+                        "windowVariable": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "metadataKey",
+                        "tagName"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "splitConfig": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "weighted",
+                          "geo"
+                        ]
+                      },
+                      "instances": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "instanceId": {
+                              "type": "string"
+                            },
+                            "weight": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 100
+                            },
+                            "regions": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "metadata": {
+                              "type": "object",
+                              "additionalProperties": {}
+                            }
+                          },
+                          "required": [
+                            "instanceId"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "minItems": 2
+                      },
+                      "stickyDuration": {
+                        "type": "number",
+                        "default": 604800
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "instances"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "deploymentId",
+                  "storeId"
+                ],
+                "additionalProperties": false
+              },
+              "examples": {
+                "basic": {
+                  "summary": "Mount to hostname",
+                  "value": {
+                    "deploymentId": "plugin_deployment_abc123",
+                    "storeId": "store_abc123",
+                    "hostname": "cdn.example.com",
+                    "basePath": "/",
+                    "matcher": ".*"
+                  }
+                },
+                "customDomain": {
+                  "summary": "Mount to custom domain",
+                  "value": {
+                    "deploymentId": "plugin_deployment_abc123",
+                    "storeId": "store_abc123",
+                    "customDomain": "checkout.example.com",
+                    "basePath": "/checkout",
+                    "matcher": "/checkout/.*"
+                  }
+                },
+                "alias": {
+                  "summary": "Mount to alias",
+                  "value": {
+                    "deploymentId": "plugin_deployment_abc123",
+                    "storeId": "store_abc123",
+                    "alias": "checkout",
+                    "basePath": "/"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
           "default": {
             "$ref": "#/components/responses/error"
           }
