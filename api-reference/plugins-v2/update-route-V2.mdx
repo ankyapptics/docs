@@ -1,0 +1,69 @@
+---
+title: "Update route (V2)"
+api: "POST https://crm.apptics.ai/api/public/v1/plugins/v2/route/update"
+description: "Update route matcher, excluder, and priority for an existing instance"
+---
+
+> Update route matcher, excluder, and priority for an existing instance
+
+### Body
+
+<ParamField body="deploymentId" type="string" required>
+  The unique identifier of the deployment.
+</ParamField>
+
+<ParamField body="storeId" type="string" required>
+  The unique identifier of the store.
+</ParamField>
+
+<ParamField body="matcher" type="string" required>
+  Regex pattern to match specific requests.
+</ParamField>
+
+<ParamField body="deploymentInstanceId" type="string">
+  The unique identifier of the deployment instance.
+</ParamField>
+
+<ParamField body="routeId" type="string">
+  The specific route ID to update.
+</ParamField>
+
+<ParamField body="hostname" type="string">
+  The hostname associated with the route.
+</ParamField>
+
+<ParamField body="alias" type="string">
+  The alias associated with the route.
+</ParamField>
+
+<ParamField body="customDomain" type="string">
+  The custom domain associated with the route.
+</ParamField>
+
+<ParamField body="basePath" default="/" type="string">
+  The base path for the route.
+</ParamField>
+
+<ParamField body="excluder" type="string">
+  Regex pattern to exclude specific requests.
+</ParamField>
+
+<ParamField body="priority" type="number">
+  Priority order for the route.
+</ParamField>
+
+### Examples
+
+<CodeGroup>
+
+```json Update route matcher
+{
+  "deploymentInstanceId": "plugin_instance_abc123",
+  "storeId": "store_abc123",
+  "matcher": "/checkout/.*",
+  "excluder": "/checkout/admin/.*",
+  "priority": 10
+}
+```
+
+</CodeGroup>

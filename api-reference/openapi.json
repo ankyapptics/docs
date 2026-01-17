@@ -2039,6 +2039,98 @@
         ]
       }
     },
+    "/plugins/v2/route/update": {
+      "post": {
+        "tags": [
+          "Plugins V2"
+        ],
+        "summary": "Update route (V2)",
+        "description": "Update route matcher, excluder, and priority for an existing instance",
+        "operationId": "post-api-public-v1-plugins-v2-route-update",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "deploymentId": {
+                    "type": "string"
+                  },
+                  "deploymentInstanceId": {
+                    "type": "string"
+                  },
+                  "routeId": {
+                    "type": "string"
+                  },
+                  "storeId": {
+                    "type": "string"
+                  },
+                  "hostname": {
+                    "type": "string"
+                  },
+                  "alias": {
+                    "type": "string"
+                  },
+                  "customDomain": {
+                    "type": "string"
+                  },
+                  "basePath": {
+                    "type": "string",
+                    "default": "/"
+                  },
+                  "matcher": {
+                    "type": "string"
+                  },
+                  "excluder": {
+                    "type": "string"
+                  },
+                  "priority": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "deploymentId",
+                  "storeId",
+                  "matcher"
+                ],
+                "additionalProperties": false
+              },
+              "examples": {
+                "basic": {
+                  "summary": "Update route matcher",
+                  "value": {
+                    "deploymentInstanceId": "plugin_instance_abc123",
+                    "storeId": "store_abc123",
+                    "matcher": "/checkout/.*",
+                    "excluder": "/checkout/admin/.*",
+                    "priority": 10
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
     "/plugins/v2/unmount": {
       "post": {
         "tags": [
