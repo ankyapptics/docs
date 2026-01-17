@@ -2039,6 +2039,77 @@
         ]
       }
     },
+    "/plugins/v2/unmount": {
+      "post": {
+        "tags": [
+          "Plugins V2"
+        ],
+        "summary": "Remove route(s) from instance (V2)",
+        "description": "Remove route(s) from an instance. If routeId is provided, removes that specific route. If routeId is not provided, removes ALL routes for the instance (complete unmount).",
+        "operationId": "post-api-public-v1-plugins-v2-unmount",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "instanceId": {
+                    "type": "string"
+                  },
+                  "storeId": {
+                    "type": "string"
+                  },
+                  "routeId": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "instanceId",
+                  "storeId"
+                ],
+                "additionalProperties": false
+              },
+              "examples": {
+                "removeAllRoutes": {
+                  "summary": "Remove all routes from instance (complete unmount)",
+                  "value": {
+                    "instanceId": "plugin_instance_abc123",
+                    "storeId": "store_abc123"
+                  }
+                },
+                "removeSpecificRoute": {
+                  "summary": "Remove specific route from instance",
+                  "value": {
+                    "instanceId": "plugin_instance_abc123",
+                    "storeId": "store_abc123",
+                    "routeId": "route_abc123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
     "/plugins/undeploy": {
       "post": {
         "tags": [

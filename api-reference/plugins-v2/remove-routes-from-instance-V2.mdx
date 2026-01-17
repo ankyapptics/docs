@@ -1,0 +1,42 @@
+---
+title: "Remove route(s) from instance (V2)"
+api: "POST https://crm.apptics.ai/api/public/v1/plugins/v2/unmount"
+---
+
+> Remove route(s) from an instance. If routeId is provided, removes that specific route. If routeId is not provided, removes ALL routes for the instance (complete unmount).
+
+### Body
+
+<ParamField body="instanceId" type="string" required>
+  The unique identifier of the plugin instance.
+</ParamField>
+
+<ParamField body="storeId" type="string" required>
+  The unique identifier of the store.
+</ParamField>
+
+<ParamField body="routeId" type="string">
+  The specific route ID to remove. If omitted, all routes for the instance will be removed.
+</ParamField>
+
+### Examples
+
+<CodeGroup>
+
+```json Remove all routes
+{
+  "instanceId": "plugin_instance_abc123",
+  "storeId": "store_abc123"
+}
+```
+
+
+```json Remove specific route
+{
+  "instanceId": "plugin_instance_abc123",
+  "storeId": "store_abc123",
+  "routeId": "route_abc123"
+}
+```
+
+</CodeGroup>
