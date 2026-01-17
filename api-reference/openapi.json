@@ -1813,6 +1813,87 @@
               }
             }
           },
+          "/plugins/v2/instantiate": {
+      "post": {
+        "tags": [
+          "Plugins V2"
+        ],
+        "summary": "Instantiate plugin (V2)",
+        "description": "Create a new instance of a deployment with a given config (without mounting)",
+        "operationId": "post-api-public-v1-plugins-v2-instantiate",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "deploymentId": {
+                    "type": "string"
+                  },
+                  "storeId": {
+                    "type": "string"
+                  },
+                  "config": {
+                    "type": "object",
+                    "additionalProperties": {}
+                  },
+                  "presetName": {
+                    "type": "string"
+                  },
+                  "isPreview": {
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "reuseIfExists": {
+                    "type": "boolean",
+                    "default": false
+                  }
+                },
+                "required": [
+                  "deploymentId",
+                  "storeId",
+                  "config"
+                ],
+                "additionalProperties": false
+              },
+              "examples": {
+                "basic": {
+                  "summary": "Create instance",
+                  "value": {
+                    "deploymentId": "plugin_deployment_abc123",
+                    "storeId": "store_abc123",
+                    "name": "Production Instance",
+                    "config": {
+                      "primaryColor": "#ff0000",
+                      "apiKey": "test-key"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
           "/plugins/v2/mount": {
       "post": {
         "tags": [

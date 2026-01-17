@@ -278,7 +278,8 @@
                   "api-reference/plugins-v2/mount-plugin-v2",
                   "api-reference/plugins-v2/remove-routes-from-instance-V2",
                   "api-reference/plugins-v2/swap-instance-V2",
-                  "api-reference/plugins-v2/update-route-V2"
+                  "api-reference/plugins-v2/update-route-V2",
+                  "api-reference/plugins-v2/instantiate-plugin-V2"
                 ]
               },
               {

@@ -1,0 +1,50 @@
+---
+title: "Instantiate plugin (V2)"
+api: "POST https://crm.apptics.ai/api/public/v1/plugins/v2/instantiate"
+---
+
+> Create a new instance of a deployment with a given config (without mounting)
+
+### Body
+
+<ParamField body="deploymentId" type="string" required>
+  The unique identifier of the deployment.
+</ParamField>
+
+<ParamField body="storeId" type="string" required>
+  The unique identifier of the store.
+</ParamField>
+
+<ParamField body="config" type="object" required>
+  Configuration object for the instance.
+</ParamField>
+
+<ParamField body="presetName" type="string">
+  Name of a configuration preset to use.
+</ParamField>
+
+<ParamField body="isPreview" default="false" type="boolean">
+  Indicates if this is a preview instance.
+</ParamField>
+
+<ParamField body="reuseIfExists" default="false" type="boolean">
+  If true, returns existing instance with same config instead of creating a new one.
+</ParamField>
+
+### Examples
+
+<CodeGroup>
+
+```json Create instance
+{
+  "deploymentId": "plugin_deployment_abc123",
+  "storeId": "store_abc123",
+  "name": "Production Instance",
+  "config": {
+    "primaryColor": "#ff0000",
+    "apiKey": "test-key"
+  }
+}
+```
+
+</CodeGroup>
