@@ -303,7 +303,8 @@
               {
                 "group": "Products (Docs Under Development)",
                 "pages": [
-                  "api-reference/products/list"
+                  "api-reference/products/list",
+                  "api-reference/products/create-products"
                 ]
               },
               {

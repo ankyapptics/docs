@@ -1,0 +1,116 @@
+---
+title: "Create product"
+api: "POST https://crm.apptics.ai/api/public/v1/products/create"
+description: "Create a new product with variants and prices for a specific store"
+---
+
+> Create a new product with variants and prices for a specific store
+
+### Body
+
+<ParamField body="storeId" type="string" required>
+  The unique identifier of the store.
+</ParamField>
+
+<ParamField body="name" type="string" required>
+  The name of the product.
+</ParamField>
+
+<ParamField body="description" type="string">
+  The description of the product.
+</ParamField>
+
+<ParamField body="active" type="boolean">
+  Whether the product is active.
+</ParamField>
+
+<ParamField body="isShippable" type="boolean">
+  Whether the product requires shipping.
+</ParamField>
+
+<ParamField body="isTaxable" type="boolean">
+  Whether the product is taxable.
+</ParamField>
+
+<ParamField body="unitLabel" type="string">
+  Label for the unit (e.g., "bottle", "box").
+</ParamField>
+
+<ParamField body="accountingCode" type="string">
+  Accounting code for the product.
+</ParamField>
+
+<ParamField body="variants" type="array">
+  List of product variants.
+  <Expandable title="items">
+    <ParamField body="name" type="string" required>
+      Variant name.
+    </ParamField>
+    <ParamField body="sku" type="string">
+      Stock Keeping Unit.
+    </ParamField>
+    <ParamField body="grams" type="number">
+      Weight in grams.
+    </ParamField>
+    <ParamField body="active" type="boolean">
+      Whether the variant is active.
+    </ParamField>
+    <ParamField body="prices" type="array">
+      Pricing configurations for this variant.
+      <Expandable title="items">
+        <ParamField body="recurring" type="boolean" required>
+          Is this a recurring price (subscription)?
+        </ParamField>
+        <ParamField body="interval" type="string">
+          Billing interval (e.g., "month", "year").
+        </ParamField>
+        <ParamField body="currencyOptions" type="object" required>
+          Object mapping currency codes (e.g., USD) to price details.
+        </ParamField>
+      </Expandable>
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+### Examples
+
+<CodeGroup>
+```json Create product with variants
+{
+  "storeId": "store_123",
+  "name": "Premium Joint Support Supplement",
+  "description": "Advanced joint support with natural ingredients",
+  "active": true,
+  "isShippable": true,
+  "isTaxable": true,
+  "variants": [
+    {
+      "name": "Regular Bottle - 1 Month Supply",
+      "sku": "JSS-REG-001",
+      "grams": 100,
+      "active": true,
+      "default": true,
+      "imageUrl": "[https://example.com/product-image.jpg](https://example.com/product-image.jpg)",
+      "prices": [
+        {
+          "recurring": false,
+          "billingTiming": "usage",
+          "intervalCount": 1,
+          "default": true,
+          "currencyOptions": {
+            "USD": {
+              "amount": 2999,
+              "currency": "USD"
+            },
+            "EUR": {
+              "amount": 2699,
+              "currency": "EUR"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
+```
+</CodeGroup>
