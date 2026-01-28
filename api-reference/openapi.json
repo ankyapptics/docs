@@ -3182,6 +3182,80 @@
         }
       }
     },
+    "/customers/{customerId}": {
+      "get": {
+        "tags": [
+          "Customers"
+        ],
+        "summary": "Get customer by ID",
+        "description": "Get customer details including payment instruments and device info",
+        "operationId": "get-api-public-v1-customers-{customerId}",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "examples": {
+                  "success": {
+                    "summary": "Customer details",
+                    "value": {
+                      "id": "cus_123",
+                      "email": "john@example.com",
+                      "firstName": "John",
+                      "lastName": "Doe",
+                      "storeId": "store_123",
+                      "createdAt": "2024-03-20T10:30:00Z",
+                      "store": {
+                        "id": "store_123",
+                        "name": "My Store"
+                      },
+                      "paymentInstruments": [
+                        {
+                          "id": "pi_123",
+                          "type": "card",
+                          "isActive": true,
+                          "isDefault": false,
+                          "card": {
+                            "last4": "1234",
+                            "brand": "visa",
+                            "expYear": 2025,
+                            "expMonth": 12
+                          }
+                        }
+                      ],
+                      "device": {
+                        "browser": "Chrome",
+                        "os": "macOS"
+                      },
+                      "tags": [
+                        "segment:vip",
+                        "source:facebook"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
     "/payment-instruments": {
       "get": {
         "tags": ["Payment Instruments"],

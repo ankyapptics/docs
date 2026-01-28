@@ -1,0 +1,54 @@
+---
+title: "Get customer by ID"
+api: "GET https://crm.apptics.ai/api/public/v1/customers/{customerId}"
+description: "Get customer details including payment instruments and device info"
+---
+
+> Get customer details including payment instruments and device info
+
+### Path
+
+<ParamField path="customerId" type="string" required>
+  The unique identifier of the customer.
+</ParamField>
+
+### Response
+
+<CodeGroup>
+```json Customer details
+{
+  "id": "cus_123",
+  "email": "john@example.com",
+  "firstName": "John",
+  "lastName": "Doe",
+  "storeId": "store_123",
+  "createdAt": "2024-03-20T10:30:00Z",
+  "store": {
+    "id": "store_123",
+    "name": "My Store"
+  },
+  "paymentInstruments": [
+    {
+      "id": "pi_123",
+      "type": "card",
+      "isActive": true,
+      "isDefault": false,
+      "card": {
+        "last4": "1234",
+        "brand": "visa",
+        "expYear": 2025,
+        "expMonth": 12
+      }
+    }
+  ],
+  "device": {
+    "browser": "Chrome",
+    "os": "macOS"
+  },
+  "tags": [
+    "segment:vip",
+    "source:facebook"
+  ]
+}
+```
+</CodeGroup>
