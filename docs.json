@@ -313,10 +313,16 @@
                 ]
               },
               {
-                "group": "Customers (Docs Under Development)",
+                "group": "Customers",
                 "pages": [
                   "api-reference/customers/list-customers",
                   "api-reference/customers/get-customer-by-id"
+                ]
+              },
+              {
+                "group": "Products)",
+                "pages": [
+                  "api-reference/products/list-products"
                 ]
               },
               {

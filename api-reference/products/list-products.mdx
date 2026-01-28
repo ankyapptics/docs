@@ -1,0 +1,67 @@
+---
+title: "List products"
+api: "POST https://crm.apptics.ai/api/public/v1/products/list"
+description: "Get all products for a specific store with filtering, sorting, and pagination"
+---
+
+> Get all products for a specific store with filtering, sorting, and pagination
+
+### Body
+
+<ParamField body="storeId" type="string" required>
+  The unique identifier of the store.
+</ParamField>
+
+<ParamField body="page" type="integer" required>
+  The page number to retrieve.
+</ParamField>
+
+<ParamField body="per_page" type="integer" default="30">
+  Number of items per page. Minimum: 10, Maximum: 1000.
+</ParamField>
+
+<ParamField body="sort" type="string" default="created_at">
+  Field to sort by. Options: `name`, `description`, `price`, `created_at`.
+</ParamField>
+
+<ParamField body="sort_order" type="string" default="desc">
+  Sort direction. Options: `asc`, `desc`.
+</ParamField>
+
+<ParamField body="includeVariants" type="boolean" default="false">
+  Whether to include product variants in the response.
+</ParamField>
+
+<ParamField body="filters" type="object">
+  Filtering criteria.
+  <Expandable title="properties">
+    <ParamField body="name" type="string">
+      Filter products by name.
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+### Examples
+
+<CodeGroup>
+```json Basic product list
+{
+  "storeId": "store_123",
+  "page": 1,
+  "per_page": 20
+}
+```
+
+```json With advanced filtering
+{
+  "storeId": "store_123",
+  "page": 1,
+  "per_page": 50,
+  "sort": "name",
+  "sort_order": "asc",
+  "filters": {
+    "name": "premium"
+  }
+}
+```
+</CodeGroup>

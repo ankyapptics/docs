@@ -3155,6 +3155,229 @@
         }
       }
     },
+    "/products/list": {
+      "post": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "List products",
+        "description": "Get all products for a specific store with filtering, sorting, and pagination",
+        "operationId": "post-api-public-v1-products-list",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "storeId": {
+                    "type": "string"
+                  },
+                  "page": {
+                    "type": "integer",
+                    "nullable": true
+                  },
+                  "per_page": {
+                    "type": "integer",
+                    "minimum": 10,
+                    "maximum": 1000,
+                    "default": 30,
+                    "nullable": true
+                  },
+                  "sort": {
+                    "type": "string",
+                    "enum": [
+                      "name",
+                      "description",
+                      "price",
+                      "created_at"
+                    ],
+                    "default": "created_at",
+                    "nullable": true
+                  },
+                  "sort_order": {
+                    "type": "string",
+                    "enum": [
+                      "asc",
+                      "desc"
+                    ],
+                    "default": "desc",
+                    "nullable": true
+                  },
+                  "filters": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "includeVariants": {
+                    "type": "boolean",
+                    "default": false,
+                    "nullable": true
+                  }
+                },
+                "required": [
+                  "storeId",
+                  "page"
+                ],
+                "additionalProperties": false
+              },
+              "examples": {
+                "basic": {
+                  "summary": "Basic product list",
+                  "value": {
+                    "storeId": "store_123",
+                    "page": 1,
+                    "per_page": 20
+                  }
+                },
+                "filtered": {
+                  "summary": "Filtered products",
+                  "value": {
+                    "storeId": "store_123",
+                    "page": 1,
+                    "per_page": 50,
+                    "sort": "name",
+                    "sort_order": "asc",
+                    "filters": {
+                      "name": "premium"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": { "type": "string" },
+                          "name": { "type": "string" },
+                          "description": { "type": "string", "nullable": true },
+                          "image": { "type": "string", "nullable": true },
+                          "price": {
+                            "type": "object",
+                            "properties": {
+                              "recurring": { "type": "boolean" },
+                              "interval": { "type": "string", "nullable": true },
+                              "intervalCount": { "type": "number", "nullable": true },
+                              "billingTiming": { "type": "string", "nullable": true },
+                              "currencyOptions": {
+                                "type": "object",
+                                "additionalProperties": {
+                                  "type": "object",
+                                  "properties": {
+                                    "amount": { "type": "number" }
+                                  },
+                                  "required": ["amount"],
+                                  "additionalProperties": false
+                                },
+                                "nullable": true
+                              }
+                            },
+                            "required": [
+                              "recurring",
+                              "interval",
+                              "intervalCount",
+                              "billingTiming",
+                              "currencyOptions"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "variants": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": { "type": "string" },
+                                "productId": { "type": "string" },
+                                "default": { "type": "boolean" },
+                                "name": { "type": "string" },
+                                "price": { "type": "number", "nullable": true },
+                                "currency": { "type": "string", "nullable": true }
+                              },
+                              "required": ["id", "productId", "default"],
+                              "additionalProperties": false
+                            }
+                          }
+                        },
+                        "required": ["id", "name", "price"],
+                        "additionalProperties": false
+                      }
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "properties": {
+                        "hasNext": { "type": "boolean" },
+                        "totalItems": { "type": "integer" },
+                        "nextPage": { "type": "integer", "nullable": true },
+                        "previousPage": { "type": "integer", "nullable": true }
+                      },
+                      "required": ["hasNext", "totalItems", "nextPage", "previousPage"],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": ["items", "pagination"],
+                  "additionalProperties": false
+                },
+                "examples": {
+                  "success": {
+                    "summary": "Successful response",
+                    "value": {
+                      "items": [
+                        {
+                          "id": "prod_123",
+                          "name": "Premium Plan",
+                          "description": "Our premium subscription plan",
+                          "image": "https://example.com/image.jpg",
+                          "price": {
+                            "recurring": true,
+                            "interval": "month",
+                            "intervalCount": 1,
+                            "currencyOptions": {
+                              "USD": { "amount": 2999 },
+                              "EUR": { "amount": 2599 }
+                            }
+                          },
+                          "variants": []
+                        }
+                      ],
+                      "pagination": {
+                        "hasNext": false,
+                        "totalItems": 1,
+                        "nextPage": null,
+                        "previousPage": null
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
     "/products": {
       "get": {
         "tags": ["Products"],
