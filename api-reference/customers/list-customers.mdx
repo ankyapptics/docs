@@ -1,0 +1,90 @@
+---
+title: "List customers"
+api: "POST https://crm.apptics.ai/api/public/v1/customers/list"
+description: "List customers with filtering, sorting and pagination"
+---
+
+> List customers with filtering, sorting and pagination
+
+### Body
+
+<ParamField body="page" type="integer" default="1">
+  The page number to retrieve. Minimum: 1.
+</ParamField>
+
+<ParamField body="pageSize" type="integer" default="20">
+  The number of items per page. Minimum: 1, Maximum: 100.
+</ParamField>
+
+<ParamField body="sortBy" type="object">
+  Sorting configuration.
+  <Expandable title="properties">
+    <ParamField body="field" type="string" default="createdAt">
+      Field to sort by. Options: `id`, `email`, `firstName`, `lastName`, `createdAt`, `lastOrderId`.
+    </ParamField>
+    <ParamField body="direction" type="string" default="desc">
+      Sort direction. Options: `asc`, `desc`.
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+<ParamField body="filters" type="object">
+  Filtering criteria.
+  <Expandable title="properties">
+    <ParamField body="storeIds" type="array">
+      Filter by store IDs.
+    </ParamField>
+    <ParamField body="firstName" type="string">
+      Filter by first name.
+    </ParamField>
+    <ParamField body="lastName" type="string">
+      Filter by last name.
+    </ParamField>
+    <ParamField body="email" type="string">
+      Filter by email address.
+    </ParamField>
+    <ParamField body="paymentInstrumentCardLast4" type="string">
+      Filter by last 4 digits of payment card.
+    </ParamField>
+    <ParamField body="tags" type="array">
+      Filter by customer tags.
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+### Examples
+
+<CodeGroup>
+```json Basic customer list
+{
+  "page": 1,
+  "pageSize": 20,
+  "sortBy": {
+    "field": "createdAt",
+    "direction": "desc"
+  }
+}
+
+{
+  "page": 1,
+  "pageSize": 50,
+  "sortBy": {
+    "field": "email",
+    "direction": "asc"
+  },
+  "filters": {
+    "storeIds": [
+      "store_123",
+      "store_456"
+    ],
+    "firstName": "John",
+    "email": "john@example.com",
+    "paymentInstrumentCardLast4": "1234",
+    "tags": [
+      "segment:vip",
+      "source:facebook"
+    ]
+  }
+}
+```
+</CodeGroup>

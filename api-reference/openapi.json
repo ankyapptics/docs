@@ -2120,6 +2120,179 @@
         ]
       }
     },
+    "/customers/list": {
+      "post": {
+        "tags": [
+          "Customers"
+        ],
+        "summary": "List customers",
+        "description": "List customers with filtering, sorting and pagination",
+        "operationId": "post-api-public-v1-customers-list",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "page": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "default": 1
+                  },
+                  "pageSize": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100,
+                    "default": 20
+                  },
+                  "sortBy": {
+                    "type": "object",
+                    "properties": {
+                      "field": {
+                        "type": "string",
+                        "enum": [
+                          "id",
+                          "email",
+                          "firstName",
+                          "lastName",
+                          "createdAt",
+                          "lastOrderId"
+                        ],
+                        "default": "createdAt"
+                      },
+                      "direction": {
+                        "type": "string",
+                        "enum": [
+                          "asc",
+                          "desc"
+                        ],
+                        "default": "desc"
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "filters": {
+                    "type": "object",
+                    "properties": {
+                      "storeIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "firstName": {
+                        "type": "string"
+                      },
+                      "lastName": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "paymentInstrumentCardLast4": {
+                        "type": "string"
+                      },
+                      "tags": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "additionalProperties": false
+              },
+              "examples": {
+                "basic": {
+                  "summary": "Basic customer list",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 20,
+                    "sortBy": {
+                      "field": "createdAt",
+                      "direction": "desc"
+                    }
+                  }
+                },
+                "filtered": {
+                  "summary": "Filtered customers",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 50,
+                    "sortBy": {
+                      "field": "email",
+                      "direction": "asc"
+                    },
+                    "filters": {
+                      "storeIds": [
+                        "store_123",
+                        "store_456"
+                      ],
+                      "firstName": "John",
+                      "email": "john@example.com",
+                      "paymentInstrumentCardLast4": "1234",
+                      "tags": [
+                        "segment:vip",
+                        "source:facebook"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "examples": {
+                  "success": {
+                    "summary": "Successful response",
+                    "value": {
+                      "items": [
+                        {
+                          "id": "cus_123",
+                          "storeId": "store_123",
+                          "storeName": "My Store",
+                          "email": "john@example.com",
+                          "firstName": "John",
+                          "lastName": "Doe",
+                          "createdAt": "2024-03-20T10:30:00Z",
+                          "lastOrderId": "ord_123",
+                          "paymentInstrumentCardLast4": "1234",
+                          "tags": [
+                            "segment:vip",
+                            "source:facebook"
+                          ]
+                        }
+                      ],
+                      "total": 150,
+                      "page": 1,
+                      "pageSize": 20,
+                      "totalPages": 8
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
     "/plugins/v2/route/update": {
       "post": {
         "tags": [
