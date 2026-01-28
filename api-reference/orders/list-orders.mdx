@@ -1,0 +1,50 @@
+---
+title: "Get product by ID"
+api: "GET https://crm.apptics.ai/api/public/v1/products/{productId}"
+description: "Retrieve detailed information about a specific product including variants and pricing"
+---
+
+> Retrieve detailed information about a specific product including variants and pricing
+
+### Path
+
+<ParamField path="productId" type="string" required>
+  The unique identifier of the product.
+</ParamField>
+
+### Response
+
+<CodeGroup>
+```json Product details
+{
+  "id": "prod_123",
+  "name": "Premium Plan",
+  "description": "Our premium subscription plan with advanced features",
+  "variants": [
+    {
+      "id": "var_123",
+      "name": "Monthly",
+      "default": true,
+      "prices": [
+        {
+          "id": "price_123",
+          "recurring": true,
+          "interval": "month",
+          "intervalCount": 1,
+          "currencyOptions": {
+            "USD": {
+              "amount": 2999,
+              "currency": "USD"
+            },
+            "EUR": {
+              "amount": 2599,
+              "currency": "EUR"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
+```
+</CodeGroup>

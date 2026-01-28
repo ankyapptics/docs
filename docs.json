@@ -289,9 +289,9 @@
                 ]
               },
               {
-                "group": "Orders (Docs Under Development)",
+                "group": "Orders",
                 "pages": [
-                  "api-reference/orders/list"
+                  "api-reference/orders/list-orders.mdx"
                 ]
               },
               {

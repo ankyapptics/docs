@@ -4199,6 +4199,79 @@
         }
       }
     },
+    "/products/{productId}": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Get product by ID",
+        "description": "Retrieve detailed information about a specific product including variants and pricing",
+        "operationId": "get-api-public-v1-products-{productId}",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "examples": {
+                  "success": {
+                    "summary": "Product details",
+                    "value": {
+                      "id": "prod_123",
+                      "name": "Premium Plan",
+                      "description": "Our premium subscription plan with advanced features",
+                      "variants": [
+                        {
+                          "id": "var_123",
+                          "name": "Monthly",
+                          "default": true,
+                          "prices": [
+                            {
+                              "id": "price_123",
+                              "recurring": true,
+                              "interval": "month",
+                              "intervalCount": 1,
+                              "currencyOptions": {
+                                "USD": {
+                                  "amount": 2999,
+                                  "currency": "USD"
+                                },
+                                "EUR": {
+                                  "amount": 2599,
+                                  "currency": "EUR"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
     "/events": {
       "get": {
         "tags": ["Events"],
