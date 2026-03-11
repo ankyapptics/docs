@@ -1,0 +1,114 @@
+---
+title: "List promotions"
+api: "POST https://crm.apptics.ai/api/public/v1/promotions/list"
+description: "Get all promotions for a specific store with filtering, sorting, and pagination"
+---
+
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.apptics.ai/llms.txt
+> Use this file to discover all available pages before exploring further.
+
+### Request Body
+
+<ParamField body="storeId" type="string" required>
+  The store ID to list promotions for.
+</ParamField>
+
+<ParamField body="search" type="string">
+  Search term to filter promotions.
+</ParamField>
+
+<ParamField body="sortBy" type="object">
+  Sorting configuration.
+  <Expandable title="properties">
+    <ParamField body="field" type="string" required>
+      Field to sort by. 
+      Options: `name`, `startDate`, `endDate`, `usageLimit`, `usageCount`, `enabled`, `createdAt`.
+    </ParamField>
+    <ParamField body="direction" type="string" required>
+      Sort direction. 
+      Options: `asc`, `desc`.
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+<ParamField body="pagination" type="object">
+  Pagination configuration.
+  <Expandable title="properties">
+    <ParamField body="page" type="number" required>
+      Page number.
+    </ParamField>
+    <ParamField body="pageSize" type="number" required>
+      Number of items per page.
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+<ParamField body="filters" type="object">
+  Advanced filters.
+  <Expandable title="properties">
+    <ParamField body="promotions.name" type="object">
+      <Expandable title="properties">
+        <ParamField body="condition" type="string" required>
+          Condition operator. 
+          Options: `contains`, `equals`.
+        </ParamField>
+        <ParamField body="value" type="string" required>
+          The value to match against.
+        </ParamField>
+      </Expandable>
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+### Response
+
+<ResponseField name="items" type="array">
+  List of matched promotions.
+  <Expandable title="Item Properties">
+    <ResponseField name="id" type="string" />
+    <ResponseField name="name" type="string" />
+    <ResponseField name="code" type="string" />
+    <ResponseField name="enabled" type="boolean" />
+    <ResponseField name="automatic" type="boolean" />
+    <ResponseField name="usageLimit" type="number" />
+    <ResponseField name="usageCount" type="number" />
+    <ResponseField name="startDate" type="string" />
+    <ResponseField name="endDate" type="string" />
+    <ResponseField name="createdAt" type="string" />
+    <ResponseField name="updatedAt" type="string" />
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="total" type="number">
+  Total number of matching records.
+</ResponseField>
+
+<ResponseField name="pageCount" type="number">
+  Total number of available pages based on pagination settings.
+</ResponseField>
+
+<ResponseField name="options" type="object">
+  Additional configuration options.
+</ResponseField>
+
+<RequestExample>
+```bash Request
+curl --request POST \
+  --url "https://crm.apptics.ai/api/public/v1/promotions/list" \
+  --header 'Authorization: Bearer <your-api-key>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "storeId": "store_123",
+  "search": "summer",
+  "sortBy": {
+    "field": "createdAt",
+    "direction": "desc"
+  },
+  "pagination": {
+    "page": 1,
+    "pageSize": 20
+  }
+}'
+```
+</RequestExample>

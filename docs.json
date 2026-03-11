@@ -283,6 +283,12 @@
                 ]
               },
               {
+                "group": "Promotions",
+                "pages": [
+                  "api-reference/promotions/list-promotions.mdx"
+                ]
+              },
+              {
                 "group": "Domains (Docs Under Development)",
                 "pages": [
                   "api-reference/domains/list"
