@@ -1,0 +1,137 @@
+---
+title: "Update promotion"
+api: "POST https://crm.apptics.ai/api/public/v1/promotions/update"
+description: "Update an existing promotion by ID. The full promotion data must be provided in the `data` field."
+---
+
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.apptics.ai/llms.txt
+> Use this file to discover all available pages before exploring further.
+
+### Request Body
+
+<ParamField body="id" type="string" required>
+  The promotion ID to update.
+</ParamField>
+
+<ParamField body="data" type="object" required>
+  Updated promotion data.
+  <Expandable title="properties" defaultOpen={true}>
+    <ParamField body="storeId" type="string" required>
+      The store ID to update the promotion for.
+    </ParamField>
+    <ParamField body="name" type="string" required>
+      Name of the promotion.
+    </ParamField>
+    <ParamField body="code" type="string">
+      Coupon code for the promotion (`null` for automatic promotions).
+    </ParamField>
+    <ParamField body="automatic" type="boolean">
+      Whether the promotion applies automatically without a code.
+    </ParamField>
+    <ParamField body="enabled" type="boolean">
+      Whether the promotion is active.
+    </ParamField>
+    <ParamField body="usageLimit" type="number">
+      Maximum number of times the promotion can be used (`null` for unlimited).
+    </ParamField>
+    <ParamField body="startDate" type="string">
+      Start date of the promotion (ISO 8601 format).
+    </ParamField>
+    <ParamField body="endDate" type="string">
+      End date of the promotion (ISO 8601 format).
+    </ParamField>
+    <ParamField body="ruleOperator" type="string">
+      Logical operator applied between rules. Options: `AND`, `OR`.
+    </ParamField>
+    <ParamField body="combinesWithOrderLevelDiscounts" type="boolean">
+      Whether this promotion can combine with order-level discounts.
+    </ParamField>
+    <ParamField body="combinesWithLineItemDiscounts" type="boolean">
+      Whether this promotion can combine with line-item discounts.
+    </ParamField>
+    <ParamField body="combinesWithShippingDiscounts" type="boolean">
+      Whether this promotion can combine with shipping discounts.
+    </ParamField>
+    <ParamField body="forceCombine" type="boolean">
+      Force combination with other promotions regardless of settings.
+    </ParamField>
+    <ParamField body="rules" type="array">
+      Conditions that must be met for the promotion to apply.
+    </ParamField>
+    <ParamField body="actions" type="array">
+      Effects applied when the promotion conditions are met.
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+### Response
+
+<ResponseField name="id" type="string">
+  The unique identifier of the promotion.
+</ResponseField>
+<ResponseField name="storeId" type="string">
+  The store ID associated with the promotion.
+</ResponseField>
+<ResponseField name="name" type="string">
+  The name of the promotion.
+</ResponseField>
+<ResponseField name="code" type="string">
+  The coupon code for the promotion.
+</ResponseField>
+<ResponseField name="enabled" type="boolean">
+  Whether the promotion is currently active.
+</ResponseField>
+<ResponseField name="automatic" type="boolean">
+  Whether the promotion applies automatically.
+</ResponseField>
+<ResponseField name="usageLimit" type="number">
+  The maximum number of times the promotion can be used.
+</ResponseField>
+<ResponseField name="usageCount" type="number">
+  The current number of times the promotion has been used.
+</ResponseField>
+<ResponseField name="startDate" type="string">
+  The start date of the promotion.
+</ResponseField>
+<ResponseField name="endDate" type="string">
+  The end date of the promotion.
+</ResponseField>
+<ResponseField name="ruleOperator" type="string">
+  The logical operator applied between rules (`AND` or `OR`).
+</ResponseField>
+<ResponseField name="createdAt" type="string">
+  The creation timestamp.
+</ResponseField>
+<ResponseField name="updatedAt" type="string">
+  The last update timestamp.
+</ResponseField>
+
+<RequestExample>
+```bash Request
+curl --request POST \
+  --url https://crm.apptics.ai/api/public/v1/promotions/update \
+  --header 'Authorization: Bearer <your-api-key>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "id": "promo_123",
+  "data": {
+    "storeId": "store_123",
+    "name": "Winter Sale 30% Off",
+    "code": "WINTER30",
+    "automatic": false,
+    "enabled": true,
+    "usageLimit": 200,
+    "startDate": "2025-12-01T00:00:00.000Z",
+    "endDate": "2026-02-28T23:59:59.000Z",
+    "ruleOperator": "AND",
+    "combinesWithOrderLevelDiscounts": false,
+    "combinesWithLineItemDiscounts": false,
+    "combinesWithShippingDiscounts": false,
+    "forceCombine": false,
+    "rules": [],
+    "actions": []
+  }
+}'
+```
+</RequestExample>

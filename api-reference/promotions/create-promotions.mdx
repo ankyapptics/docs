@@ -1,0 +1,238 @@
+---
+title: "Create promotion"
+api: "POST https://crm.apptics.ai/api/public/v1/promotions/create"
+description: "Create a new promotion with rules and actions for a specific store."
+---
+
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.apptics.ai/llms.txt
+> Use this file to discover all available pages before exploring further.
+
+**Rules** define conditions that must be met for the promotion to apply:
+- `ContainsProduct`: Cart must contain a specific product
+- `OrderAmountMinimum`: Order must meet a minimum amount
+- `OrderMinQuantity`: Order must have a minimum number of items
+
+**Actions** define what happens when conditions are met:
+- `LineItemAdjustment`: Percentage or fixed amount discount on specific line items
+- `OrderAdjustment`: Percentage or fixed amount discount on the entire order
+- `ShippingAdjustment`: Free shipping
+- `CreateLineItem`: Add a free product to the cart
+- `SubscriptionLineItemFreeTrial`: Grant a free trial on a subscription
+
+---
+
+### Request Body
+
+<ParamField body="storeId" type="string" required>
+  The store ID to create the promotion for.
+</ParamField>
+
+<ParamField body="name" type="string" required>
+  Name of the promotion.
+</ParamField>
+
+<ParamField body="code" type="string">
+  Coupon code for the promotion (`null` for automatic promotions).
+</ParamField>
+
+<ParamField body="automatic" type="boolean" default="false">
+  Whether the promotion applies automatically without a code.
+</ParamField>
+
+<ParamField body="enabled" type="boolean" default="true">
+  Whether the promotion is active.
+</ParamField>
+
+<ParamField body="usageLimit" type="number">
+  Maximum number of times the promotion can be used (`null` for unlimited).
+</ParamField>
+
+<ParamField body="startDate" type="string">
+  Start date of the promotion (ISO 8601 format).
+</ParamField>
+
+<ParamField body="endDate" type="string">
+  End date of the promotion (ISO 8601 format).
+</ParamField>
+
+<ParamField body="ruleOperator" type="string" default="OR">
+  Logical operator applied between rules. Options: `AND`, `OR`.
+</ParamField>
+
+<ParamField body="combinesWithOrderLevelDiscounts" type="boolean" default="false">
+  Whether this promotion can combine with order-level discounts.
+</ParamField>
+
+<ParamField body="combinesWithLineItemDiscounts" type="boolean" default="false">
+  Whether this promotion can combine with line-item discounts.
+</ParamField>
+
+<ParamField body="combinesWithShippingDiscounts" type="boolean" default="false">
+  Whether this promotion can combine with shipping discounts.
+</ParamField>
+
+<ParamField body="forceCombine" type="boolean" default="false">
+  Force combination with other promotions regardless of settings.
+</ParamField>
+
+<ParamField body="rules" type="array" default="[]">
+  Conditions that must be met for the promotion to apply. 
+  <Expandable title="Rule Object Types">
+    <ParamField body="ContainsProduct" type="object">
+      <Expandable title="properties">
+        <ParamField body="type" type="string" required>Must be `ContainsProduct`</ParamField>
+        <ParamField body="productId" type="string" required>The targeted product ID</ParamField>
+        <ParamField body="minimumQuantity" type="number">Minimum quantity required</ParamField>
+        <ParamField body="variantIds" type="array">List of specific variant IDs</ParamField>
+      </Expandable>
+    </ParamField>
+    <ParamField body="OrderAmountMinimum" type="object">
+      <Expandable title="properties">
+        <ParamField body="type" type="string" required>Must be `OrderAmountMinimum`</ParamField>
+        <ParamField body="minimumAmount" type="object" required>Currency-keyed minimum amounts (requires `rate`, `amount`, `lock`, `date`)</ParamField>
+      </Expandable>
+    </ParamField>
+    <ParamField body="OrderMinQuantity" type="object">
+      <Expandable title="properties">
+        <ParamField body="type" type="string" required>Must be `OrderMinQuantity`</ParamField>
+        <ParamField body="orderMinQuantity" type="number" required>Minimum total quantity</ParamField>
+      </Expandable>
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+<ParamField body="actions" type="array" default="[]">
+  Effects applied when the promotion conditions are met.
+  <Expandable title="Action Object Types">
+    <ParamField body="LineItemPercentageAdjustment" type="object">
+      <Expandable title="properties">
+        <ParamField body="type" type="string" required>Must be `LineItemAdjustment`</ParamField>
+        <ParamField body="adjustmentType" type="string" required>Must be `percentage`</ParamField>
+        <ParamField body="adjustmentPercentage" type="number" required>Discount percentage (e.g. 20 for 20%)</ParamField>
+        <ParamField body="targetProductId" type="string">Target product ID</ParamField>
+        <ParamField body="targetVariantIds" type="array">Target variant IDs</ParamField>
+        <ParamField body="maxQuantityDiscounted" type="number">Max items to discount</ParamField>
+        <ParamField body="appliesOnEachItem" type="boolean" default="false">Apply to each item</ParamField>
+      </Expandable>
+    </ParamField>
+    <ParamField body="LineItemAmountAdjustment" type="object">
+      <Expandable title="properties">
+        <ParamField body="type" type="string" required>Must be `LineItemAdjustment`</ParamField>
+        <ParamField body="adjustmentType" type="string" required>Must be `amount`</ParamField>
+        <ParamField body="adjustmentAmount" type="object" required>Currency-keyed discount amounts</ParamField>
+      </Expandable>
+    </ParamField>
+    <ParamField body="OrderPercentageAdjustment" type="object">
+      <Expandable title="properties">
+        <ParamField body="type" type="string" required>Must be `OrderAdjustment`</ParamField>
+        <ParamField body="adjustmentType" type="string" required>Must be `percentage`</ParamField>
+        <ParamField body="adjustmentPercentage" type="number" required>Discount percentage</ParamField>
+      </Expandable>
+    </ParamField>
+    <ParamField body="OrderAmountAdjustment" type="object">
+      <Expandable title="properties">
+        <ParamField body="type" type="string" required>Must be `OrderAdjustment`</ParamField>
+        <ParamField body="adjustmentType" type="string" required>Must be `amount`</ParamField>
+        <ParamField body="adjustmentAmount" type="object" required>Currency-keyed discount amounts</ParamField>
+      </Expandable>
+    </ParamField>
+    <ParamField body="ShippingAdjustment" type="object">
+      <Expandable title="properties">
+        <ParamField body="type" type="string" required>Must be `ShippingAdjustment`</ParamField>
+        <ParamField body="freeShipping" type="boolean" default="true">Enable free shipping</ParamField>
+      </Expandable>
+    </ParamField>
+    <ParamField body="CreateLineItem" type="object">
+      <Expandable title="properties">
+        <ParamField body="type" type="string" required>Must be `CreateLineItem`</ParamField>
+        <ParamField body="priceIdToAdd" type="string" required>Price ID of the product to add for free</ParamField>
+      </Expandable>
+    </ParamField>
+    <ParamField body="SubscriptionLineItemFreeTrial" type="object">
+      <Expandable title="properties">
+        <ParamField body="type" type="string" required>Must be `SubscriptionLineItemFreeTrial`</ParamField>
+        <ParamField body="subscriptionFreeTrialDuration" type="number" required>Duration of the free trial</ParamField>
+        <ParamField body="subscriptionFreeTrialDurationType" type="string" required>Options: `day`, `week`, `month`, `year`</ParamField>
+      </Expandable>
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+### Response
+
+<ResponseField name="id" type="string" />
+<ResponseField name="storeId" type="string" />
+<ResponseField name="name" type="string" />
+<ResponseField name="code" type="string" />
+<ResponseField name="enabled" type="boolean" />
+<ResponseField name="automatic" type="boolean" />
+<ResponseField name="usageLimit" type="number" />
+<ResponseField name="usageCount" type="number" />
+<ResponseField name="startDate" type="string" />
+<ResponseField name="endDate" type="string" />
+<ResponseField name="ruleOperator" type="string" />
+<ResponseField name="createdAt" type="string" />
+<ResponseField name="updatedAt" type="string" />
+
+<RequestExample>
+```bash Coupon Code Promotion
+curl --request POST \
+  --url [https://crm.apptics.ai/api/public/v1/promotions/create](https://crm.apptics.ai/api/public/v1/promotions/create) \
+  --header 'Authorization: Bearer <your-api-key>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "storeId": "store_123",
+  "name": "Summer Sale 20% Off",
+  "code": "SUMMER20",
+  "automatic": false,
+  "enabled": true,
+  "usageLimit": 100,
+  "startDate": "2025-06-01T00:00:00.000Z",
+  "endDate": "2025-08-31T23:59:59.000Z",
+  "ruleOperator": "AND",
+  "combinesWithOrderLevelDiscounts": false,
+  "combinesWithLineItemDiscounts": false,
+  "combinesWithShippingDiscounts": false,
+  "forceCombine": false,
+  "rules": [],
+  "actions": [
+    {
+      "type": "OrderAdjustment",
+      "adjustmentType": "percentage",
+      "adjustmentPercentage": 20
+    }
+  ]
+}'
+```
+
+```bash Automatic Promotion
+curl --request POST \
+  --url [https://crm.apptics.ai/api/public/v1/promotions/create](https://crm.apptics.ai/api/public/v1/promotions/create) \
+  --header 'Authorization: Bearer <your-api-key>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "storeId": "store_123",
+  "name": "Buy Product X, Get 10% Off",
+  "automatic": true,
+  "enabled": true,
+  "ruleOperator": "AND",
+  "rules": [
+    {
+      "type": "ContainsProduct",
+      "productId": "prod_abc",
+      "minimumQuantity": 2
+    }
+  ],
+  "actions": [
+    {
+      "type": "LineItemAdjustment",
+      "adjustmentType": "percentage",
+      "adjustmentPercentage": 10,
+      "targetProductId": "prod_abc",
+      "appliesOnEachItem": true
+    }
+  ]
+}'
+```
+</RequestExample>
