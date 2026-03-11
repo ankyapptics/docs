@@ -1,0 +1,95 @@
+---
+title: "Get promotion by ID"
+api: "POST https://crm.apptics.ai/api/public/v1/promotions/getById"
+description: "Retrieve detailed information about a specific promotion including its rules and actions"
+---
+
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.apptics.ai/llms.txt
+> Use this file to discover all available pages before exploring further.
+
+### Request Body
+
+<ParamField body="id" type="string" required>
+  The promotion ID
+</ParamField>
+
+<ParamField body="storeId" type="string" required>
+  The store ID the promotion belongs to
+</ParamField>
+
+### Response
+
+<ResponseField name="id" type="string">
+  The unique identifier of the promotion.
+</ResponseField>
+<ResponseField name="storeId" type="string">
+  The store ID associated with the promotion.
+</ResponseField>
+<ResponseField name="accountId" type="string">
+  The account ID associated with the promotion.
+</ResponseField>
+<ResponseField name="name" type="string">
+  The name of the promotion.
+</ResponseField>
+<ResponseField name="code" type="string">
+  The coupon code for the promotion (`null` if automatic).
+</ResponseField>
+<ResponseField name="enabled" type="boolean">
+  Whether the promotion is active.
+</ResponseField>
+<ResponseField name="automatic" type="boolean">
+  Whether the promotion applies automatically without a code.
+</ResponseField>
+<ResponseField name="usageLimit" type="number">
+  The maximum number of times the promotion can be used.
+</ResponseField>
+<ResponseField name="usageCount" type="number">
+  The current number of times the promotion has been used.
+</ResponseField>
+<ResponseField name="startDate" type="string">
+  The start date of the promotion (ISO 8601 format).
+</ResponseField>
+<ResponseField name="endDate" type="string">
+  The end date of the promotion (ISO 8601 format).
+</ResponseField>
+<ResponseField name="ruleOperator" type="string">
+  The logical operator applied between rules (`AND` or `OR`).
+</ResponseField>
+<ResponseField name="combinesWithOrderLevelDiscounts" type="boolean">
+  Whether this promotion can combine with order-level discounts.
+</ResponseField>
+<ResponseField name="combinesWithLineItemDiscounts" type="boolean">
+  Whether this promotion can combine with line-item discounts.
+</ResponseField>
+<ResponseField name="combinesWithShippingDiscounts" type="boolean">
+  Whether this promotion can combine with shipping discounts.
+</ResponseField>
+<ResponseField name="forceCombine" type="boolean">
+  Whether to force combination with other promotions regardless of settings.
+</ResponseField>
+<ResponseField name="rules" type="array">
+  Conditions that must be met for the promotion to apply.
+</ResponseField>
+<ResponseField name="actions" type="array">
+  Effects applied when the promotion conditions are met.
+</ResponseField>
+<ResponseField name="createdAt" type="string">
+  The creation timestamp.
+</ResponseField>
+<ResponseField name="updatedAt" type="string">
+  The last update timestamp.
+</ResponseField>
+
+<RequestExample>
+```bash Request
+curl --request POST \
+  --url "https://crm.apptics.ai/api/public/v1/promotions/getById" \
+  --header 'Authorization: Bearer <your-api-key>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "id": "promo_123",
+  "storeId": "store_123"
+}'
+```
+</RequestExample>

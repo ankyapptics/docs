@@ -313,7 +313,8 @@
                 "pages": [
                   "api-reference/products/list",
                   "api-reference/products/create-products",
-                  "api-reference/products/get-product-by-ID"
+                  "api-reference/products/get-product-by-ID",
+                  "api-reference/promotions/get-promotions-by-ID.mdx"
                 ]
               },
               {
