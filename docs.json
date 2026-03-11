@@ -285,9 +285,11 @@
               {
                 "group": "Promotions",
                 "pages": [
-                  "api-reference/promotions/list-promotions.mdx",
-                  "api-reference/promotions/create-promotions.mdx",
-                  "api-reference/promotions/update-promotion.mdx"
+                  "api-reference/promotions/list-promotions",
+                  "api-reference/promotions/create-promotions",
+                  "api-reference/promotions/update-promotion",
+                  "api-reference/promotions/get-promotions-by-ID",
+                  "api-reference/promotions/delete-promotions"
                 ]
               },
               {
