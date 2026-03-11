@@ -1,0 +1,46 @@
+---
+title: "Delete promotions"
+api: "POST https://crm.apptics.ai/api/public/v1/promotions/delete"
+description: "Delete one or more promotions by their IDs. All specified promotions must belong to the given store."
+---
+
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.apptics.ai/llms.txt
+> Use this file to discover all available pages before exploring further.
+
+### Request Body
+
+<ParamField body="ids" type="array" required>
+  Array of promotion IDs to delete.
+  <Expandable title="Item format">
+    <ParamField body="id" type="string">
+      Promotion ID
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+<ParamField body="storeId" type="string" required>
+  The store ID the promotions belong to.
+</ParamField>
+
+### Response
+
+<ResponseField name="success" type="boolean">
+  Indicates whether the deletion was successful.
+</ResponseField>
+
+<RequestExample>
+```bash Request
+curl --request POST \
+  --url https://crm.apptics.ai/api/public/v1/promotions/delete \
+  --header 'Authorization: Bearer <your-api-key>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "ids": [
+    "promo_123",
+    "promo_456"
+  ],
+  "storeId": "store_123"
+}'
+```
+</RequestExample>
