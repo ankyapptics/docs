@@ -2727,6 +2727,136 @@
         "security": [{ "bearerAuth": [] }]
       }
     },
+    {
+  "paths": {
+    "/api/public/v1/orders/list": {
+      "post": {
+        "summary": "List orders",
+        "description": "Get all orders for the authenticated account with filtering, sorting, and pagination",
+        "operationId": "listOrders",
+        "tags": [
+          "orders"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "search": {
+                    "type": "string",
+                    "description": "Search term to filter orders"
+                  },
+                  "sortBy": {
+                    "type": "object",
+                    "description": "Sorting configuration"
+                  },
+                  "pagination": {
+                    "type": "object",
+                    "properties": {
+                      "page": {
+                        "type": "integer",
+                        "default": 1
+                      },
+                      "pageSize": {
+                        "type": "integer",
+                        "default": 20
+                      }
+                    }
+                  },
+                  "filters": {
+                    "type": "object",
+                    "description": "Filtering criteria"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Order"
+                      }
+                    },
+                    "total": {
+                      "type": "integer"
+                    },
+                    "pageCount": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "Order": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "ord_123"
+          },
+          "status": {
+            "type": "string",
+            "example": "paid"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-03-20T10:30:00Z"
+          },
+          "customer": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string",
+                "example": "john@example.com"
+              },
+              "name": {
+                "type": "string",
+                "example": "John Doe"
+              }
+            }
+          },
+          "total": {
+            "type": "integer",
+            "example": 2999
+          },
+          "currency": {
+            "type": "string",
+            "example": "USD"
+          }
+        }
+      }
+    }
+  }
+}
     "/plugins/v2/features": {
       "post": {
         "tags": ["Plugins V2"],

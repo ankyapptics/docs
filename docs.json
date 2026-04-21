@@ -9,6 +9,20 @@
   },
   "favicon": "/favicon.png",
   "navigation": {
+    "global": {
+      "anchors": [
+        {
+          "anchor": "Dashboard",
+          "icon": "chart-line",
+          "href": "https://crm.apptics.ai"
+        },
+        {
+          "anchor": "Contact us on Telegram",
+          "icon": "telegram",
+          "href": "https://t.me/appticsai"
+        }
+      ]
+    },
     "tabs": [
       {
         "tab": "Guides",
@@ -221,8 +235,6 @@
                 "pages": [
                   "api-reference/checkout/initialize-checkout-session",
                   "api-reference/checkout/pay-checkout-session-V2"
-                  
-          
                 ]
               },
               {
@@ -301,7 +313,8 @@
               {
                 "group": "Orders",
                 "pages": [
-                  "api-reference/orders/list-orders.mdx"
+                  "api-reference/orders/list-orders.mdx",
+                  "api-reference/orders/list-orders-mdx"
                 ]
               },
               {
@@ -355,21 +368,7 @@
           }
         ]
       }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Dashboard",
-          "href": "https://crm.apptics.ai",
-          "icon": "chart-line"
-        },
-        {
-          "anchor": "Contact us on Telegram",
-          "href": "https://t.me/appticsai",
-          "icon": "telegram"
-        }
-      ]
-    }
+    ]
   },
   "logo": {
     "light": "/logo/light1.png",

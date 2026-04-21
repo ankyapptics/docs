@@ -1,50 +1,118 @@
 ---
-title: "Get product by ID"
-api: "GET https://crm.apptics.ai/api/public/v1/products/{productId}"
-description: "Retrieve detailed information about a specific product including variants and pricing"
+title: "List orders"
+description: "Get all orders for the authenticated account with filtering, sorting, and pagination"
+api: "POST https://crm.apptics.ai/api/public/v1/orders/list"
+authMethod: "bearer"
 ---
 
-> Retrieve detailed information about a specific product including variants and pricing
+### Authorizations
 
-### Path
+<ParamField header="Authorization" type="string" required>
+  Enter your API key as: `Bearer your-api-key`
+</ParamField>
 
-<ParamField path="productId" type="string" required>
-  The unique identifier of the product.
+### Body
+
+<ParamField body="search" type="string">
+  Search term to filter orders
+</ParamField>
+
+<ParamField body="sortBy" type="object">
+  Sorting configuration
+</ParamField>
+
+<ParamField body="pagination" type="object">
+  <Expandable title="properties">
+    <ParamField body="page" type="integer" default="1">
+      The page number to retrieve
+    </ParamField>
+    <ParamField body="pageSize" type="integer" default="20">
+      The number of items per page
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+<ParamField body="filters" type="object">
+  Filtering criteria to narrow down results
 </ParamField>
 
 ### Response
 
-<CodeGroup>
-```json Product details
+<ResponseField name="items" type="Order object[]">
+  <Expandable title="Order">
+    <ResponseField name="id" type="string">
+      The unique identifier for the order
+    </ResponseField>
+    <ResponseField name="status" type="string">
+      Current status of the order (e.g., paid)
+    </ResponseField>
+    <ResponseField name="createdAt" type="string">
+      Timestamp of order creation
+    </ResponseField>
+    <ResponseField name="customer" type="object">
+      <Expandable title="Customer Details">
+        <ResponseField name="email" type="string">
+          Customer email address
+        </ResponseField>
+        <ResponseField name="name" type="string">
+          Customer full name
+        </ResponseField>
+      </Expandable>
+    </ResponseField>
+    <ResponseField name="total" type="integer">
+      Total amount in cents
+    </ResponseField>
+    <ResponseField name="currency" type="string">
+      Currency code (e.g., USD)
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="total" type="integer">
+  Total number of orders matching the criteria
+</ResponseField>
+
+<ResponseField name="pageCount" type="integer">
+  Total number of available pages
+</ResponseField>
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+  --url https://crm.apptics.ai/api/public/v1/orders/list \
+  --header 'Authorization: Bearer <token>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "pagination": {
+    "page": 1,
+    "pageSize": 20
+  }
+}'
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json
 {
-  "id": "prod_123",
-  "name": "Premium Plan",
-  "description": "Our premium subscription plan with advanced features",
-  "variants": [
+  "items": [
     {
-      "id": "var_123",
-      "name": "Monthly",
-      "default": true,
-      "prices": [
-        {
-          "id": "price_123",
-          "recurring": true,
-          "interval": "month",
-          "intervalCount": 1,
-          "currencyOptions": {
-            "USD": {
-              "amount": 2999,
-              "currency": "USD"
-            },
-            "EUR": {
-              "amount": 2599,
-              "currency": "EUR"
-            }
-          }
-        }
-      ]
+      "id": "ord_123",
+      "status": "paid",
+      "createdAt": "2024-03-20T10:30:00Z",
+      "customer": {
+        "email": "john@example.com",
+        "name": "John Doe"
+      },
+      "total": 2999,
+      "currency": "USD"
     }
-  ]
+  ],
+  "total": 1,
+  "pageCount": 1
 }
 ```
-</CodeGroup>
+
+</ResponseExample>
