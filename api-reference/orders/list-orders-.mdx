@@ -11,6 +11,8 @@ authMethod: "bearer"
   Enter your API key as: `Bearer your-api-key`
 </ParamField>
 
+/
+
 ### Body
 
 <ParamField body="search" type="string">
@@ -23,10 +25,11 @@ authMethod: "bearer"
 
 <ParamField body="pagination" type="object">
   <Expandable title="properties">
-    <ParamField body="page" type="integer" default="1">
+    <ParamField body="page" default="1" type="integer">
       The page number to retrieve
     </ParamField>
-    <ParamField body="pageSize" type="integer" default="20">
+
+    <ParamField body="pageSize" default="20" type="integer">
       The number of items per page
     </ParamField>
   </Expandable>
@@ -43,25 +46,31 @@ authMethod: "bearer"
     <ResponseField name="id" type="string">
       The unique identifier for the order
     </ResponseField>
+
     <ResponseField name="status" type="string">
       Current status of the order (e.g., paid)
     </ResponseField>
+
     <ResponseField name="createdAt" type="string">
       Timestamp of order creation
     </ResponseField>
+
     <ResponseField name="customer" type="object">
       <Expandable title="Customer Details">
         <ResponseField name="email" type="string">
           Customer email address
         </ResponseField>
+
         <ResponseField name="name" type="string">
           Customer full name
         </ResponseField>
       </Expandable>
     </ResponseField>
+
     <ResponseField name="total" type="integer">
       Total amount in cents
     </ResponseField>
+
     <ResponseField name="currency" type="string">
       Currency code (e.g., USD)
     </ResponseField>
