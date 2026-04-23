@@ -313,7 +313,7 @@
               {
                 "group": "Orders",
                 "pages": [
-                  "api-reference/orders/list-orders-.mdx"
+                  "api-reference/orders/list-orders-"
                 ]
               },
               {
