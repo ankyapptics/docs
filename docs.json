@@ -234,7 +234,8 @@
                 "group": "Checkout",
                 "pages": [
                   "api-reference/checkout/initialize-checkout-session",
-                  "api-reference/checkout/pay-checkout-session-V2"
+                  "api-reference/checkout/pay-checkout-session-V2",
+                  "api-reference/checkout/abandoned-checkout"
                 ]
               },
               {

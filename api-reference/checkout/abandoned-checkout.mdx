@@ -1,0 +1,497 @@
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.apptics.io/llms.txt
+> Use this file to discover all available pages before exploring further.
+
+# Emails
+
+> Customize transactional emails — order confirmations, subscription receipts, abandoned cart recovery, and more
+
+# Email Templates
+
+**Time**: ~10 minutes | **Difficulty**: Beginner
+
+Apptics sends transactional emails automatically when key events happen. You can customize every template per store — via the CRM dashboard **or** programmatically with the Node SDK and public API.
+Event fires (order paid, subscription rebill, …)
+→ Apptics picks the matching template for this store
+→ Renders the body with real-time variables (customer name, amount, …)
+→ Sends from your custom domain (or noreply@apptics.ai)
+
+<Info>
+  **Zero code required for defaults.** If you create a template for a given event type, Apptics sends it automatically. No webhooks, no cron jobs — just create the template and it works.
+</Info>
+
+***
+
+## Supported Template Types
+
+| Type                            | Event                     | Fires when…                          |
+| ------------------------------- | ------------------------- | ------------------------------------ |
+| `order_paid`                    | Order confirmed           | Customer completes a payment         |
+| `order_refunded`                | Refund processed          | You issue a refund                   |
+| `subscription_rebill_succeeded` | Rebill receipt            | Recurring payment succeeds           |
+| `subscription_rebill_upcoming`  | Upcoming rebill notice    | 3 days before the next billing cycle |
+| `subscription_canceled`         | Cancellation confirmation | Subscription is canceled             |
+| `subscription_past_due`         | Payment failed            | Recurring payment declined           |
+| `abandoned_checkout`            | Cart recovery             | Customer leaves checkout incomplete  |
+| `customer_promotion_code`       | Promo code delivery       | Customer receives a discount code    |
+| `club_membership_started`       | Membership welcome        | Customer joins a club                |
+| `club_membership_deactivated`   | Membership ended          | Club membership is deactivated       |
+
+<Note>
+  `free_trial_expiration_incoming` is reserved for a future release (trial expiration reminders). All other types are fully supported today.
+</Note>
+
+***
+
+## Manage Templates with the Node SDK
+
+```bash theme={null}
+npm install @apptics/node-sdk
+```
+
+```ts theme={null}
+import Apptics from '@apptics/node-sdk';
+const apptics = new Apptics('tgd_your_api_key');
+```
+
+### List Available Types
+
+```ts theme={null}
+const types = await apptics.emailTemplates.listTypes();
+// [
+//   { type: 'order_paid', label: 'Order Paid Confirmation', description: 'Sent when a customer successfully pays for an order' },
+//   { type: 'abandoned_checkout', label: 'Abandoned Checkout', description: 'Sent when a customer abandons their checkout' },
+//   ...
+// ]
+```
+
+### Create a Template
+
+```ts theme={null}
+const template = await apptics.emailTemplates.create({
+  storeId: 'store_xxx',
+  type: 'order_paid',
+  name: 'Order Confirmation',
+  subject: {
+    en: 'Your order #{{ orderNumber }} is confirmed — {{ storeName }}',
+    fr: 'Votre commande #{{ orderNumber }} est confirmée — {{ storeName }}',
+  },
+  active: true,
+  params: {
+    replyTo: 'support@your-store.com',
+  },
+  templateVariables: {
+    order_paid: {
+      body: {
+        en: `<p>Hi {{ customerFirstName }},</p>
+<p>Thank you for your purchase! Your order has been confirmed.</p>
+<p><strong>Order:</strong> #{{ orderNumber }}<br/>
+<strong>Total:</strong> {{ orderTotal }}<br/>
+<strong>Date:</strong> {{ orderDate }}</p>`,
+        fr: `<p>Bonjour {{ customerFirstName }},</p>
+<p>Merci pour votre achat ! Votre commande a été confirmée.</p>
+<p><strong>Commande :</strong> #{{ orderNumber }}<br/>
+<strong>Total :</strong> {{ orderTotal }}<br/>
+<strong>Date :</strong> {{ orderDate }}</p>`,
+      },
+    },
+  },
+});
+
+console.log(template.id); // 'et_...'
+```
+
+### List Templates for a Store
+
+```ts theme={null}
+const templates = await apptics.emailTemplates.list({ storeId: 'store_xxx' });
+```
+
+### Update a Template
+
+```ts theme={null}
+await apptics.emailTemplates.update('et_xxx', {
+  subject: { en: 'Thanks for your purchase, {{ customerFirstName }}!' },
+  active: true,
+});
+```
+
+### Send a Test Email
+
+```ts theme={null}
+await apptics.emailTemplates.test({
+  templateId: 'et_xxx',
+  to: 'test@example.com',
+  locale: 'en',
+});
+```
+
+<Tip>
+  Always send a test email after creating or editing a template. Apptics renders the template with mock data so you can preview exactly what customers will receive.
+</Tip>
+
+### Delete a Template
+
+```ts theme={null}
+await apptics.emailTemplates.del('et_xxx', 'store_xxx');
+```
+
+***
+
+## Template Variables Reference
+
+Use `{{ variableName }}` in subjects and bodies. Variables are auto-populated from real-time event data when the email is sent.
+
+### Common Variables (All Templates)
+
+| Variable            | Description         | Example                                     |
+| ------------------- | ------------------- | ------------------------------------------- |
+| `customerFirstName` | Customer first name | John                                        |
+| `customerLastName`  | Customer last name  | Doe                                         |
+| `customerEmail`     | Customer email      | [john@example.com](mailto:john@example.com) |
+| `storeName`         | Store name          | My Store                                    |
+
+### `order_paid`
+
+| Variable         | Description                     | Example              |
+| ---------------- | ------------------------------- | -------------------- |
+| `orderNumber`    | Order reference number          | 1042                 |
+| `orderTotal`     | Formatted total (with currency) | \$149.99             |
+| `orderDate`      | Formatted date                  | April 2, 2026        |
+| `orderItemsHtml` | HTML table of ordered items     | `<table>...</table>` |
+
+### `order_refunded`
+
+| Variable       | Description             | Example  |
+| -------------- | ----------------------- | -------- |
+| `orderNumber`  | Order reference number  | 1042     |
+| `refundAmount` | Formatted refund amount | \$149.99 |
+
+### `subscription_rebill_succeeded`
+
+| Variable             | Description                | Example     |
+| -------------------- | -------------------------- | ----------- |
+| `subscriptionName`   | Plan/product name          | VIP Club    |
+| `subscriptionAmount` | Formatted recurring amount | \$19.99     |
+| `nextBillingDate`    | Next billing date          | May 2, 2026 |
+
+### `subscription_rebill_upcoming`
+
+| Variable             | Description                 | Example       |
+| -------------------- | --------------------------- | ------------- |
+| `subscriptionName`   | Plan/product name           | VIP Club      |
+| `subscriptionAmount` | Formatted recurring amount  | \$19.99       |
+| `nextBillingDate`    | Billing date                | June 30, 2026 |
+| `customerPortalLink` | Link to the customer portal | https\://...  |
+
+### `subscription_canceled`
+
+| Variable             | Description                | Example  |
+| -------------------- | -------------------------- | -------- |
+| `subscriptionName`   | Plan/product name          | VIP Club |
+| `subscriptionAmount` | Formatted recurring amount | \$19.99  |
+
+### `subscription_past_due`
+
+| Variable             | Description                | Example  |
+| -------------------- | -------------------------- | -------- |
+| `subscriptionName`   | Plan/product name          | VIP Club |
+| `subscriptionAmount` | Formatted recurring amount | \$19.99  |
+
+### `abandoned_checkout`
+
+| Variable      | Description         | Example      |
+| ------------- | ------------------- | ------------ |
+| `cartTotal`   | Cart total          | \$99.99      |
+| `checkoutUrl` | Return-to-cart link | https\://... |
+
+<Info>
+  Abandoned checkout emails support a configurable **trigger delay** — how long after the customer leaves before the email fires. Set it via `params.specific.triggerDurationSinceLastActivity` with values like `10min`, `30min`, `1h`, `3h`, `6h`, `12h`, `24h`, or `48h`.
+</Info>
+
+### `customer_promotion_code`
+
+| Variable        | Description              | Example    |
+| --------------- | ------------------------ | ---------- |
+| `promotionCode` | Discount code            | SAVE20     |
+| `expiresAt`     | Expiration date (if set) | 2026-12-31 |
+
+### `club_membership_started`
+
+| Variable             | Description                 | Example       |
+| -------------------- | --------------------------- | ------------- |
+| `subscriptionName`   | Club/membership name        | VIP Club      |
+| `subscriptionAmount` | Formatted membership amount | \$19.99       |
+| `nextBillingDate`    | Next billing date           | June 30, 2026 |
+| `customerPortalLink` | Link to the customer portal | https\://...  |
+
+### `club_membership_deactivated`
+
+| Variable           | Description          | Example  |
+| ------------------ | -------------------- | -------- |
+| `subscriptionName` | Club/membership name | VIP Club |
+
+***
+
+## Template Data Structure
+
+The `templateVariables` field follows a specific nesting pattern:
+
+```ts theme={null}
+templateVariables: {
+  [templateType]: {     // e.g. "order_paid"
+    body: {
+      [locale]: string  // HTML body per language
+    }
+  }
+}
+```
+
+The `subject` field is simpler — a flat locale map:
+
+```ts theme={null}
+subject: {
+  en: 'Your order #{{ orderNumber }} is confirmed',
+  fr: 'Votre commande #{{ orderNumber }} est confirmée',
+}
+```
+
+<Note>
+  The key inside `templateVariables` must match the template `type`. For an `order_paid` template, use `templateVariables.order_paid.body`, not `templateVariables.body`.
+</Note>
+
+***
+
+## Multilingual Emails
+
+Set subjects and bodies per language. Apptics picks the locale from the checkout session or customer profile and falls back to `en` if the customer's locale isn't configured.
+
+Supported locales: `en`, `fr`, `de`, `es`, `it` (and any custom locale you define).
+
+```ts theme={null}
+await apptics.emailTemplates.create({
+  storeId: 'store_xxx',
+  type: 'subscription_rebill_succeeded',
+  name: 'Subscription Receipt',
+  subject: {
+    en: 'Payment of {{ subscriptionAmount }} confirmed — {{ storeName }}',
+    fr: 'Paiement de {{ subscriptionAmount }} confirmé — {{ storeName }}',
+    de: 'Zahlung von {{ subscriptionAmount }} bestätigt — {{ storeName }}',
+    es: 'Pago de {{ subscriptionAmount }} confirmado — {{ storeName }}',
+    it: 'Pagamento di {{ subscriptionAmount }} confermato — {{ storeName }}',
+  },
+  templateVariables: {
+    subscription_rebill_succeeded: {
+      body: {
+        en: '<p>Hi {{ customerFirstName }}, your payment of {{ subscriptionAmount }} for {{ subscriptionName }} was successful. Next billing: {{ nextBillingDate }}.</p>',
+        fr: '<p>Bonjour {{ customerFirstName }}, votre paiement de {{ subscriptionAmount }} pour {{ subscriptionName }} a été effectué. Prochain prélèvement : {{ nextBillingDate }}.</p>',
+      },
+    },
+  },
+  active: true,
+});
+```
+
+***
+
+## Custom Sender Domain
+
+By default, emails are sent from `noreply@apptics.ai`. Set up a custom sender domain for branded emails:
+
+1. Go to **Settings → Emails → Custom Domain** in the CRM
+2. Add your domain (e.g., `your-store.com`)
+3. Add the DNS records shown (SPF, DKIM, DMARC)
+4. Once verified, emails send from `noreply@your-store.com`
+
+You can also set a per-template reply-to address:
+
+```ts theme={null}
+await apptics.emailTemplates.create({
+  // ...
+  params: {
+    replyTo: 'support@your-store.com',
+  },
+});
+```
+
+***
+
+## Full Example: Configure All Emails for a New Store
+
+This script creates the most common email templates in a single run:
+
+```ts theme={null}
+import Apptics from '@apptics/node-sdk';
+
+const apptics = new Apptics('tgd_your_api_key');
+const storeId = 'store_xxx';
+
+// ── 1. Order confirmation ────────────────────────────────────────────
+await apptics.emailTemplates.create({
+  storeId,
+  type: 'order_paid',
+  name: 'Order Confirmation',
+  subject: { en: 'Your order #{{ orderNumber }} is confirmed — {{ storeName }}' },
+  templateVariables: {
+    order_paid: {
+      body: {
+        en: `<p>Hi {{ customerFirstName }},</p>
+<p>Thank you for your purchase! Your order has been confirmed.</p>
+<p><strong>Order:</strong> #{{ orderNumber }}<br/>
+<strong>Total:</strong> {{ orderTotal }}<br/>
+<strong>Date:</strong> {{ orderDate }}</p>`,
+      },
+    },
+  },
+  active: true,
+});
+
+// ── 2. Refund notification ───────────────────────────────────────────
+await apptics.emailTemplates.create({
+  storeId,
+  type: 'order_refunded',
+  name: 'Refund Confirmation',
+  subject: { en: 'Your refund for order #{{ orderNumber }} has been processed' },
+  templateVariables: {
+    order_refunded: {
+      body: {
+        en: '<p>Hi {{ customerFirstName }}, your refund of {{ refundAmount }} for order #{{ orderNumber }} has been processed. It may take 5–10 business days to appear on your statement.</p>',
+      },
+    },
+  },
+  active: true,
+});
+
+// ── 3. Subscription payment receipt ──────────────────────────────────
+await apptics.emailTemplates.create({
+  storeId,
+  type: 'subscription_rebill_succeeded',
+  name: 'Subscription Receipt',
+  subject: { en: 'Payment of {{ subscriptionAmount }} confirmed — {{ storeName }}' },
+  templateVariables: {
+    subscription_rebill_succeeded: {
+      body: {
+        en: '<p>Hi {{ customerFirstName }}, your payment of {{ subscriptionAmount }} for {{ subscriptionName }} was successful. Next billing date: {{ nextBillingDate }}.</p>',
+      },
+    },
+  },
+  active: true,
+});
+
+// ── 4. Upcoming rebill notice ────────────────────────────────────────
+await apptics.emailTemplates.create({
+  storeId,
+  type: 'subscription_rebill_upcoming',
+  name: 'Upcoming Payment Notice',
+  subject: { en: '{{ subscriptionAmount }} will be charged on {{ nextBillingDate }}' },
+  templateVariables: {
+    subscription_rebill_upcoming: {
+      body: {
+        en: '<p>Hi {{ customerFirstName }}, your next payment of {{ subscriptionAmount }} for {{ subscriptionName }} is scheduled for {{ nextBillingDate }}.</p>',
+      },
+    },
+  },
+  active: true,
+});
+
+// ── 5. Failed payment alert ──────────────────────────────────────────
+await apptics.emailTemplates.create({
+  storeId,
+  type: 'subscription_past_due',
+  name: 'Payment Failed',
+  subject: { en: 'Action required: payment failed for {{ subscriptionName }}' },
+  templateVariables: {
+    subscription_past_due: {
+      body: {
+        en: '<p>Hi {{ customerFirstName }}, your payment of {{ subscriptionAmount }} for {{ subscriptionName }} could not be processed. Please update your payment method to avoid interruption.</p>',
+      },
+    },
+  },
+  active: true,
+});
+
+// ── 6. Cancellation confirmation ─────────────────────────────────────
+await apptics.emailTemplates.create({
+  storeId,
+  type: 'subscription_canceled',
+  name: 'Subscription Canceled',
+  subject: { en: 'Your subscription to {{ subscriptionName }} has been canceled' },
+  templateVariables: {
+    subscription_canceled: {
+      body: {
+        en: '<p>Hi {{ customerFirstName }}, your subscription to {{ subscriptionName }} has been canceled. If this was a mistake, you can resubscribe at any time from your account.</p>',
+      },
+    },
+  },
+  active: true,
+});
+
+// ── 7. Abandoned checkout recovery ───────────────────────────────────
+await apptics.emailTemplates.create({
+  storeId,
+  type: 'abandoned_checkout',
+  name: 'Cart Recovery',
+  subject: { en: 'You left items in your cart at {{ storeName }}' },
+  templateVariables: {
+    abandoned_checkout: {
+      body: {
+        en: '<p>Hi {{ customerFirstName }}, you left {{ cartTotal }} worth of items in your cart. Click below to complete your purchase.</p>',
+      },
+    },
+  },
+  params: { specific: { triggerDurationSinceLastActivity: '1h' } },
+  active: true,
+});
+
+console.log('All email templates created!');
+```
+
+***
+
+## CRM Dashboard
+
+You can also manage templates visually in the CRM without writing any code:
+Stores → [Your Store] → Settings → Emails
+
+The dashboard provides:
+
+* **Template editor** with live HTML preview
+* **Variable picker** — click to insert `{{ variableName }}`
+* **Multilingual editor** — tabs per language with independent subjects and bodies
+* **Send test email** — preview rendering with mock data sent to any address
+* **Enable/disable toggle** — per template, per store
+
+***
+
+## SDK Methods Reference
+
+| Method                                            | Description                                                    |
+| ------------------------------------------------- | -------------------------------------------------------------- |
+| `emailTemplates.listTypes()`                      | List all available template types with labels and descriptions |
+| `emailTemplates.list({ storeId })`                | List all templates for a store                                 |
+| `emailTemplates.create({ ... })`                  | Create a new template                                          |
+| `emailTemplates.update(id, { ... })`              | Update an existing template                                    |
+| `emailTemplates.del(id, storeId)`                 | Delete a template                                              |
+| `emailTemplates.test({ templateId, to, locale })` | Send a test email                                              |
+
+***
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Webhooks & Events" icon="bell" href="/developer-tools/node-sdk/webhooks-events">
+    Listen for the same events that trigger emails — order.paid, subscription.canceled, etc.
+  </Card>
+
+  <Card title="Subscriptions" icon="rotate" href="/developer-tools/node-sdk/subscriptions">
+    Set up recurring billing — the events that trigger subscription email templates
+  </Card>
+
+  <Card title="Build a Store with AI" icon="wand-magic-sparkles" href="/developer-tools/headless-sdk/build-store-with-ai">
+    Full tutorial: AI-generated storefront + Apptics for payments and emails
+  </Card>
+
+  <Card title="Node SDK Quick Start" icon="terminal" href="/developer-tools/node-sdk/quick-start">
+    Install the SDK, authenticate, and explore all resources
+  </Card>
+</CardGroup>
