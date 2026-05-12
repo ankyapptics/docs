@@ -1,0 +1,256 @@
+
+# Webhooks & Events
+
+> Receive real-time notifications and monitor platform events
+
+# Webhooks & Events
+
+**Time**: ~10 minutes | **Difficulty**: Beginner
+
+Use the Apptics Node SDK to register HTTPS endpoints for real-time notifications, verify deliveries cryptographically, and query the event log for debugging and analytics.
+
+***
+
+## What webhooks are (and why use them)
+
+**Webhooks** are HTTP callbacks Apptics sends to your server when something happens on the platform — for example, a successful payment or a subscription change. Your endpoint receives a JSON payload so you can update your database, trigger fulfillment, notify internal tools, or sync with Zapier/n8n without polling the API.
+
+<Info>
+  Webhooks run **asynchronously** after the triggering action. Design your handler to respond quickly (e.g. validate the signature, enqueue work, return `2xx`). Heavy work should happen in a background job.
+</Info>
+
+***
+
+## Create a webhook
+
+Register a URL and the event types you care about. The API returns the endpoint id, URL, **signing secret**, subscribed types, and whether the endpoint is enabled.
+
+```ts theme={null}
+import Apptics from '@apptics/node-sdk';
+
+const apptics = new Apptics('your-api-key');
+
+const webhook = await apptics.webhooks.create({
+  storeId: 'store_...',
+  url: 'https://crm.apptics.ai/webhooks/apptics',
+  eventTypes: ['order/paid', 'subscription/created', 'subscription/canceled'],
+  description: 'Production notifications',
+});
+
+// { id, url, secret, eventTypes, enabled, storeId, createdAt, ... }
+console.log(webhook.id, webhook.secret);
+```
+
+<Tip>
+  Store `webhook.secret` securely (environment variable or secrets manager). It is returned when you create the endpoint and is required to verify that payloads really came from Apptics.
+</Tip>
+
+***
+
+## The signing secret
+
+Each webhook endpoint has a unique **secret**. Apptics uses it to compute an **HMAC-SHA256** signature over the **raw JSON body** of each delivery. Your server must verify that signature before trusting the payload.
+
+<Note>
+  Event type strings in `eventTypes` must **exactly match** the names listed below (slash format like `order/paid`). The SDK validates event types at build time via TypeScript and at runtime — passing an invalid type will throw an error immediately.
+</Note>
+
+***
+
+## List webhooks
+
+```ts theme={null}
+const endpoints = await apptics.webhooks.list('store_...');
+// Webhook[]
+```
+
+***
+
+## Delete a webhook
+
+```ts theme={null}
+const { success, id } = await apptics.webhooks.del('wh_...');
+```
+
+***
+
+## Available event types
+
+All webhook event types use the **slash format** (`category/event`). These are the only valid values accepted by the `eventTypes` field.
+
+### Order events
+
+| Event type               | Description                                                  |
+| ------------------------ | ------------------------------------------------------------ |
+| `order/paid`             | Order successfully paid — trigger fulfillment or CRM updates |
+| `order/created`          | Order record created                                         |
+| `order/refunded`         | Order refunded                                               |
+| `order/failed`           | Order payment failed                                         |
+| `order/upsellStarted`    | Post-purchase upsell flow initiated                          |
+| `order/paymentInitiated` | Payment process started for an order                         |
+
+### Checkout events
+
+| Event type                | Description                              |
+| ------------------------- | ---------------------------------------- |
+| `checkout/initiated`      | Checkout session started                 |
+| `checkout/emailValidated` | Customer email validated during checkout |
+
+### Payment events
+
+| Event type           | Description                                  |
+| -------------------- | -------------------------------------------- |
+| `payment/created`    | Payment record created                       |
+| `payment/succeeded`  | Payment completed successfully               |
+| `payment/failed`     | Payment attempt failed                       |
+| `payment/refunded`   | Payment refunded                             |
+| `payment/authorized` | Payment authorized (not yet captured)        |
+| `payment/rejected`   | Payment rejected by processor or fraud rules |
+
+### Subscription events
+
+| Event type                         | Description                              |
+| ---------------------------------- | ---------------------------------------- |
+| `subscription/created`             | New subscription started                 |
+| `subscription/canceled`            | Subscription canceled                    |
+| `subscription/paused`              | Subscription paused                      |
+| `subscription/resumed`             | Subscription resumed                     |
+| `subscription/pastDue`             | Subscription payment past due            |
+| `subscription/rebillUpcoming`      | Upcoming rebill notification             |
+| `subscription/rebillSucceeded`     | Rebill charge succeeded                  |
+| `subscription/rebillDeclined`      | Rebill charge declined                   |
+| `subscription/cancelScheduled`     | Cancellation scheduled for end of period |
+| `subscription/rebillCaptureFailed` | Rebill capture failed                    |
+
+### Funnel events
+
+| Event type                | Description                   |
+| ------------------------- | ----------------------------- |
+| `funnel/sessionStarted`   | Funnel session started        |
+| `funnel/sessionCompleted` | Funnel session completed      |
+| `funnel/stepEntered`      | Visitor entered a funnel step |
+| `funnel/stepViewed`       | Funnel step viewed            |
+| `funnel/stepExited`       | Visitor exited a funnel step  |
+| `funnel/converted`        | Funnel conversion recorded    |
+| `funnel/customEvent`      | Custom funnel event fired     |
+| `funnel/sessionAbandoned` | Funnel session abandoned      |
+
+### Club events
+
+| Event type                   | Description                 |
+| ---------------------------- | --------------------------- |
+| `club/membershipActivated`   | Club membership activated   |
+| `club/membershipDeactivated` | Club membership deactivated |
+
+### Security events
+
+| Event type               | Description             |
+| ------------------------ | ----------------------- |
+| `security/abuseDetected` | Abuse or fraud detected |
+
+<Warning>
+  The SDK and API **reject** any event type not in this list. If you pass an invalid type like `order.paid` (dot format) or `s_order_paid` (internal format), you will receive a validation error.
+</Warning>
+
+***
+
+## Events API (query & analytics)
+
+Use the **Events** resource to audit activity, build dashboards, or debug webhook payloads.
+
+### Recent events
+
+```ts theme={null}
+const recent = await apptics.events.recent(25);
+// AppEvent[] — includes eventType, createdAt, payload, storeId, ...
+```
+
+### Statistics
+
+```ts theme={null}
+const stats = await apptics.events.statistics({ storeId: 'store_...' });
+// { totalEvents, eventsByType, processedCount, unprocessedCount }
+```
+
+### List with filters and pagination
+
+```ts theme={null}
+const { data, total, page, pageSize, hasMore } = await apptics.events.list({
+  pagination: { page: 1, pageSize: 50 },
+  sortBy: { field: 'appEvents.createdAt', direction: 'desc' },
+  filters: {
+    'stores.id': ['store_...'],
+    // Event types here are often internal analytics ids (e.g. s_order_paid) — see Note below
+    'appEvents.eventType': ['s_order_paid'],
+  },
+});
+```
+
+Optional filters include date ranges on `appEvents.createdAt` / `appEvents.processedAt`, `customer.email`, `appEvents.draft`, and free-text `search`.
+
+<Note>
+  **Webhook subscriptions** use slash-format names like `order/paid` and `subscription/created`. The **Events list** API may return internal `eventType` strings (for example `s_order_paid`) — these are for internal analytics and should not be used when creating webhooks.
+</Note>
+
+***
+
+## Webhook signature verification (HMAC-SHA256)
+
+Apptics signs the **exact JSON string** sent as the request body.
+
+1. Read the raw body as a **string** (do not parse JSON before verifying).
+2. Compute `HMAC-SHA256(secret, rawBody)` and hex-encode the digest.
+3. Compare to the `X-Apptics-Signature` header value after the `sha256=` prefix.
+
+```ts theme={null}
+import crypto from 'crypto';
+
+function verifyAppticsWebhook(rawBody: string, secret: string, signatureHeader: string | null) {
+  if (!signatureHeader?.startsWith('sha256=')) return false;
+  const expected = signatureHeader.slice('sha256='.length);
+  const hmac = crypto.createHmac('sha256', secret).update(rawBody, 'utf8').digest('hex');
+  try {
+    return crypto.timingSafeEqual(Buffer.from(expected, 'hex'), Buffer.from(hmac, 'hex'));
+  } catch {
+    return false;
+  }
+}
+```
+
+Other headers on the request include `X-Apptics-Timestamp` and `User-Agent: Apptics-Webhooks/1.0`. You can use the timestamp for optional replay protection.
+
+***
+
+## SDK methods reference
+
+| Resource   | Method                | Description                                                                     |
+| ---------- | --------------------- | ------------------------------------------------------------------------------- |
+| `webhooks` | `create(params)`      | Create endpoint; params: `storeId`, `url`, `eventTypes`, optional `description` |
+| `webhooks` | `list(storeId)`       | List all webhooks for a store                                                   |
+| `webhooks` | `del(id)`             | Delete webhook; returns `{ success, id }`                                       |
+| `events`   | `recent(limit?)`      | Most recent events                                                              |
+| `events`   | `statistics(params?)` | Aggregates; optional `storeId`, `startDate`, `endDate`                          |
+| `events`   | `list(params?)`       | Filtered list with `filters`, `pagination`, `sortBy`, `search`                  |
+| `events`   | `retrieve(eventId)`   | Single event by id                                                              |
+
+***
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Node SDK Quick Start" icon="terminal" href="/developer-tools/node-sdk/quick-start">
+    Install the SDK, authenticate, and explore core resources
+  </Card>
+
+  <Card title="Sandbox Testing" icon="flask-vial" href="/developer-tools/node-sdk/sandbox-testing">
+    Exercise payments and webhook-style flows without live processors
+  </Card>
+
+  <Card title="Merchant Quick Start" icon="rocket" href="/developer-tools/node-sdk/merchant-quickstart">
+    End-to-end store, funnel, and checkout setup
+  </Card>
+
+  <Card title="Subscriptions" icon="repeat" href="/developer-tools/node-sdk/subscriptions">
+    Recurring billing and subscription lifecycle
+  </Card>
+</CardGroup>

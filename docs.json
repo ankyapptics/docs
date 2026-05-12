@@ -227,7 +227,8 @@
               {
                 "group": "Auth",
                 "pages": [
-                  "api-reference/auth/test-authentication"
+                  "api-reference/auth/test-authentication",
+                  "api-reference/auth/webhooks-and-events"
                 ]
               },
               {
